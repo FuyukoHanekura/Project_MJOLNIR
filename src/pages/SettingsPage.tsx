@@ -1,5 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useTranslation } from 'react-i18next'
+import DataPanel from '../components/DataPanel'
 import { db } from '../db/db'
 import { LANGUAGES, setLanguage, type Language } from '../i18n'
 
@@ -37,7 +38,14 @@ export default function SettingsPage() {
         </div>
       </fieldset>
 
-      <p className="mt-8 text-sm text-muted">
+      <section className="mt-10">
+        <h2 className="font-display text-3xl font-extrabold tracking-wide text-ink uppercase">{t('data.title')}</h2>
+        <div className="mt-4">
+          <DataPanel />
+        </div>
+      </section>
+
+      <p className="mt-10 text-sm text-muted">
         {t('settings.dbStatus', {
           state: sessionCount === undefined ? t('settings.dbOpening') : t('settings.dbReady', { count: sessionCount }),
         })}
