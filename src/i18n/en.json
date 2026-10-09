@@ -111,5 +111,55 @@
     "dbOpening": "opening…",
     "dbReady_one": "ready ({{count}} session)",
     "dbReady_other": "ready ({{count}} sessions)"
+  },
+  "tracking": {
+    "title": "Tracking",
+    "tabsLabel": "Tracking sections",
+    "tabs": {
+      "weight": "Body weight",
+      "progress": "Progress",
+      "records": "Records"
+    },
+    "weight": {
+      "date": "Date",
+      "kg": "Weight (kg)",
+      "save": "Save",
+      "invalid": "Enter a weight between 20 and 400 kg.",
+      "latest": "Latest: {{kg}} kg ({{date}})",
+      "avg": "7-day average: {{kg}} kg",
+      "empty": "No measurement yet. Enter today's weight.",
+      "history": "Latest measurements",
+      "chartLabel": "Body weight curve and 7-day moving average",
+      "seriesKg": "Weight",
+      "seriesAvg": "7-day avg",
+      "deleteAria": "Delete the measurement of {{date}}"
+    },
+    "progress": {
+      "exercise": "Exercise",
+      "noData": "No sets recorded yet. Finish a session to see your progress.",
+      "metric": "Displayed measure",
+      "chartLabel": "{{metric}} by date",
+      "rpeTitle": "Average RPE",
+      "rpeChartLabel": "Average RPE by date",
+      "rpeEmpty": "Enter the RPE of your sets to track perceived effort over time.",
+      "rpeSeries": "Average RPE",
+      "chartSummary": "{{count}} points, from {{first}} to {{last}}. Latest value: {{value}}."
+    },
+    "metrics": {
+      "maxWeight": "Top weight (kg)",
+      "e1rm": "Estimated 1RM (kg)",
+      "volume": "Volume (kg)",
+      "maxReps": "Max reps"
+    },
+    "records": {
+      "title": "Records",
+      "empty": "No records yet.",
+      "maxWeight": "Top weight",
+      "e1rm": "Estimated 1RM",
+      "maxReps": "Max reps",
+      "recent": "Recent",
+      "set": "{{reps}} × {{weight}} kg",
+      "setBodyweight": "{{reps}} reps"
+    }
   }
 }

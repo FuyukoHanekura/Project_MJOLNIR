@@ -111,5 +111,55 @@
     "dbOpening": "ouverture…",
     "dbReady_one": "prête ({{count}} séance)",
     "dbReady_other": "prête ({{count}} séances)"
+  },
+  "tracking": {
+    "title": "Suivi",
+    "tabsLabel": "Sections du suivi",
+    "tabs": {
+      "weight": "Poids de corps",
+      "progress": "Progression",
+      "records": "Records"
+    },
+    "weight": {
+      "date": "Date",
+      "kg": "Poids (kg)",
+      "save": "Enregistrer",
+      "invalid": "Entre un poids entre 20 et 400 kg.",
+      "latest": "Dernier : {{kg}} kg ({{date}})",
+      "avg": "Moyenne sur 7 jours : {{kg}} kg",
+      "empty": "Aucune mesure pour l'instant. Saisis ton poids du jour.",
+      "history": "Dernières mesures",
+      "chartLabel": "Courbe du poids de corps et moyenne glissante sur 7 jours",
+      "seriesKg": "Poids",
+      "seriesAvg": "Moyenne 7 j",
+      "deleteAria": "Supprimer la mesure du {{date}}"
+    },
+    "progress": {
+      "exercise": "Exercice",
+      "noData": "Pas encore de séries enregistrées. Termine une séance pour voir ta progression.",
+      "metric": "Mesure affichée",
+      "chartLabel": "{{metric}} par date",
+      "rpeTitle": "RPE moyen",
+      "rpeChartLabel": "RPE moyen par date",
+      "rpeEmpty": "Renseigne le RPE de tes séries pour suivre l'évolution de l'effort perçu.",
+      "rpeSeries": "RPE moyen",
+      "chartSummary": "{{count}} points, de {{first}} à {{last}}. Dernière valeur : {{value}}."
+    },
+    "metrics": {
+      "maxWeight": "Charge max (kg)",
+      "e1rm": "1RM estimé (kg)",
+      "volume": "Volume (kg)",
+      "maxReps": "Reps max"
+    },
+    "records": {
+      "title": "Records",
+      "empty": "Aucun record pour l'instant.",
+      "maxWeight": "Charge max",
+      "e1rm": "1RM estimé",
+      "maxReps": "Reps max",
+      "recent": "Récent",
+      "set": "{{reps}} × {{weight}} kg",
+      "setBodyweight": "{{reps}} reps"
+    }
   }
 }
