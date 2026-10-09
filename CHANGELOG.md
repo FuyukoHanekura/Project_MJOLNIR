@@ -2,6 +2,15 @@
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), versionnage [SemVer](https://semver.org/lang/fr/).
 
+## [0.5.0] - 2026-10-09
+
+### Added
+- Aperçu : heatmap du corps (silhouette face et dos) colorée par volume par muscle sur 7, 30, 90 jours ou tout l'historique, avec classement des muscles, détail du muscle choisi et lien vers ses exercices.
+- Aperçu : calendrier des 26 dernières semaines (séries ou volume), cases accessibles au clavier (flèches), détail de la séance du jour et création d'une séance sur un jour de repos.
+- Aperçu : statistiques résumées (séances sur 30 jours, séries de la semaine, semaines consécutives).
+- La liste des exercices accepte un filtre de muscle dans l'adresse (`?muscle=<id>`).
+- Fonctions pures du volume par muscle, du calendrier et des statistiques, avec tests.
+
 ## [0.4.0] - 2026-10-09
 
 ### Added

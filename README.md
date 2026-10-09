@@ -2,7 +2,7 @@
 
 PWA de suivi de musculation, 100 % locale : aucun compte, aucune API. Les données restent dans IndexedDB et se transfèrent par export/import JSON.
 
-> Phase 4 (suivi) : poids de corps, RPE, records et courbes de progression. L'écran Aperçu est encore un placeholder.
+> Phase 5 (heatmaps) : aperçu avec heatmap du corps, calendrier et statistiques. Les phases restantes : export/import, exercices personnalisés, finitions.
 
 ## Démarrage
 
