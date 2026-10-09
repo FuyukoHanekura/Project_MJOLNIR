@@ -1,8 +1,9 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import ExerciseLink from '../components/ExerciseLink'
-import { MUSCLES } from '../data/muscles'
+import { MUSCLE_BY_ID, MUSCLES } from '../data/muscles'
 import { db } from '../db/db'
 import { EQUIPMENT_TYPES, filterExercises, GROUPS, sortExercises } from '../lib/exercises'
 import type { EquipmentType, ExerciseGroup } from '../types'
@@ -14,7 +15,12 @@ export default function ExercisesPage() {
   const [query, setQuery] = useState('')
   const [group, setGroup] = useState<ExerciseGroup | undefined>()
   const [equipment, setEquipment] = useState<EquipmentType | undefined>()
-  const [muscle, setMuscle] = useState<string | undefined>()
+  // Le lien « Voir les exercices » de l'aperçu arrive avec ?muscle=<id>.
+  const [params] = useSearchParams()
+  const [muscle, setMuscle] = useState<string | undefined>(() => {
+    const m = params.get('muscle')
+    return m && MUSCLE_BY_ID.has(m) ? m : undefined
+  })
 
   const all = useLiveQuery(() => db.exercises.toArray())
   const shown = useMemo(
