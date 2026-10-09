@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import AppShell from './components/AppShell'
 import OverviewPage from './pages/OverviewPage'
@@ -5,24 +6,33 @@ import SessionsPage from './pages/SessionsPage'
 import SessionEditPage from './pages/SessionEditPage'
 import ExercisesPage from './pages/ExercisesPage'
 import ExerciseDetailPage from './pages/ExerciseDetailPage'
-import TrackingPage from './pages/TrackingPage'
 import SettingsPage from './pages/SettingsPage'
+
+// Pages moins fréquentes : chargées à la demande pour alléger le premier chargement.
+const ExerciseFormPage = lazy(() => import('./pages/ExerciseFormPage'))
+const BulkImportPage = lazy(() => import('./pages/BulkImportPage'))
+const TrackingPage = lazy(() => import('./pages/TrackingPage'))
 
 export default function App() {
   return (
     <HashRouter>
-      <Routes>
-        <Route element={<AppShell />}>
-          <Route index element={<OverviewPage />} />
-          <Route path="seances" element={<SessionsPage />} />
-          <Route path="seances/:id" element={<SessionEditPage />} />
-          <Route path="exercices" element={<ExercisesPage />} />
-          <Route path="exercices/:id" element={<ExerciseDetailPage />} />
-          <Route path="suivi" element={<TrackingPage />} />
-          <Route path="reglages" element={<SettingsPage />} />
-          <Route path="*" element={<OverviewPage />} />
-        </Route>
-      </Routes>
+      <Suspense fallback={<p className="p-4 text-muted">…</p>}>
+        <Routes>
+          <Route element={<AppShell />}>
+            <Route index element={<OverviewPage />} />
+            <Route path="seances" element={<SessionsPage />} />
+            <Route path="seances/:id" element={<SessionEditPage />} />
+            <Route path="exercices" element={<ExercisesPage />} />
+            <Route path="exercices/nouveau" element={<ExerciseFormPage />} />
+            <Route path="exercices/import" element={<BulkImportPage />} />
+            <Route path="exercices/:id/modifier" element={<ExerciseFormPage />} />
+            <Route path="exercices/:id" element={<ExerciseDetailPage />} />
+            <Route path="suivi" element={<TrackingPage />} />
+            <Route path="reglages" element={<SettingsPage />} />
+            <Route path="*" element={<OverviewPage />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </HashRouter>
   )
 }
