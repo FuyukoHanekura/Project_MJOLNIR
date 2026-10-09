@@ -7,6 +7,8 @@ import ExerciseLink from '../components/ExerciseLink'
 import Silhouette from '../components/Silhouette'
 import { MUSCLE_BY_ID } from '../data/muscles'
 import { db } from '../db/db'
+import { formatLocalDate, numberFormatter } from '../lib/format'
+import { exerciseHistory, formatSets } from '../lib/sessions'
 import type { Exercise } from '../types'
 
 /** N'affiche un lien que pour http(s) : jamais de javascript: venant d'un import. */
@@ -53,6 +55,38 @@ function MuscleList({ title, ids }: { title: string; ids: string[] }) {
         </ul>
       )}
     </div>
+  )
+}
+
+/** Dernières performances de l'utilisateur sur cet exercice (la courbe arrive avec le suivi). */
+function History({ exerciseId }: { exerciseId: string }) {
+  const { t, i18n } = useTranslation()
+  const sessions = useLiveQuery(() => db.sessions.toArray())
+  if (!sessions) return null
+  const fmt = numberFormatter(i18n.language)
+  const history = exerciseHistory(sessions, exerciseId).slice(0, 10)
+  return (
+    <section className="mt-8">
+      <h2 className={sectionTitle}>{t('detail.history')}</h2>
+      {history.length === 0 ? (
+        <p className="mt-2 text-muted">{t('detail.historyEmpty')}</p>
+      ) : (
+        <ul className="mt-3 space-y-2">
+          {history.map((p) => (
+            <li key={p.sessionId}>
+              <Link
+                to={`/seances/${p.sessionId}`}
+                aria-label={`${t('detail.historyLink')} : ${formatLocalDate(p.date, i18n.language)}`}
+                className="flex min-h-12 flex-wrap items-center justify-between gap-x-3 rounded-xl border border-line bg-surface px-4 py-2 hover:border-accent"
+              >
+                <span className="text-sm text-muted">{formatLocalDate(p.date, i18n.language)}</span>
+                <span className="font-semibold text-ink">{formatSets(p.sets, fmt)}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
   )
 }
 
@@ -159,6 +193,8 @@ export default function ExerciseDetailPage() {
           </a>
         </p>
       )}
+
+      <History exerciseId={exercise.id} />
 
       <Notes key={exercise.id} exercise={exercise} />
 
