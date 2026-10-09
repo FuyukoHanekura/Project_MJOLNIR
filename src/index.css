@@ -100,3 +100,27 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* Silhouette interactive (heatmap du corps) */
+.sil-mu * {
+  stroke: var(--surface);
+  stroke-width: 1;
+}
+.sil-mu-interactive {
+  cursor: pointer;
+}
+.sil-mu-interactive:hover * {
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+.sil-mu-interactive[aria-pressed='true'] * {
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+.sil-mu-interactive:focus-visible {
+  outline: none;
+}
+.sil-mu-interactive:focus-visible * {
+  stroke: var(--accent);
+  stroke-width: 2.4;
+}
