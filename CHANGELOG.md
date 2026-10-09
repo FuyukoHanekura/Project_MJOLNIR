@@ -2,6 +2,15 @@
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), versionnage [SemVer](https://semver.org/lang/fr/).
 
+## [0.3.0] - 2026-10-09
+
+### Added
+- Séances : liste triée par date, création, duplication (date du jour, mêmes exercices et séries) et suppression avec confirmation.
+- Éditeur de séance : nom, date, notes, ajout d'exercices par recherche, réorganisation, séries reps × poids × RPE optionnel (6 à 10 par demi-points), sauvegarde automatique dans Dexie.
+- Rappel de la dernière performance sous chaque exercice, avec reprise en un clic.
+- Historique des performances sur la fiche exercice.
+- Fonctions pures de séances (normalisation, duplication, historique, formatage « 3×12 @ 45 kg ») et de brouillon, avec tests.
+
 ## [0.2.0] - 2026-10-09
 
 ### Added
