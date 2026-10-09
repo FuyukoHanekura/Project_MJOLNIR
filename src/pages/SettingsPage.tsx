@@ -1,49 +1,54 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useTranslation } from 'react-i18next'
 import DataPanel from '../components/DataPanel'
+import DemoPanel from '../components/DemoPanel'
+import RadioChoice from '../components/RadioChoice'
 import { db } from '../db/db'
+import { saveTheme } from '../db/preferences'
+import { getSetting } from '../db/settings'
 import { LANGUAGES, setLanguage, type Language } from '../i18n'
+import { parseTheme, THEMES, type Theme } from '../lib/theme'
+
+const sectionTitle = 'font-display text-3xl font-extrabold tracking-wide text-ink uppercase'
 
 export default function SettingsPage() {
   const { t, i18n } = useTranslation()
   // Vérifie que la base IndexedDB est ouverte et lisible (undefined = en cours de chargement).
   const sessionCount = useLiveQuery(() => db.sessions.count())
+  const theme = parseTheme(useLiveQuery(() => getSetting<unknown>('theme')))
 
   return (
     <section>
       <h1 className="font-display text-4xl font-extrabold tracking-wide text-ink uppercase">{t('settings.title')}</h1>
 
-      <fieldset className="mt-6">
-        <legend className="font-semibold text-ink">{t('settings.language')}</legend>
-        <p className="mt-1 text-sm text-muted">{t('settings.languageHelp')}</p>
-        <div className="mt-3 flex gap-2">
-          {LANGUAGES.map((lang: Language) => (
-            <label
-              key={lang}
-              className={`flex min-h-11 min-w-20 cursor-pointer items-center justify-center rounded-lg border px-4 font-semibold uppercase has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
-                i18n.language === lang ? 'border-accent bg-accent text-accent-ink' : 'border-line bg-surface text-ink2'
-              }`}
-            >
-              <input
-                type="radio"
-                name="language"
-                value={lang}
-                checked={i18n.language === lang}
-                onChange={() => void setLanguage(lang)}
-                className="sr-only"
-              />
-              {lang}
-            </label>
-          ))}
-        </div>
-      </fieldset>
+      <RadioChoice<Language>
+        name="language"
+        legend={t('settings.language')}
+        help={t('settings.languageHelp')}
+        options={LANGUAGES.map((l) => ({ value: l, label: l.toUpperCase() }))}
+        value={i18n.language as Language}
+        onChange={(l) => void setLanguage(l)}
+      />
+
+      <RadioChoice<Theme>
+        name="theme"
+        legend={t('settings.theme')}
+        help={t('settings.themeHelp')}
+        options={THEMES.map((v) => ({ value: v, label: t(`settings.themes.${v}`) }))}
+        value={theme}
+        onChange={(v) => void saveTheme(v)}
+      />
 
       <section className="mt-10">
-        <h2 className="font-display text-3xl font-extrabold tracking-wide text-ink uppercase">{t('data.title')}</h2>
+        <h2 className={sectionTitle}>{t('data.title')}</h2>
         <div className="mt-4">
           <DataPanel />
         </div>
       </section>
+
+      <div className="mt-10">
+        <DemoPanel />
+      </div>
 
       <p className="mt-10 text-sm text-muted">
         {t('settings.dbStatus', {
