@@ -60,7 +60,7 @@ export interface BodyWeight {
   kg: number
 }
 
-export type SettingKey = 'language' | 'theme' | 'exportReminderWeeks' | 'lastExportAt'
+export type SettingKey = 'language' | 'theme' | 'exportReminderWeeks' | 'lastExportAt' | 'seedVersion'
 
 export interface Setting {
   key: SettingKey
