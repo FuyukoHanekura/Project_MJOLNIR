@@ -109,7 +109,8 @@
     "removeExercise": "Remove exercise {{name}}",
     "moveUp": "Move exercise {{name}} up",
     "moveDown": "Move exercise {{name}} down",
-    "unknownExercise": "Exercise not found ({{id}})"
+    "unknownExercise": "Exercise not found ({{id}})",
+    "demoBadge": "Demo"
   },
   "settings": {
     "title": "Settings",
@@ -118,7 +119,24 @@
     "dbStatus": "Local database: {{state}}",
     "dbOpening": "opening…",
     "dbReady_one": "ready ({{count}} session)",
-    "dbReady_other": "ready ({{count}} sessions)"
+    "dbReady_other": "ready ({{count}} sessions)",
+    "theme": "Theme",
+    "themeHelp": "\"System\" follows your device setting.",
+    "themes": {
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "demo": {
+      "title": "Demo",
+      "help": "Adds sample sessions and measurements so you can see the heatmaps and charts. They are never exported. A demo session you edit becomes a real session.",
+      "present": "Demo loaded: {{sessions}} sessions, {{weights}} weight entries.",
+      "none": "No demo data loaded.",
+      "load": "Load demo",
+      "remove": "Remove demo",
+      "removeConfirm": "Confirm removing the demo",
+      "failed": "The operation failed: {{message}}"
+    }
   },
   "tracking": {
     "title": "Tracking",

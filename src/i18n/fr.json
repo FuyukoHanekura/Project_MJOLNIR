@@ -109,7 +109,8 @@
     "removeExercise": "Retirer l'exercice {{name}}",
     "moveUp": "Monter l'exercice {{name}}",
     "moveDown": "Descendre l'exercice {{name}}",
-    "unknownExercise": "Exercice introuvable ({{id}})"
+    "unknownExercise": "Exercice introuvable ({{id}})",
+    "demoBadge": "Démo"
   },
   "settings": {
     "title": "Réglages",
@@ -118,7 +119,24 @@
     "dbStatus": "Base locale : {{state}}",
     "dbOpening": "ouverture…",
     "dbReady_one": "prête ({{count}} séance)",
-    "dbReady_other": "prête ({{count}} séances)"
+    "dbReady_other": "prête ({{count}} séances)",
+    "theme": "Thème",
+    "themeHelp": "« Système » suit le réglage de ton appareil.",
+    "themes": {
+      "system": "Système",
+      "light": "Clair",
+      "dark": "Sombre"
+    },
+    "demo": {
+      "title": "Démo",
+      "help": "Ajoute des séances et des mesures d'exemple pour voir les heatmaps et les courbes. Elles ne sont jamais exportées. Une séance de démo que tu modifies devient une vraie séance.",
+      "present": "Démo chargée : {{sessions}} séances, {{weights}} mesures de poids.",
+      "none": "Aucune donnée de démo chargée.",
+      "load": "Charger la démo",
+      "remove": "Retirer la démo",
+      "removeConfirm": "Confirmer le retrait de la démo",
+      "failed": "L'opération a échoué : {{message}}"
+    }
   },
   "tracking": {
     "title": "Suivi",

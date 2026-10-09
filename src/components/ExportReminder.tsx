@@ -16,8 +16,9 @@ export default function ExportReminder() {
     const [weeks, lastExportAt, firstSession, firstWeight] = await Promise.all([
       getSetting<number>('exportReminderWeeks'),
       getSetting<string>('lastExportAt'),
-      db.sessions.orderBy('date').first(),
-      db.bodyWeights.orderBy('date').first(),
+      // Les données de démonstration ne comptent pas : elles ne sont jamais exportées.
+      db.sessions.orderBy('date').filter((s) => !s.demo).first(),
+      db.bodyWeights.orderBy('date').filter((w) => !w.demo).first(),
     ])
     const oldestDataDate = [firstSession?.date, firstWeight?.date].filter((d): d is string => !!d).sort()[0]
     return { weeks: weeks ?? DEFAULT_REMINDER_WEEKS, lastExportAt, oldestDataDate }

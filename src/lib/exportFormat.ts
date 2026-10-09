@@ -190,7 +190,10 @@ export function parseBodyWeight(raw: unknown): { ok: true; value: BodyWeight } |
 
 /* ---------- Export ---------- */
 
-/** Construit le fichier d'export : exercices personnalisés, notes des exercices de base, séances, poids. */
+/**
+ * Construit le fichier d'export : exercices personnalisés, notes des exercices de base, séances, poids.
+ * Les données de démonstration en sont exclues.
+ */
 export function buildExportFile(
   exercises: readonly Exercise[],
   sessions: readonly Session[],
@@ -207,8 +210,8 @@ export function buildExportFile(
     exportedAt: now.toISOString(),
     exercises: exercises.filter((e) => e.isCustom).sort(byId),
     exerciseNotes,
-    sessions: [...sessions].sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id)),
-    bodyWeights: [...bodyWeights].sort((a, b) => a.date.localeCompare(b.date)),
+    sessions: sessions.filter((s) => !s.demo).sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id)),
+    bodyWeights: bodyWeights.filter((w) => !w.demo).sort((a, b) => a.date.localeCompare(b.date)),
   }
 }
 

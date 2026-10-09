@@ -52,12 +52,16 @@ export interface Session {
   name: string
   notes?: string
   entries: SessionEntry[]
+  /** Donnée de démonstration : jamais exportée, retirable en un clic. Disparaît dès que la séance est modifiée. */
+  demo?: boolean
 }
 
 export interface BodyWeight {
   /** YYYY-MM-DD, heure locale. Une valeur par date. */
   date: string
   kg: number
+  /** Donnée de démonstration : jamais exportée, retirable en un clic. */
+  demo?: boolean
 }
 
 export type SettingKey = 'language' | 'theme' | 'exportReminderWeeks' | 'lastExportAt' | 'seedVersion'

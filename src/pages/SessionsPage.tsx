@@ -66,7 +66,10 @@ export default function SessionsPage() {
             <li key={s.id} className="rounded-xl border border-line bg-surface p-4">
               <Link to={`/seances/${s.id}`} className="block min-h-11">
                 <span className="block text-sm text-muted">{formatLocalDate(s.date, i18n.language, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}</span>
-                <span className="block text-lg font-semibold text-ink">{title}</span>
+                <span className="block text-lg font-semibold text-ink">
+                  {title}
+                  {s.demo && <span className="ml-2 rounded-full bg-accent/10 px-2 py-0.5 align-middle text-xs font-semibold text-accent">{t('sessions.demoBadge')}</span>}
+                </span>
                 <span className="block text-sm text-ink2">
                   {s.entries.length
                     ? t('sessions.summary', { count: s.entries.length, sets: countSets(s.entries) })
