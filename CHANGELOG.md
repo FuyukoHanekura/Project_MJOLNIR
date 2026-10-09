@@ -2,6 +2,21 @@
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), versionnage [SemVer](https://semver.org/lang/fr/).
 
+## [1.0.0] - 2026-10-10
+
+### Added
+- Thème Système, Clair ou Sombre dans les Réglages, enregistré et appliqué avant le premier rendu (sans flash). Les champs natifs (date, listes) suivent le thème.
+- Données de démonstration : chargement et retrait en un clic depuis les Réglages. Elles sont marquées, ne sont jamais exportées et ne déclenchent pas le rappel d'export.
+- Workflow GitHub Actions de déploiement sur GitHub Pages (lint, tests, build, publication).
+- Test de contraste WCAG sur les deux thèmes, et test de cohérence entre le thème sombre automatique et forcé.
+- Tests de cas limites des calculs (volume par muscle, calendrier, RPE, records, recherche).
+- README complet : installation, déploiement (GitHub Pages et Raspberry Pi), sauvegarde, calculs, architecture.
+
+### Changed
+- Contraste du texte atténué du thème clair relevé (4,09:1 à 4,82:1).
+- Couleurs des muscles secondaires et premier palier de la heatmap plus distincts du gris des muscles non travaillés, dans les deux thèmes.
+- Thème et langue enregistrés sont chargés avant le premier affichage.
+
 ## [0.6.0] - 2026-10-09
 
 ### Added
