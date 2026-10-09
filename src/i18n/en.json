@@ -64,6 +64,7 @@
     "title": "Sessions",
     "new": "New session",
     "empty": "No sessions yet. Create your first one.",
+    "createError": "Could not create the session: {{message}}",
     "untitled": "Untitled session",
     "summary_one": "{{count}} exercise · {{sets}} sets",
     "summary_other": "{{count}} exercises · {{sets}} sets",

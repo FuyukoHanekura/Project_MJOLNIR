@@ -1,4 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import ConfirmDeleteButton from '../components/ConfirmDeleteButton'
@@ -17,17 +18,22 @@ export default function SessionsPage() {
 
   const open = (id: string) => navigate(`/seances/${id}`)
 
-  const create = async () => {
-    const s = createSession(todayLocal())
-    await db.sessions.add(s)
-    open(s.id)
+  const [error, setError] = useState<string | null>(null)
+
+  /** Ajoute la séance puis l'ouvre ; en cas d'échec (stockage indisponible...), affiche la raison. */
+  const addAndOpen = async (session: Session) => {
+    try {
+      setError(null)
+      await db.sessions.add(session)
+      open(session.id)
+    } catch (e) {
+      console.error(e)
+      setError(e instanceof Error ? `${e.name}: ${e.message}` : String(e))
+    }
   }
 
-  const duplicate = async (source: Session) => {
-    const copy = duplicateSession(source, todayLocal())
-    await db.sessions.add(copy)
-    open(copy.id)
-  }
+  const create = () => addAndOpen(createSession(todayLocal()))
+  const duplicate = (source: Session) => addAndOpen(duplicateSession(source, todayLocal()))
 
   const sorted = sessions ? sortSessions(sessions) : []
 
@@ -43,6 +49,12 @@ export default function SessionsPage() {
           + {t('sessions.new')}
         </button>
       </div>
+
+      {error && (
+        <p role="alert" className="mt-4 rounded-lg border border-danger p-3 text-sm text-danger">
+          {t('sessions.createError', { message: error })}
+        </p>
+      )}
 
       {sessions && sorted.length === 0 && <p className="mt-6 text-ink2">{t('sessions.empty')}</p>}
 

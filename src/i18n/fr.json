@@ -64,6 +64,7 @@
     "title": "Séances",
     "new": "Nouvelle séance",
     "empty": "Aucune séance pour l'instant. Crée ta première séance.",
+    "createError": "Impossible de créer la séance : {{message}}",
     "untitled": "Séance sans nom",
     "summary_one": "{{count}} exercice · {{sets}} séries",
     "summary_other": "{{count}} exercices · {{sets}} séries",
