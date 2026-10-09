@@ -161,5 +161,62 @@
       "set": "{{reps}} × {{weight}} kg",
       "setBodyweight": "{{reps}} reps"
     }
+  },
+  "overview": {
+    "stats": {
+      "sessions30_one": "{{count}} session in 30 days",
+      "sessions30_other": "{{count}} sessions in 30 days",
+      "setsWeek_one": "{{count}} set this week",
+      "setsWeek_other": "{{count}} sets this week",
+      "streak_one": "{{count}} week in a row",
+      "streak_other": "{{count}} weeks in a row"
+    },
+    "empty": "No sessions yet. Log your first session to see the heatmaps appear.",
+    "emptyAction": "Create a session",
+    "body": {
+      "title": "Volume per muscle",
+      "period": "Period",
+      "d7": "7 d",
+      "d30": "30 d",
+      "d90": "90 d",
+      "all": "All",
+      "legendMax": "{{ref}}+ sets/wk",
+      "view": "Silhouette, {{view}} view",
+      "muscleValue_one": "{{name}}: {{n}} set",
+      "muscleValue_other": "{{name}}: {{n}} sets",
+      "muscleNone": "{{name}}: no sets",
+      "hint": "Tap a muscle on the silhouette or in the list to see details.",
+      "sets_one": "{{n}} set",
+      "sets_other": "{{n}} sets",
+      "selected": "{{sets}} in the period · {{perWeek}} per week",
+      "last": "Last direct training: {{ago}}",
+      "exercises": "See exercises",
+      "ranking": "Muscle ranking"
+    },
+    "ago": {
+      "never": "never",
+      "today": "today",
+      "yesterday": "yesterday",
+      "days_one": "{{count}} day ago",
+      "days_other": "{{count}} days ago"
+    },
+    "calendar": {
+      "title": "Calendar",
+      "metric": "Measure",
+      "sets": "Sets",
+      "volume": "Volume",
+      "hint": "Tap a cell to see that day's session. Use the arrow keys to move around.",
+      "cellSets_one": "{{date}}: {{n}} set",
+      "cellSets_other": "{{date}}: {{n}} sets",
+      "cellVolume": "{{date}}: {{n}} kg of volume",
+      "cellRest": "{{date}}: rest",
+      "rest": "rest.",
+      "add": "Add a session on this day",
+      "daySummary_one": "({{count}} set, {{volume}} kg)",
+      "daySummary_other": "({{count}} sets, {{volume}} kg)",
+      "less": "Less",
+      "more": "More",
+      "unnamed": "Session"
+    }
   }
 }

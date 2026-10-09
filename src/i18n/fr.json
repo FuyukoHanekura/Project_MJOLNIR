@@ -161,5 +161,62 @@
       "set": "{{reps}} × {{weight}} kg",
       "setBodyweight": "{{reps}} reps"
     }
+  },
+  "overview": {
+    "stats": {
+      "sessions30_one": "{{count}} séance sur 30 jours",
+      "sessions30_other": "{{count}} séances sur 30 jours",
+      "setsWeek_one": "{{count}} série cette semaine",
+      "setsWeek_other": "{{count}} séries cette semaine",
+      "streak_one": "{{count}} semaine d'affilée",
+      "streak_other": "{{count}} semaines d'affilée"
+    },
+    "empty": "Aucune séance pour l'instant. Enregistre ta première séance pour voir apparaître les cartes de chaleur.",
+    "emptyAction": "Créer une séance",
+    "body": {
+      "title": "Volume par muscle",
+      "period": "Période",
+      "d7": "7 j",
+      "d30": "30 j",
+      "d90": "90 j",
+      "all": "Tout",
+      "legendMax": "{{ref}}+ séries/sem.",
+      "view": "Silhouette vue {{view}}",
+      "muscleValue_one": "{{name}} : {{n}} série",
+      "muscleValue_other": "{{name}} : {{n}} séries",
+      "muscleNone": "{{name}} : aucune série",
+      "hint": "Touche un muscle sur la silhouette ou dans la liste pour voir le détail.",
+      "sets_one": "{{n}} série",
+      "sets_other": "{{n}} séries",
+      "selected": "{{sets}} sur la période · {{perWeek}} par semaine",
+      "last": "Dernier entraînement direct : {{ago}}",
+      "exercises": "Voir les exercices",
+      "ranking": "Classement des muscles"
+    },
+    "ago": {
+      "never": "jamais",
+      "today": "aujourd'hui",
+      "yesterday": "hier",
+      "days_one": "il y a {{count}} jour",
+      "days_other": "il y a {{count}} jours"
+    },
+    "calendar": {
+      "title": "Calendrier",
+      "metric": "Mesure",
+      "sets": "Séries",
+      "volume": "Volume",
+      "hint": "Touche une case pour voir la séance du jour. Flèches du clavier pour te déplacer.",
+      "cellSets_one": "{{date}} : {{n}} série",
+      "cellSets_other": "{{date}} : {{n}} séries",
+      "cellVolume": "{{date}} : {{n}} kg de volume",
+      "cellRest": "{{date}} : repos",
+      "rest": "repos.",
+      "add": "Ajouter une séance ce jour",
+      "daySummary_one": "({{count}} série, {{volume}} kg)",
+      "daySummary_other": "({{count}} séries, {{volume}} kg)",
+      "less": "Moins",
+      "more": "Plus",
+      "unnamed": "Séance"
+    }
   }
 }
