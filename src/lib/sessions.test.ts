@@ -7,6 +7,7 @@ import {
   exerciseHistory,
   formatSets,
   lastPerformance,
+  newId,
   normalizeSet,
   parseNumberInput,
   sortSessions,
@@ -14,6 +15,26 @@ import {
 
 const s = (id: string, date: string, entries: Session['entries'] = []): Session => ({ id, date, name: id, entries })
 const set = (reps: number, weight: number, rpe?: number) => ({ reps, weight, ...(rpe ? { rpe } : {}) })
+
+describe('newId', () => {
+  const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
+
+  it('génère des UUID v4 uniques', () => {
+    const ids = new Set(Array.from({ length: 50 }, () => newId()))
+    expect(ids.size).toBe(50)
+    for (const id of ids) expect(id).toMatch(uuid)
+  })
+
+  it('fonctionne sans crypto.randomUUID (contexte non sécurisé, ex. HTTP sur le réseau local)', () => {
+    const original = crypto.randomUUID
+    Object.defineProperty(crypto, 'randomUUID', { value: undefined, configurable: true })
+    try {
+      expect(newId()).toMatch(uuid)
+    } finally {
+      Object.defineProperty(crypto, 'randomUUID', { value: original, configurable: true })
+    }
+  })
+})
 
 describe('normalizeSet', () => {
   it('accepte une série valide et arrondit', () => {
