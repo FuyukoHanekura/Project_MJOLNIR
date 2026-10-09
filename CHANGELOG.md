@@ -2,6 +2,17 @@
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), versionnage [SemVer](https://semver.org/lang/fr/).
 
+## [0.4.0] - 2026-10-09
+
+### Added
+- Onglet Suivi en trois sections : Poids de corps, Progression, Records.
+- Poids de corps : saisie rapide (une valeur par date), courbe, moyenne glissante sur 7 jours, dernières mesures avec suppression.
+- Progression par exercice : charge max, 1RM estimé (Epley), volume et répétitions max, avec courbe du RPE moyen dans le temps.
+- Records personnels par exercice (charge max, 1RM estimé, reps max), mis en évidence quand ils ont moins de 30 jours.
+- Records et courbes également sur la fiche exercice.
+- Graphiques Recharts chargés à la demande, avec résumé textuel pour les lecteurs d'écran.
+- Fonctions pures de suivi (moyenne glissante, progression, RPE, records) avec tests.
+
 ## [0.3.0] - 2026-10-09
 
 ### Added
