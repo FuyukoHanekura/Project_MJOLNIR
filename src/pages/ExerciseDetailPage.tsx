@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
 import BilingualName from '../components/BilingualName'
 import ExerciseLink from '../components/ExerciseLink'
+import ExerciseProgress from '../components/ExerciseProgress'
 import Silhouette from '../components/Silhouette'
 import { MUSCLE_BY_ID } from '../data/muscles'
 import { db } from '../db/db'
@@ -58,7 +59,7 @@ function MuscleList({ title, ids }: { title: string; ids: string[] }) {
   )
 }
 
-/** Dernières performances de l'utilisateur sur cet exercice (la courbe arrive avec le suivi). */
+/** Dernières performances de l'utilisateur sur cet exercice. */
 function History({ exerciseId }: { exerciseId: string }) {
   const { t, i18n } = useTranslation()
   const sessions = useLiveQuery(() => db.sessions.toArray())
@@ -87,6 +88,17 @@ function History({ exerciseId }: { exerciseId: string }) {
         </ul>
       )}
     </section>
+  )
+}
+
+/** Records et courbes de l'exercice, affichés seulement une fois qu'il a été pratiqué. */
+function Progress({ exerciseId }: { exerciseId: string }) {
+  const sessions = useLiveQuery(() => db.sessions.toArray())
+  if (!sessions || exerciseHistory(sessions, exerciseId).length === 0) return null
+  return (
+    <div className="mt-8">
+      <ExerciseProgress exerciseId={exerciseId} sessions={sessions} />
+    </div>
   )
 }
 
@@ -195,6 +207,7 @@ export default function ExerciseDetailPage() {
       )}
 
       <History exerciseId={exercise.id} />
+      <Progress exerciseId={exercise.id} />
 
       <Notes key={exercise.id} exercise={exercise} />
 
