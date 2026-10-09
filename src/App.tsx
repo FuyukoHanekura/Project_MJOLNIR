@@ -2,6 +2,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom'
 import AppShell from './components/AppShell'
 import OverviewPage from './pages/OverviewPage'
 import SessionsPage from './pages/SessionsPage'
+import SessionEditPage from './pages/SessionEditPage'
 import ExercisesPage from './pages/ExercisesPage'
 import ExerciseDetailPage from './pages/ExerciseDetailPage'
 import TrackingPage from './pages/TrackingPage'
@@ -14,6 +15,7 @@ export default function App() {
         <Route element={<AppShell />}>
           <Route index element={<OverviewPage />} />
           <Route path="seances" element={<SessionsPage />} />
+          <Route path="seances/:id" element={<SessionEditPage />} />
           <Route path="exercices" element={<ExercisesPage />} />
           <Route path="exercices/:id" element={<ExerciseDetailPage />} />
           <Route path="suivi" element={<TrackingPage />} />
