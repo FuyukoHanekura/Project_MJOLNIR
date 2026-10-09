@@ -1,8 +1,9 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import BilingualName from '../components/BilingualName'
+import ConfirmDeleteButton from '../components/ConfirmDeleteButton'
 import ExerciseLink from '../components/ExerciseLink'
 import ExerciseProgress from '../components/ExerciseProgress'
 import Silhouette from '../components/Silhouette'
@@ -102,6 +103,31 @@ function Progress({ exerciseId }: { exerciseId: string }) {
   )
 }
 
+/** Modifier ou supprimer un exercice personnalisé (la base de départ n'est pas modifiable). */
+function CustomActions({ exercise }: { exercise: Exercise }) {
+  const { t } = useTranslation()
+  const navigate = useNavigate()
+  const usedIn = useLiveQuery(
+    async () => (await db.sessions.toArray()).filter((s) => s.entries.some((e) => e.exerciseId === exercise.id)).length,
+    [exercise.id],
+  )
+  return (
+    <section className="mt-10 border-t border-line pt-6">
+      <div className="flex flex-wrap items-center gap-3">
+        <Link to={`/exercices/${exercise.id}/modifier`} className="inline-flex min-h-11 items-center rounded-lg border border-line bg-surface px-4 font-semibold text-accent">
+          {t('detail.edit')}
+        </Link>
+        <ConfirmDeleteButton
+          label={t('detail.deleteExercise')}
+          ariaLabel={t('detail.deleteExerciseAria', { name: exercise.name })}
+          onConfirm={() => void db.exercises.delete(exercise.id).then(() => navigate('/exercices', { replace: true }))}
+        />
+      </div>
+      {usedIn !== undefined && usedIn > 0 && <p className="mt-2 text-sm text-muted">{t('detail.usedIn', { count: usedIn })}</p>}
+    </section>
+  )
+}
+
 function Notes({ exercise }: { exercise: Exercise }) {
   const { t } = useTranslation()
   const [value, setValue] = useState(exercise.notes ?? '')
@@ -188,10 +214,12 @@ export default function ExerciseDetailPage() {
         </section>
       )}
 
-      <section className="mt-8">
-        <h2 className={sectionTitle}>{t('detail.instructions')}</h2>
-        <p className="mt-2 text-ink2">{instructions}</p>
-      </section>
+      {instructions && (
+        <section className="mt-8">
+          <h2 className={sectionTitle}>{t('detail.instructions')}</h2>
+          <p className="mt-2 text-ink2">{instructions}</p>
+        </section>
+      )}
 
       {exercise.videoUrl && isHttpUrl(exercise.videoUrl) && (
         <p className="mt-6">
@@ -214,6 +242,8 @@ export default function ExerciseDetailPage() {
       <RelatedList title={t('detail.alternatives')} ids={exercise.alternatives} />
       <RelatedList title={t('detail.antagonists')} ids={exercise.antagonists} />
       <RelatedList title={t('detail.complements')} ids={exercise.complements} />
+
+      {exercise.isCustom && <CustomActions exercise={exercise} />}
     </article>
   )
 }

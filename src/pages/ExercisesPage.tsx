@@ -1,6 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import ExerciseLink from '../components/ExerciseLink'
 import { MUSCLE_BY_ID, MUSCLES } from '../data/muscles'
@@ -39,6 +39,15 @@ export default function ExercisesPage() {
   return (
     <section>
       <h1 className="font-display text-4xl font-extrabold tracking-wide text-ink uppercase">{t('exercises.title')}</h1>
+
+      <div className="mt-3 flex flex-wrap gap-2">
+        <Link to="/exercices/nouveau" className="inline-flex min-h-11 items-center rounded-lg bg-accent px-4 font-semibold text-accent-ink">
+          + {t('exercises.newExercise')}
+        </Link>
+        <Link to="/exercices/import" className="inline-flex min-h-11 items-center rounded-lg border border-line bg-surface px-4 font-semibold text-accent">
+          {t('exercises.importExercises')}
+        </Link>
+      </div>
 
       <div className="mt-4 space-y-3">
         <input

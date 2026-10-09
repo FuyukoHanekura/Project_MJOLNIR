@@ -65,3 +65,16 @@ export function mergeSeedExercise(seed: Exercise, existing: Exercise | undefined
     videoUrl: existing.videoUrl ?? seed.videoUrl,
   }
 }
+
+export type MuscleLevel = 'primary' | 'secondary'
+
+/** Un appui sur un muscle : aucun → principal → secondaire → aucun. */
+export function cycleMuscle(
+  primary: readonly string[],
+  secondary: readonly string[],
+  id: string,
+): { primary: string[]; secondary: string[] } {
+  if (primary.includes(id)) return { primary: primary.filter((m) => m !== id), secondary: [...secondary, id] }
+  if (secondary.includes(id)) return { primary: [...primary], secondary: secondary.filter((m) => m !== id) }
+  return { primary: [...primary, id], secondary: [...secondary] }
+}

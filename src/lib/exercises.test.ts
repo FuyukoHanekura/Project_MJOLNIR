@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Exercise } from '../types'
-import { bilingual, filterExercises, mergeSeedExercise, normalize, sortExercises } from './exercises'
+import { bilingual, cycleMuscle, filterExercises, mergeSeedExercise, normalize, sortExercises } from './exercises'
 import { EXERCISES_SEED } from '../data/exercises.seed'
 
 const byId = (id: string): Exercise => {
@@ -69,5 +69,22 @@ describe('mergeSeedExercise', () => {
   })
   it('renvoie le seed s\'il n\'existe pas encore', () => {
     expect(mergeSeedExercise(byId('crunch'), undefined)).toEqual(byId('crunch'))
+  })
+})
+
+describe('cycleMuscle', () => {
+  it('passe de aucun à principal, secondaire, puis aucun', () => {
+    const a = cycleMuscle([], [], 'lats')
+    expect(a).toEqual({ primary: ['lats'], secondary: [] })
+    const b = cycleMuscle(a.primary, a.secondary, 'lats')
+    expect(b).toEqual({ primary: [], secondary: ['lats'] })
+    const c = cycleMuscle(b.primary, b.secondary, 'lats')
+    expect(c).toEqual({ primary: [], secondary: [] })
+  })
+  it('ne touche pas aux autres muscles ni aux tableaux d\'origine', () => {
+    const primary = ['chest']
+    const secondary = ['triceps']
+    expect(cycleMuscle(primary, secondary, 'biceps')).toEqual({ primary: ['chest', 'biceps'], secondary: ['triceps'] })
+    expect(primary).toEqual(['chest'])
   })
 })
