@@ -2,7 +2,7 @@
 
 PWA de suivi de musculation, 100 % locale : aucun compte, aucune API. Les données restent dans IndexedDB et se transfèrent par export/import JSON.
 
-> Phase 1 (base) : projet, PWA, navigation, base Dexie. Les écrans sont des placeholders.
+> Phase 2 (exercices) : base de départ bilingue, liste avec filtres, fiche exercice, i18n FR/EN. Les écrans Aperçu, Séances et Suivi sont encore des placeholders.
 
 ## Démarrage
 
