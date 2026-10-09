@@ -25,3 +25,9 @@ export function addDays(s: string, days: number): string | null {
   d.setDate(d.getDate() + days)
   return toLocalDateString(d)
 }
+
+/** Numéro de jour (jours depuis 1970) d'un YYYY-MM-DD, sans effet d'heure d'été. NaN si invalide. */
+export function dayIndex(s: string): number {
+  const d = parseLocalDate(s)
+  return d ? Math.round(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86_400_000) : NaN
+}

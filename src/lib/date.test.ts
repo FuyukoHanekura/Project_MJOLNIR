@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { addDays, parseLocalDate, toLocalDateString } from './date'
+import { addDays, dayIndex, parseLocalDate, toLocalDateString } from './date'
 
 describe('date (heure locale)', () => {
   it('formate en YYYY-MM-DD avec zéros', () => {
@@ -21,5 +21,12 @@ describe('date (heure locale)', () => {
     expect(addDays('2026-12-31', 1)).toBe('2027-01-01')
     expect(addDays('2026-03-01', -1)).toBe('2026-02-28')
     expect(addDays('nope', 1)).toBeNull()
+  })
+
+  it('calcule un numéro de jour sans effet d\'heure d\'été', () => {
+    expect(dayIndex('2026-03-30') - dayIndex('2026-03-28')).toBe(2)
+    expect(dayIndex('2026-10-26') - dayIndex('2026-10-24')).toBe(2)
+    expect(dayIndex('2027-01-01') - dayIndex('2026-01-01')).toBe(365)
+    expect(dayIndex('nope')).toBeNaN()
   })
 })
