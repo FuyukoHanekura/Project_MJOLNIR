@@ -1,5 +1,7 @@
+import { useTranslation } from 'react-i18next'
 import PagePlaceholder from '../components/PagePlaceholder'
 
 export default function TrackingPage() {
-  return <PagePlaceholder title="Suivi" />
+  const { t } = useTranslation()
+  return <PagePlaceholder title={t('nav.tracking')} />
 }

@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "aria": "Main navigation",
+    "overview": "Overview",
+    "sessions": "Sessions",
+    "exercises": "Exercises",
+    "tracking": "Tracking",
+    "settings": "Settings"
+  },
+  "common": {
+    "comingSoon": "This section is coming in a later phase.",
+    "all": "All",
+    "loading": "Loading…"
+  },
+  "groups": {
+    "back": "Back",
+    "chest": "Chest",
+    "shoulders": "Shoulders",
+    "arms": "Arms",
+    "legs": "Legs",
+    "abs": "Abs"
+  },
+  "equipment": {
+    "machine": "Machine",
+    "cable": "Cable",
+    "barbell": "Barbell",
+    "dumbbell": "Dumbbell",
+    "bodyweight": "Bodyweight"
+  },
+  "exercises": {
+    "title": "Exercises",
+    "searchLabel": "Search exercises",
+    "searchPlaceholder": "Name, muscle, machine…",
+    "filterGroup": "Muscle group",
+    "filterEquipment": "Equipment",
+    "filterMuscle": "Primary muscle",
+    "results_one": "{{count}} exercise",
+    "results_other": "{{count}} exercises",
+    "empty": "No exercise matches.",
+    "reset": "Reset filters"
+  },
+  "detail": {
+    "notFound": "Exercise not found.",
+    "backToList": "Back to exercises",
+    "machine": "Machine / equipment",
+    "primary": "Primary muscles",
+    "secondary": "Secondary muscles",
+    "none": "None",
+    "front": "front",
+    "back": "back",
+    "silhouetteLabel": "Silhouette, {{view}} view. Primary: {{primary}}. Secondary: {{secondary}}.",
+    "instructions": "Form tip",
+    "video": "Watch the video",
+    "notes": "My notes",
+    "notesPlaceholder": "Settings, feel, tips…",
+    "alternatives": "Alternatives",
+    "antagonists": "Antagonists",
+    "complements": "Complements"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Interface language",
+    "languageHelp": "Only changes the app's text, not exercise names.",
+    "dbStatus": "Local database: {{state}}",
+    "dbOpening": "opening…",
+    "dbReady_one": "ready ({{count}} session)",
+    "dbReady_other": "ready ({{count}} sessions)"
+  }
+}

@@ -1,11 +1,13 @@
+import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 import { TABS } from '../nav'
 import TabIcon from './TabIcon'
 
 export default function TabBar() {
+  const { t } = useTranslation()
   return (
     <nav
-      aria-label="Navigation principale"
+      aria-label={t('nav.aria')}
       className="fixed inset-x-0 bottom-0 z-10 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] md:sticky md:top-0 md:h-dvh md:w-56 md:shrink-0 md:border-t-0 md:border-r md:pb-0"
     >
       <p className="hidden px-5 pt-6 pb-4 font-display text-3xl leading-none font-extrabold text-accent uppercase md:block">
@@ -26,7 +28,7 @@ export default function TabBar() {
               }
             >
               <TabIcon id={tab.id} />
-              <span>{tab.label}</span>
+              <span>{t(tab.labelKey)}</span>
             </NavLink>
           </li>
         ))}

@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "aria": "Navigation principale",
+    "overview": "Aperçu",
+    "sessions": "Séances",
+    "exercises": "Exercices",
+    "tracking": "Suivi",
+    "settings": "Réglages"
+  },
+  "common": {
+    "comingSoon": "Cette section arrive dans une prochaine phase.",
+    "all": "Tous",
+    "loading": "Chargement…"
+  },
+  "groups": {
+    "back": "Dos",
+    "chest": "Pectoraux",
+    "shoulders": "Épaules",
+    "arms": "Bras",
+    "legs": "Jambes",
+    "abs": "Abdos"
+  },
+  "equipment": {
+    "machine": "Machine",
+    "cable": "Poulie",
+    "barbell": "Barre",
+    "dumbbell": "Haltères",
+    "bodyweight": "Poids du corps"
+  },
+  "exercises": {
+    "title": "Exercices",
+    "searchLabel": "Rechercher un exercice",
+    "searchPlaceholder": "Nom, muscle, machine…",
+    "filterGroup": "Groupe musculaire",
+    "filterEquipment": "Matériel",
+    "filterMuscle": "Muscle principal",
+    "results_one": "{{count}} exercice",
+    "results_other": "{{count}} exercices",
+    "empty": "Aucun exercice ne correspond.",
+    "reset": "Réinitialiser les filtres"
+  },
+  "detail": {
+    "notFound": "Exercice introuvable.",
+    "backToList": "Retour aux exercices",
+    "machine": "Machine / matériel",
+    "primary": "Muscles principaux",
+    "secondary": "Muscles secondaires",
+    "none": "Aucun",
+    "front": "de face",
+    "back": "de dos",
+    "silhouetteLabel": "Silhouette vue {{view}}. Principaux : {{primary}}. Secondaires : {{secondary}}.",
+    "instructions": "Conseil d'exécution",
+    "video": "Voir la vidéo",
+    "notes": "Mes notes",
+    "notesPlaceholder": "Réglages, sensations, astuces…",
+    "alternatives": "Alternatives",
+    "antagonists": "Antagonistes",
+    "complements": "Complémentaires"
+  },
+  "settings": {
+    "title": "Réglages",
+    "language": "Langue de l'interface",
+    "languageHelp": "Ne change que les textes de l'application, pas les noms d'exercices.",
+    "dbStatus": "Base locale : {{state}}",
+    "dbOpening": "ouverture…",
+    "dbReady_one": "prête ({{count}} séance)",
+    "dbReady_other": "prête ({{count}} séances)"
+  }
+}

@@ -1,5 +1,7 @@
+import { useTranslation } from 'react-i18next'
 import PagePlaceholder from '../components/PagePlaceholder'
 
 export default function SessionsPage() {
-  return <PagePlaceholder title="Séances" />
+  const { t } = useTranslation()
+  return <PagePlaceholder title={t('nav.sessions')} />
 }
