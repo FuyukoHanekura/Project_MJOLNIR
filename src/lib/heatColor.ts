@@ -1,11 +1,11 @@
 // Dégradé de chaleur du prototype : violet clair → rose → orange (versions claire et sombre).
 const LIGHT: readonly (readonly [number, number, number])[] = [
-  [217, 210, 250],
+  [183, 168, 241],
   [232, 69, 139],
   [255, 154, 31],
 ]
 const DARK: readonly (readonly [number, number, number])[] = [
-  [75, 63, 168],
+  [98, 86, 205],
   [217, 58, 133],
   [255, 154, 31],
 ]

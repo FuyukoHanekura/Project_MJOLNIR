@@ -2,11 +2,12 @@
 
 /* Palette du prototype : clair par défaut, sombre selon le système ou data-theme. */
 :root {
+  color-scheme: light dark;
   --bg: #f1f3f8;
   --surface: #ffffff;
   --ink: #16203a;
   --ink2: #4b5670;
-  --muted: #6b7690;
+  --muted: #5f6b85;
   --line: #d8dde9;
   --accent: #3b2ec9;
   --accent-ink: #ffffff;
@@ -14,7 +15,7 @@
   --body: #e7eaf2;
   --m0: #d3d8e7;
   --m-primary: #e8458b;
-  --m-secondary: #d9d2fa;
+  --m-secondary: #a899ee;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -31,11 +32,12 @@
     --body: #1b2338;
     --m0: #2c3654;
     --m-primary: #d93a85;
-    --m-secondary: #4b3fa8;
+    --m-secondary: #a89cf5;
   }
 }
 
 :root[data-theme='dark'] {
+  color-scheme: dark;
   --bg: #0d111f;
   --surface: #151b2e;
   --ink: #edeff8;
@@ -48,7 +50,11 @@
   --body: #1b2338;
   --m0: #2c3654;
   --m-primary: #d93a85;
-  --m-secondary: #4b3fa8;
+  --m-secondary: #a89cf5;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
 }
 
 @theme {
