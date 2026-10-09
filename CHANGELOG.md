@@ -2,7 +2,18 @@
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), versionnage [SemVer](https://semver.org/lang/fr/).
 
-## [0.5.0] - 2026-10-09
+## [0.6.0] - 2026-10-09
+
+### Added
+- Export JSON versionné (version 1) : séances, poids de corps, exercices personnalisés et notes/vidéos des exercices de la base de départ. Téléchargement depuis Réglages > Données.
+- Import au choix « Fusionner » ou « Remplacer » (avec confirmation avant remplacement), validation élément par élément et rapport des éléments ignorés. Les réglages ne sont ni exportés ni écrasés.
+- Migrations du format d'export : un fichier d'une version plus ancienne est converti, un fichier plus récent est refusé.
+- Rappel d'export : bandeau quand le dernier export date de plus de X semaines (réglable, 4 par défaut, désactivable).
+- Exercices personnalisés : création et modification par formulaire (muscles choisis sur la silhouette, exercices liés, vidéo), suppression, badge « Perso » dans la liste.
+- Import en masse d'exercices par fichier JSON, avec rapport ligne par ligne.
+- Tests du format d'export, des migrations, de la validation, des plans de fusion et de remplacement, et du rappel.
+
+ - 2026-10-09
 
 ### Added
 - Aperçu : heatmap du corps (silhouette face et dos) colorée par volume par muscle sur 7, 30, 90 jours ou tout l'historique, avec classement des muscles, détail du muscle choisi et lien vers ses exercices.
