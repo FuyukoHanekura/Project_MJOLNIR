@@ -67,12 +67,21 @@ export interface Setting {
   value: unknown
 }
 
+/** Notes et lien vidéo saisis par l'utilisateur sur un exercice de la base de départ. */
+export interface ExerciseNote {
+  id: string
+  notes?: string
+  videoUrl?: string
+}
+
 /** `version` est un entier de schéma d'export, indépendant de la version SemVer de l'appli. */
 export interface ExportFile {
   version: number
   exportedAt: string
   /** Exercices personnalisés uniquement (isCustom). */
   exercises: Exercise[]
+  /** Notes et vidéos des exercices de la base de départ (non exportés, donc sauvegardés à part). */
+  exerciseNotes: ExerciseNote[]
   sessions: Session[]
   bodyWeights: BodyWeight[]
 }
