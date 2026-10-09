@@ -31,3 +31,9 @@ export function dayIndex(s: string): number {
   const d = parseLocalDate(s)
   return d ? Math.round(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86_400_000) : NaN
 }
+
+/** Lundi de la semaine (ISO) contenant la date. null si invalide. */
+export function mondayOf(s: string): string | null {
+  const d = parseLocalDate(s)
+  return d ? addDays(s, -((d.getDay() + 6) % 7)) : null
+}

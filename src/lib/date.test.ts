@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { addDays, dayIndex, parseLocalDate, toLocalDateString } from './date'
+import { addDays, dayIndex, mondayOf, parseLocalDate, toLocalDateString } from './date'
 
 describe('date (heure locale)', () => {
   it('formate en YYYY-MM-DD avec zéros', () => {
@@ -28,5 +28,13 @@ describe('date (heure locale)', () => {
     expect(dayIndex('2026-10-26') - dayIndex('2026-10-24')).toBe(2)
     expect(dayIndex('2027-01-01') - dayIndex('2026-01-01')).toBe(365)
     expect(dayIndex('nope')).toBeNaN()
+  })
+
+  it('trouve le lundi de la semaine (ISO)', () => {
+    expect(mondayOf('2026-03-11')).toBe('2026-03-09') // mercredi
+    expect(mondayOf('2026-03-09')).toBe('2026-03-09') // lundi
+    expect(mondayOf('2026-03-15')).toBe('2026-03-09') // dimanche
+    expect(mondayOf('2026-01-01')).toBe('2025-12-29') // changement d'année
+    expect(mondayOf('nope')).toBeNull()
   })
 })
