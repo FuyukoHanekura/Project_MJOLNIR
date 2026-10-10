@@ -23,7 +23,7 @@ export default function RadioChoice<T extends string>({ name, legend, help, opti
           <label
             key={o.value}
             className={`flex min-h-11 min-w-20 cursor-pointer items-center justify-center rounded-lg border px-4 font-semibold has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
-              value === o.value ? 'border-accent bg-accent text-accent-ink' : 'border-line bg-surface text-ink2'
+              value === o.value ? 'border-brand bg-brand text-brand-ink' : 'border-line bg-surface text-ink2'
             }`}
           >
             <input type="radio" name={name} value={o.value} checked={value === o.value} onChange={() => onChange(o.value)} className="sr-only" />

@@ -59,7 +59,7 @@ export default function BodyWeightPanel() {
             aria-describedby={invalid ? 'weight-error' : undefined}
           />
         </label>
-        <button type="submit" className="col-span-2 min-h-11 rounded-lg bg-accent px-6 font-semibold text-accent-ink sm:col-span-1">
+        <button type="submit" className="col-span-2 min-h-11 rounded-lg bg-brand px-6 font-semibold text-brand-ink sm:col-span-1">
           {t('tracking.weight.save')}
         </button>
       </form>

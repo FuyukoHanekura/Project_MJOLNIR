@@ -114,7 +114,7 @@ export default function BulkImportPage() {
           )}
           <ImportIssues issues={ready.issues} />
           {ready.exercises.length > 0 && (
-            <button type="button" onClick={() => void runImport()} className="mt-4 min-h-11 rounded-lg bg-accent px-4 font-semibold text-accent-ink">
+            <button type="button" onClick={() => void runImport()} className="mt-4 min-h-11 rounded-lg bg-brand px-4 font-semibold text-brand-ink">
               {t('bulk.import', { count: ready.exercises.length })}
             </button>
           )}

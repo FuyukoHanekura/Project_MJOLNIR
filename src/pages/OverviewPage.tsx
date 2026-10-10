@@ -31,7 +31,7 @@ export default function OverviewPage() {
       {sessions && sessions.length === 0 && (
         <div className="mt-6 rounded-xl border border-dashed border-line p-4">
           <p className="text-ink2">{t('overview.empty')}</p>
-          <Link to="/seances" className="mt-3 inline-flex min-h-11 items-center rounded-lg bg-accent px-4 font-semibold text-accent-ink">
+          <Link to="/seances" className="mt-3 inline-flex min-h-11 items-center rounded-lg bg-brand px-4 font-semibold text-brand-ink">
             {t('overview.emptyAction')}
           </Link>
         </div>

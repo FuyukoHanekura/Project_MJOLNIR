@@ -2,6 +2,7 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { contrastRatio } from './contrast'
+import { heatColor } from './heatColor'
 
 // Lecture directe du fichier : un import `?raw` passerait par le plugin Tailwind et serait transformé.
 const css = readFileSync(new URL('../index.css', import.meta.url), 'utf8').replace(/\r\n/g, '\n')
@@ -11,6 +12,12 @@ function theme(pattern: RegExp): Record<string, string> {
   const body = css.match(pattern)?.[1]
   if (!body) throw new Error(`Bloc introuvable : ${pattern}`)
   return Object.fromEntries([...body.matchAll(/--([\w-]+):\s*(#[0-9a-fA-F]{6})/g)].map((m) => [m[1], m[2]]))
+}
+
+/** 'rgb(r,g,b)' → '#rrggbb', pour comparer les couleurs de la heatmap avec la palette. */
+const rgbToHex = (rgb: string): string => {
+  const [r, g, b] = (rgb.match(/\d+/g) ?? []).map(Number)
+  return '#' + [r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('')
 }
 
 const light = theme(/^:root \{([^}]*)\}/m)
@@ -42,6 +49,7 @@ describe('contraste (WCAG)', () => {
       ['accent', 'bg'],
       ['accent', 'surface'],
       ['accent-ink', 'accent'],
+      ['brand-ink', 'brand'],
       ['danger', 'bg'],
       ['danger', 'surface'],
       ['accent-ink', 'danger'],
@@ -52,6 +60,23 @@ describe('contraste (WCAG)', () => {
     it('les muscles principal et secondaire se distinguent du gris des muscles non travaillés', () => {
       expect(contrastRatio(t['m-primary'], t.m0)).toBeGreaterThanOrEqual(1.5)
       expect(contrastRatio(t['m-secondary'], t.m0)).toBeGreaterThanOrEqual(1.5)
+    })
+
+    it('le premier palier de la heatmap se distingue du gris des muscles non travaillés', () => {
+      const dark = _name === 'sombre'
+      const first = heatColor(0.05, dark)
+      expect(first).not.toBeNull()
+      expect(contrastRatio(rgbToHex(first as string), t.m0)).toBeGreaterThanOrEqual(1.5)
+    })
+
+    it('le gris des muscles non travaillés se distingue de la silhouette et du fond', () => {
+      expect(contrastRatio(t.m0, t.body)).toBeGreaterThanOrEqual(1.1)
+      expect(contrastRatio(t.m0, t.bg)).toBeGreaterThanOrEqual(1.3)
+    })
+
+    it('le violet des boutons se distingue du fond, et le filet or aussi (décoratif, 1,5:1 minimum)', () => {
+      expect(contrastRatio(t.brand, t.bg)).toBeGreaterThanOrEqual(1.8)
+      expect(contrastRatio(t.gold, t.bg)).toBeGreaterThanOrEqual(1.5)
     })
 
     it('principal et secondaire se distinguent entre eux', () => {

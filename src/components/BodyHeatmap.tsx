@@ -60,7 +60,7 @@ export default function BodyHeatmap({ sessions, exercises }: Props) {
               aria-pressed={period === p}
               onClick={() => setPeriod(p)}
               className={`min-h-11 rounded-full border px-4 text-sm font-semibold ${
-                period === p ? 'border-accent bg-accent text-accent-ink' : 'border-line bg-surface text-ink2'
+                period === p ? 'border-brand bg-brand text-brand-ink' : 'border-line bg-surface text-ink2'
               }`}
             >
               {t(`overview.body.${periodKey(p)}`)}

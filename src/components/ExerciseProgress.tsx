@@ -54,7 +54,7 @@ export default function ExerciseProgress({ exerciseId, sessions }: Props) {
                 aria-pressed={m === metric}
                 onClick={() => setChosen(m)}
                 className={`min-h-11 rounded-full border px-4 text-sm font-semibold ${
-                  m === metric ? 'border-accent bg-accent text-accent-ink' : 'border-line bg-surface text-ink2'
+                  m === metric ? 'border-brand bg-brand text-brand-ink' : 'border-line bg-surface text-ink2'
                 }`}
               >
                 {t(`tracking.metrics.${m}`)}

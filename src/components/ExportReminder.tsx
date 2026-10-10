@@ -35,7 +35,7 @@ export default function ExportReminder() {
           <button
             type="button"
             onClick={() => void exportAndDownload().catch((e) => console.error(e))}
-            className="min-h-11 rounded-lg bg-accent px-4 text-sm font-semibold text-accent-ink"
+            className="min-h-11 rounded-lg bg-brand px-4 text-sm font-semibold text-brand-ink"
           >
             {t('data.reminderNow')}
           </button>

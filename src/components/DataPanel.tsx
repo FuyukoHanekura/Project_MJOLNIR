@@ -102,7 +102,7 @@ export default function DataPanel() {
       <section>
         <h2 className={sectionTitle}>{t('data.exportTitle')}</h2>
         <p className="mt-2 text-sm text-ink2">{t('data.exportHelp')}</p>
-        <button type="button" onClick={() => void exportNow()} className={`${button} mt-3 bg-accent text-accent-ink`}>
+        <button type="button" onClick={() => void exportNow()} className={`${button} mt-3 bg-brand text-brand-ink`}>
           {t('data.exportButton')}
         </button>
         <p className="mt-2 text-sm text-muted" role="status">
@@ -173,7 +173,7 @@ export default function DataPanel() {
 
             <div className="mt-4">
               {mode === 'merge' ? (
-                <button type="button" disabled={busy} onClick={() => void runImport()} className={`${button} bg-accent text-accent-ink disabled:opacity-50`}>
+                <button type="button" disabled={busy} onClick={() => void runImport()} className={`${button} bg-brand text-brand-ink disabled:opacity-50`}>
                   {t('data.importButton')}
                 </button>
               ) : (

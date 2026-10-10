@@ -1,36 +1,76 @@
 @import 'tailwindcss';
 
-/* Palette du prototype : clair par défaut, sombre selon le système ou data-theme. */
+/*
+ * Noto Sans, auto-hébergée (aucune requête vers Google) : police variable avec ses trois axes,
+ * graisse 100 à 900, largeur 62,5 à 100 % et italique. Seul le sous-ensemble « latin » est inclus :
+ * il couvre le français et l'anglais (accents, œ, ponctuation). Les autres caractères retombent
+ * sur la police du système.
+ */
+@font-face {
+  font-family: 'Noto Sans Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 62.5% 100%;
+  src: url('../node_modules/@fontsource-variable/noto-sans/files/noto-sans-latin-wdth-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Noto Sans Variable';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 62.5% 100%;
+  src: url('../node_modules/@fontsource-variable/noto-sans/files/noto-sans-latin-wdth-italic.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/*
+ * Palette Golden State Valkyries.
+ * Clair : maillot Heroine (blanc, violet, or). Sombre : maillot Explorer inversé (noir en couleur
+ * principale, violet en secondaire). Couleurs officielles : violet #AD96DC, noir #010101, or #B9975B.
+ * - accent : violet assez foncé pour servir de texte ou de bordure sur le fond (liens, focus).
+ * - brand : violet officiel, pour les fonds de boutons et de pastilles, avec du texte brand-ink.
+ * - gold : filets décoratifs uniquement (jamais du texte).
+ * Le thème sombre automatique (système) et le thème sombre forcé doivent rester identiques :
+ * un test le vérifie.
+ */
 :root {
   color-scheme: light dark;
-  --bg: #f1f3f8;
+  --bg: #f7f5fb;
   --surface: #ffffff;
-  --ink: #16203a;
-  --ink2: #4b5670;
-  --muted: #5f6b85;
-  --line: #d8dde9;
-  --accent: #3b2ec9;
+  --ink: #0e0b16;
+  --ink2: #453d5c;
+  --muted: #655c7e;
+  --line: #ddd6ec;
+  --accent: #5b3fa0;
   --accent-ink: #ffffff;
-  --danger: #c1213e;
-  --body: #e7eaf2;
-  --m0: #d3d8e7;
+  --brand: #ad96dc;
+  --brand-ink: #010101;
+  --gold: #b9975b;
+  --danger: #b3203a;
+  --body: #ece7f6;
+  --m0: #d5cde8;
   --m-primary: #e8458b;
   --m-secondary: #a899ee;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --bg: #0d111f;
-    --surface: #151b2e;
-    --ink: #edeff8;
-    --ink2: #b0b8cf;
-    --muted: #8791ab;
-    --line: #28314a;
-    --accent: #9a91ff;
-    --accent-ink: #0d111f;
-    --danger: #ff7088;
-    --body: #1b2338;
-    --m0: #2c3654;
+    --bg: #08080b;
+    --surface: #14121a;
+    --ink: #f4f0fb;
+    --ink2: #cfc6e6;
+    --muted: #a196bd;
+    --line: #2e2a3b;
+    --accent: #ad96dc;
+    --accent-ink: #010101;
+    --brand: #ad96dc;
+    --brand-ink: #010101;
+    --gold: #c9a765;
+    --danger: #ff8a9a;
+    --body: #1a1722;
+    --m0: #302b3e;
     --m-primary: #d93a85;
     --m-secondary: #a89cf5;
   }
@@ -38,17 +78,20 @@
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #0d111f;
-  --surface: #151b2e;
-  --ink: #edeff8;
-  --ink2: #b0b8cf;
-  --muted: #8791ab;
-  --line: #28314a;
-  --accent: #9a91ff;
-  --accent-ink: #0d111f;
-  --danger: #ff7088;
-  --body: #1b2338;
-  --m0: #2c3654;
+  --bg: #08080b;
+  --surface: #14121a;
+  --ink: #f4f0fb;
+  --ink2: #cfc6e6;
+  --muted: #a196bd;
+  --line: #2e2a3b;
+  --accent: #ad96dc;
+  --accent-ink: #010101;
+  --brand: #ad96dc;
+  --brand-ink: #010101;
+  --gold: #c9a765;
+  --danger: #ff8a9a;
+  --body: #1a1722;
+  --m0: #302b3e;
   --m-primary: #d93a85;
   --m-secondary: #a89cf5;
 }
@@ -66,15 +109,33 @@
   --color-line: var(--line);
   --color-accent: var(--accent);
   --color-accent-ink: var(--accent-ink);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-gold: var(--gold);
   --color-danger: var(--danger);
-  --font-display: 'Big Shoulders Display', 'Arial Narrow', 'Helvetica Neue', sans-serif;
-  --font-sans: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Noto Sans Variable', 'Noto Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Noto Sans Variable', 'Noto Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-sans);
+}
+
+/* Titres : Noto Sans en largeur étroite et graisse forte (le côté condensé du maillot). */
+.font-display {
+  font-stretch: 75%;
+}
+
+/* Filet or sous chaque titre de page, comme le liseré du maillot. */
+h1::after {
+  content: '';
+  display: block;
+  width: 34px;
+  height: 3px;
+  margin-top: 8px;
+  background: var(--gold);
 }
 
 :focus-visible {

@@ -165,7 +165,7 @@ function ExerciseForm({ exercise, allExercises }: FormProps) {
       </Field>
 
       <div className="flex flex-wrap gap-3">
-        <button type="submit" className="min-h-11 rounded-lg bg-accent px-6 font-semibold text-accent-ink">
+        <button type="submit" className="min-h-11 rounded-lg bg-brand px-6 font-semibold text-brand-ink">
           {t('customExercise.save')}
         </button>
         <Link to={exercise ? `/exercices/${exercise.id}` : '/exercices'} className="inline-flex min-h-11 items-center rounded-lg border border-line bg-surface px-6 font-semibold text-ink2">

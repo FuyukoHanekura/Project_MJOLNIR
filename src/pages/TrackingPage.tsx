@@ -105,7 +105,7 @@ export default function TrackingPage() {
             onClick={() => setTab(id)}
             onKeyDown={onKeyDown}
             className={`min-h-11 shrink-0 rounded-full border px-4 text-sm font-semibold ${
-              tab === id ? 'border-accent bg-accent text-accent-ink' : 'border-line bg-surface text-ink2'
+              tab === id ? 'border-brand bg-brand text-brand-ink' : 'border-line bg-surface text-ink2'
             }`}
           >
             {t(`tracking.tabs.${id}`)}

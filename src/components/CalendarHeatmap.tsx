@@ -71,7 +71,7 @@ export default function CalendarHeatmap({ sessions }: { sessions: readonly Sessi
             aria-pressed={metric === m}
             onClick={() => setMetric(m)}
             className={`min-h-11 rounded-full border px-4 text-sm font-semibold ${
-              metric === m ? 'border-accent bg-accent text-accent-ink' : 'border-line bg-surface text-ink2'
+              metric === m ? 'border-brand bg-brand text-brand-ink' : 'border-line bg-surface text-ink2'
             }`}
           >
             {t(`overview.calendar.${m}`)}

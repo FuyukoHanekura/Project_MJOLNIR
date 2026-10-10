@@ -44,7 +44,7 @@ export default function SessionsPage() {
         <button
           type="button"
           onClick={() => void create()}
-          className="min-h-11 rounded-lg bg-accent px-4 font-semibold text-accent-ink"
+          className="min-h-11 rounded-lg bg-brand px-4 font-semibold text-brand-ink"
         >
           + {t('sessions.new')}
         </button>

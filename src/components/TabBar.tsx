@@ -8,7 +8,7 @@ export default function TabBar() {
   return (
     <nav
       aria-label={t('nav.aria')}
-      className="fixed inset-x-0 bottom-0 z-10 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] md:sticky md:top-0 md:h-dvh md:w-56 md:shrink-0 md:border-t-0 md:border-r md:pb-0"
+      className="fixed inset-x-0 bottom-0 z-10 before:absolute before:inset-x-0 before:-top-px before:h-0.5 before:bg-gold md:before:inset-x-auto md:before:inset-y-0 md:before:top-0 md:before:-right-px md:before:left-auto md:before:h-auto md:before:w-0.5 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] md:sticky md:top-0 md:h-dvh md:w-56 md:shrink-0 md:border-t-0 md:border-r md:pb-0"
     >
       <p className="hidden px-5 pt-6 pb-4 font-display text-3xl leading-none font-extrabold text-accent uppercase md:block">
         Carnet
@@ -22,8 +22,8 @@ export default function TabBar() {
               to={tab.path}
               end={tab.path === '/'}
               className={({ isActive }) =>
-                `flex min-h-14 flex-col items-center justify-center gap-0.5 px-1 text-xs font-semibold md:min-h-12 md:flex-row md:justify-start md:gap-3 md:rounded-lg md:px-3 md:text-base ${
-                  isActive ? 'text-accent md:bg-accent/10' : 'text-muted hover:text-ink'
+                `relative flex min-h-14 flex-col items-center justify-center gap-0.5 px-1 text-xs font-semibold md:min-h-12 md:flex-row md:justify-start md:gap-3 md:rounded-lg md:px-3 md:text-base ${
+                  isActive ? 'text-accent after:absolute after:inset-x-6 after:top-0 after:h-[3px] after:rounded-b-sm after:bg-brand md:bg-accent/10 md:after:hidden' : 'text-muted hover:text-ink'
                 }`
               }
             >
