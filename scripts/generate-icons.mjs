@@ -2,8 +2,8 @@
 import { deflateSync } from 'node:zlib'
 import { mkdirSync, writeFileSync } from 'node:fs'
 
-const BG = [0x3b, 0x2e, 0xc9]
-const FG = [0xff, 0xff, 0xff]
+const BG = [0x01, 0x01, 0x01] // noir Valkyries
+const FG = [0xad, 0x96, 0xdc] // violet Valkyries
 const OUT = new URL('../public/icons/', import.meta.url)
 mkdirSync(OUT, { recursive: true })
 
@@ -75,6 +75,6 @@ const x = 256 + r * Math.cos(a)
 const y = 256 - r * Math.sin(a)
 writeFileSync(
   new URL('icon.svg', OUT),
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="#3B2EC9"/><path d="M ${x.toFixed(1)} ${y.toFixed(1)} A ${r} ${r} 0 1 0 ${x.toFixed(1)} ${(512 - y).toFixed(1)}" fill="none" stroke="#fff" stroke-width="${(0.13 * 512).toFixed(1)}"/></svg>\n`,
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="#010101"/><path d="M ${x.toFixed(1)} ${y.toFixed(1)} A ${r} ${r} 0 1 0 ${x.toFixed(1)} ${(512 - y).toFixed(1)}" fill="none" stroke="#AD96DC" stroke-width="${(0.13 * 512).toFixed(1)}"/></svg>\n`,
 )
 console.log('Icônes générées dans public/icons/')

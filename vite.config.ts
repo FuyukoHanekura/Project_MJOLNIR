@@ -25,8 +25,8 @@ export default defineConfig(({ mode }) => {
           lang: 'fr',
           display: 'standalone',
           orientation: 'portrait',
-          background_color: '#F1F3F8',
-          theme_color: '#3B2EC9',
+          background_color: '#F7F5FB',
+          theme_color: '#AD96DC',
           scope: base,
           start_url: base,
           icons: [
@@ -36,18 +36,8 @@ export default defineConfig(({ mode }) => {
           ],
         },
         workbox: {
+          // Tout est précaché, polices auto-hébergées comprises : l'appli s'ouvre hors ligne dès la première visite.
           globPatterns: ['**/*.{js,css,html,svg,png,ico,woff2}'],
-          runtimeCaching: [
-            {
-              urlPattern: /^https:\/\/fonts\.(googleapis|gstatic)\.com\/.*/,
-              handler: 'CacheFirst',
-              options: {
-                cacheName: 'google-fonts',
-                expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 * 365 },
-                cacheableResponse: { statuses: [0, 200] },
-              },
-            },
-          ],
         },
       }),
     ],
