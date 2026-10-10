@@ -65,7 +65,7 @@ export default function ExerciseProgress({ exerciseId, sessions }: Props) {
         <div className="mt-3">
           <LineChart
             data={points}
-            series={[{ key: metric, label: metricLabel, color: 'var(--accent)' }]}
+            series={[{ key: metric, label: metricLabel, color: 'var(--chart-1)' }]}
             label={t('tracking.progress.chartLabel', { metric: metricLabel })}
             summary={summary(points, fmt(lastValue))}
           />
@@ -80,7 +80,7 @@ export default function ExerciseProgress({ exerciseId, sessions }: Props) {
           <div className="mt-3">
             <LineChart
               data={rpe}
-              series={[{ key: 'avg', label: t('tracking.progress.rpeSeries'), color: 'var(--m-primary)' }]}
+              series={[{ key: 'avg', label: t('tracking.progress.rpeSeries'), color: 'var(--chart-2)' }]}
               label={t('tracking.progress.rpeChartLabel')}
               summary={summary(rpe, fmt(rpe[rpe.length - 1].avg))}
               yDomain={[6, 10]}

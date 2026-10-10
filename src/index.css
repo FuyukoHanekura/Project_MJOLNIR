@@ -32,6 +32,7 @@
  * - accent : violet assez foncé pour servir de texte ou de bordure sur le fond (liens, focus).
  * - brand : violet officiel, pour les fonds de boutons et de pastilles, avec du texte brand-ink.
  * - gold : filets décoratifs uniquement (jamais du texte).
+ * - chart-1 / chart-2 : séries des graphiques (violet puis or), assez contrastées pour des traits (3:1).
  * Le thème sombre automatique (système) et le thème sombre forcé doivent rester identiques :
  * un test le vérifie.
  */
@@ -53,6 +54,8 @@
   --m0: #d5cde8;
   --m-primary: #e8458b;
   --m-secondary: #a899ee;
+  --chart-1: #5b3fa0;
+  --chart-2: #9a7b3c;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -73,6 +76,8 @@
     --m0: #302b3e;
     --m-primary: #d93a85;
     --m-secondary: #a89cf5;
+    --chart-1: #ad96dc;
+    --chart-2: #c9a765;
   }
 }
 
@@ -94,6 +99,8 @@
   --m0: #302b3e;
   --m-primary: #d93a85;
   --m-secondary: #a89cf5;
+  --chart-1: #ad96dc;
+  --chart-2: #c9a765;
 }
 
 :root[data-theme='light'] {

@@ -79,6 +79,11 @@ describe('contraste (WCAG)', () => {
       expect(contrastRatio(t.gold, t.bg)).toBeGreaterThanOrEqual(1.5)
     })
 
+    it.each([['chart-1'], ['chart-2']])('la série %s des graphiques est lisible comme un trait (3:1) sur la carte et le fond', (token) => {
+      expect(contrastRatio(t[token], t.surface)).toBeGreaterThanOrEqual(3)
+      expect(contrastRatio(t[token], t.bg)).toBeGreaterThanOrEqual(3)
+    })
+
     it('principal et secondaire se distinguent entre eux', () => {
       expect(contrastRatio(t['m-primary'], t['m-secondary'])).toBeGreaterThanOrEqual(1.4)
     })

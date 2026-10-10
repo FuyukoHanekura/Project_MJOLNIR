@@ -53,6 +53,9 @@ export default function LineChartImpl({ data, series, lang, yDomain = DEFAULT_Y_
           formatter={(v) => nf.format(Number(v))}
           contentStyle={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 8, color: 'var(--ink)' }}
           labelStyle={{ color: 'var(--ink2)' }}
+          itemStyle={{ color: 'var(--ink)' }}
+          // Filet or au survol, comme le liseré du maillot (le gris par défaut de Recharts est retiré).
+          cursor={{ stroke: 'var(--gold)', strokeWidth: 1.5, strokeDasharray: '4 3' }}
         />
         {series.map((s) => (
           <Line
@@ -63,8 +66,8 @@ export default function LineChartImpl({ data, series, lang, yDomain = DEFAULT_Y_
             stroke={s.color}
             strokeWidth={2}
             strokeDasharray={s.dashed ? '6 4' : undefined}
-            dot={{ r: s.dashed ? 0 : 3, fill: s.color }}
-            activeDot={{ r: 5 }}
+            dot={{ r: s.dashed ? 0 : 3, fill: s.color, stroke: 'var(--surface)', strokeWidth: 1.5 }}
+            activeDot={{ r: 5, fill: s.color, stroke: 'var(--surface)', strokeWidth: 2 }}
             isAnimationActive={false}
           />
         ))}

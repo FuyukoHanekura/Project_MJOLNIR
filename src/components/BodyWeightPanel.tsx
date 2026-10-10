@@ -83,8 +83,8 @@ export default function BodyWeightPanel() {
             <LineChart
               data={points}
               series={[
-                { key: 'kg', label: t('tracking.weight.seriesKg'), color: 'var(--accent)' },
-                { key: 'avg', label: t('tracking.weight.seriesAvg'), color: 'var(--m-primary)', dashed: true },
+                { key: 'kg', label: t('tracking.weight.seriesKg'), color: 'var(--chart-1)' },
+                { key: 'avg', label: t('tracking.weight.seriesAvg'), color: 'var(--chart-2)', dashed: true },
               ]}
               label={t('tracking.weight.chartLabel')}
               summary={t('tracking.progress.chartSummary', {
