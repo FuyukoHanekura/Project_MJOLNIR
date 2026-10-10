@@ -2,6 +2,16 @@
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), versionnage [SemVer](https://semver.org/lang/fr/).
 
+## [1.0.1] - 2026-10-10
+
+### Changed
+- Graphiques aux couleurs des Valkyries : série principale en violet, seconde série (moyenne glissante, RPE) en or, à la place du rose de la heatmap. Deux variables de palette, `--chart-1` et `--chart-2`, suffisamment contrastées pour des traits (3:1) dans les deux thèmes.
+- Infobulle des graphiques : filet or au survol (au lieu du gris par défaut de Recharts), points cerclés de la couleur de la carte.
+
+### Added
+- Légende visible sous les graphiques à deux séries (poids de corps et moyenne sur 7 jours).
+- Test de contraste des couleurs de graphique.
+
 ## [1.0.0] - 2026-10-10
 
 ### Added

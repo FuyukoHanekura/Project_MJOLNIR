@@ -117,6 +117,7 @@ Aux couleurs des Golden State Valkyries : violet `#AD96DC`, noir `#010101`, blan
 - **Thème sombre** : inspiré du maillot Explorer, avec le noir en couleur principale et le violet en secondaire.
 - Rôles : `accent` = violet assez foncé pour le texte et les bordures (liens, focus) ; `brand` = violet officiel pour les **fonds** de boutons et de pastilles, avec du texte `brand-ink` (noir) ; `gold` = filets décoratifs uniquement, jamais du texte.
 - Filet or sous les titres de page et au-dessus de la barre d'onglets ; trait violet sur l'onglet actif.
+- Graphiques (Recharts) : série principale en `--chart-1` (violet), seconde série en `--chart-2` (or), filet or au survol ; les deux atteignent 3:1 sur la carte et le fond dans les deux thèmes.
 - Le dégradé de chaleur des heatmaps (violet clair, rose, orange) et le rose des muscles principaux sont conservés.
 - Titres : Noto Sans en largeur étroite (75 %) et graisse forte, en majuscules.
 - Contraste : tout texte atteint 4,5:1 dans les deux thèmes, et le thème sombre automatique (système) reste identique au thème sombre forcé. `src/lib/contrast.test.ts` le vérifie en lisant `index.css` : toute modification de palette passe ce test.
