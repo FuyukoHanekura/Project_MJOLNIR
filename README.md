@@ -76,7 +76,7 @@ server {
 - **iPhone** : ouvre le site dans Safari, puis Partager > Sur l'écran d'accueil.
 - **Android** : menu du navigateur > Installer l'application.
 
-Après une première visite, l'application fonctionne hors ligne. Les polices viennent de Google Fonts et sont mises en cache à la première visite ; sans cela, des polices système de repli sont utilisées.
+Après une première visite, l'application fonctionne hors ligne : le code, les icônes et la police sont tous précachés.
 
 ## Sauvegarde et restauration
 
@@ -128,8 +128,10 @@ src/
   pages/        un fichier par écran
 ```
 
-Stack : Vite, React, TypeScript strict, Tailwind CSS v4, HashRouter, i18next, Dexie, Recharts, vite-plugin-pwa, Vitest, ESLint.
+Stack : Vite, React, TypeScript strict, Tailwind CSS v4, HashRouter, i18next, Dexie, Recharts, vite-plugin-pwa, Vitest, ESLint. Police : Noto Sans variable (licence SIL OFL 1.1), auto-hébergée via `@fontsource-variable/noto-sans`.
+
+Identité visuelle : couleurs des Golden State Valkyries (violet `#AD96DC`, noir `#010101`, or `#B9975B`). Thème clair inspiré du maillot Heroine, thème sombre du maillot Explorer avec le noir en couleur principale.
 
 ## Confidentialité
 
-Tes données d'entraînement ne quittent jamais ton appareil. Seule exception : les polices (Big Shoulders Display, Figtree) sont chargées depuis Google Fonts à la première visite, ce qui expose l'adresse IP à Google ; elles sont ensuite mises en cache.
+Tes données d'entraînement ne quittent jamais ton appareil, et l'application ne contacte aucun service tiers : la police est auto-hébergée, sans requête vers Google.

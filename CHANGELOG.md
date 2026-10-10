@@ -11,9 +11,13 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), versi
 - Test de contraste WCAG sur les deux thèmes, et test de cohérence entre le thème sombre automatique et forcé.
 - Tests de cas limites des calculs (volume par muscle, calendrier, RPE, records, recherche).
 - README complet : installation, déploiement (GitHub Pages et Raspberry Pi), sauvegarde, calculs, architecture.
+- Dépendance `@fontsource-variable/noto-sans` (licence OFL) pour auto-héberger la police.
 
 ### Changed
-- Contraste du texte atténué du thème clair relevé (4,09:1 à 4,82:1).
+- Nouvelle identité visuelle aux couleurs des Golden State Valkyries : thème clair inspiré du maillot Heroine, thème sombre du maillot Explorer avec le noir en couleur principale. Boutons et pastilles actives en violet officiel avec texte noir, filet or sous les titres et au-dessus de la barre d'onglets, trait violet sur l'onglet actif. Le dégradé de la heatmap est conservé.
+- Police Noto Sans variable (graisse, largeur et italique) auto-hébergée, à la place de Big Shoulders Display et Figtree : plus aucune requête vers Google, et la police est précachée pour le hors-ligne.
+- Icône de l'application (fond noir, « C » violet) et couleur de la barre du navigateur (violet en clair, noir en sombre) alignées sur la palette.
+- Tous les textes atteignent 4,5:1 de contraste dans les deux thèmes (vérifié par test).
 - Couleurs des muscles secondaires et premier palier de la heatmap plus distincts du gris des muscles non travaillés, dans les deux thèmes.
 - Thème et langue enregistrés sont chargés avant le premier affichage.
 
