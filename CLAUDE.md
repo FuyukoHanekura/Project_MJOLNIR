@@ -11,7 +11,7 @@ PWA de suivi de musculation, 100 % locale. Ce fichier fixe les décisions du pro
 - Je ne demande pas de token, de clé SSH ni d'identifiants GitHub.
 
 ### Branches
-- Une branche par phase, créée par l'utilisateur : `phase-N-nom` (ex. `phase-1-base`).
+- Une branche par phase, créée par l'utilisateur : `phase-N-nom` (ex. `phase-1-base`). Un chantier hors phase (correctif, refonte visuelle) a sa propre branche, au nom libre (ex. `theme-valkyries`), et suit les mêmes règles.
 - Au début de chaque phase, je lance `git branch --show-current`. Si je suis sur `main`, je m'arrête et je demande à l'utilisateur de créer la branche.
 
 ### Commits atomiques
@@ -55,6 +55,7 @@ Si on me demande une revue de code, je lis `git diff main...HEAD`, je commente (
 - Silhouette : SVG maison avec muscles colorables
 - Heatmap calendrier : grille CSS maison, sans dépendance
 - `vite-plugin-pwa` pour l'installation et le hors-ligne
+- Police : Noto Sans variable (graisse, largeur, italique), **auto-hébergée** via `@fontsource-variable/noto-sans`, sous-ensemble latin uniquement. Aucune requête vers un service tiers (pas de Google Fonts).
 - Tests : Vitest. Lint : ESLint.
 - Cette liste est la liste approuvée. Toute autre dépendance est signalée et justifiée avant installation.
 
@@ -88,12 +89,15 @@ Exercise {
   videoUrl?, notes?,      // notes = notes personnelles de l'utilisateur
   isCustom
 }
-Session { id, date, name, notes?, entries: [{ exerciseId, sets: [{ reps, weight, rpe? }] }] }
+Session { id, date, name, notes?, entries: [{ exerciseId, sets: [{ reps, weight, rpe? }] }], demo? }
 Muscle { id, name, nameEn }          // 17 muscles, définis dans src/data/muscles.ts
-BodyWeight { date, kg }              // une valeur par date
-Setting { key, value }               // language, theme, exportReminderWeeks, lastExportAt
-Export { version, exportedAt, exercises (custom), sessions, bodyWeights }
+BodyWeight { date, kg, demo? }       // une valeur par date
+Setting { key, value }               // language, theme, exportReminderWeeks, lastExportAt, seedVersion
+Export { version, exportedAt, exercises (custom), exerciseNotes, sessions, bodyWeights }
 ```
+
+- `demo` marque les données de démonstration (Réglages) : elles ne sont jamais exportées, ne déclenchent pas le rappel d'export, et une séance de démo modifiée devient une vraie séance.
+- `exerciseNotes` sauvegarde les notes et vidéos que l'utilisateur ajoute aux exercices de la base de départ (non exportés eux-mêmes).
 
 - Le schéma Dexie est versionné (`db.version(n)`) avec migrations, indépendamment de `version` dans l'export.
 - L'export JSON contient toujours un numéro de version entier ; toute évolution du format passe par une migration. Les réglages ne sont pas exportés.
@@ -104,6 +108,18 @@ Export { version, exportedAt, exercises (custom), sessions, bodyWeights }
 
 - La langue de l'interface ne change que les textes de l'interface (fichiers de traduction).
 - Les noms d'exercices, de machines et de muscles s'affichent toujours en gros dans leur langue d'origine (`name`), avec l'anglais (`nameEn`) en plus petit dessous. Si les deux sont identiques, une seule ligne.
+
+## Identité visuelle
+
+Aux couleurs des Golden State Valkyries : violet `#AD96DC`, noir `#010101`, blanc, or `#B9975B`. Les variables CSS vivent dans `src/index.css` (jamais de couleur en dur dans un composant).
+
+- **Thème clair** : inspiré du maillot Heroine (blanc teinté de lavande, violet, or).
+- **Thème sombre** : inspiré du maillot Explorer, avec le noir en couleur principale et le violet en secondaire.
+- Rôles : `accent` = violet assez foncé pour le texte et les bordures (liens, focus) ; `brand` = violet officiel pour les **fonds** de boutons et de pastilles, avec du texte `brand-ink` (noir) ; `gold` = filets décoratifs uniquement, jamais du texte.
+- Filet or sous les titres de page et au-dessus de la barre d'onglets ; trait violet sur l'onglet actif.
+- Le dégradé de chaleur des heatmaps (violet clair, rose, orange) et le rose des muscles principaux sont conservés.
+- Titres : Noto Sans en largeur étroite (75 %) et graisse forte, en majuscules.
+- Contraste : tout texte atteint 4,5:1 dans les deux thèmes, et le thème sombre automatique (système) reste identique au thème sombre forcé. `src/lib/contrast.test.ts` le vérifie en lisant `index.css` : toute modification de palette passe ce test.
 
 ## Règles de calcul
 
@@ -124,11 +140,12 @@ Export { version, exportedAt, exercises (custom), sessions, bodyWeights }
 ## Prototype de référence
 
 `docs/prototype.html` est un prototype autonome. Je m'en sers comme référence pour :
-- la direction visuelle (palette indigo, polices Big Shoulders Display et Figtree, thème clair/sombre) ;
 - la silhouette SVG et ses zones musculaires ;
 - la liste d'exercices, les schémas de mouvement et la logique alternatives / antagonistes / complémentaires (table `REL`) ;
 - le calcul de chaleur ;
 - les écrans.
+
+Sa direction visuelle d'origine (palette indigo, polices Big Shoulders Display et Figtree) a été remplacée par l'identité Valkyries ci-dessus : ne pas la reprendre.
 
 Il est en français uniquement, stocke dans localStorage, a 4 onglets (Aperçu, Séances, Exercices, Données) et n'a ni RPE, ni poids de corps, ni exercices personnalisés. Je ne le copie pas tel quel : je reprends ses idées et ses données dans une architecture TypeScript propre, avec Dexie et l'i18n. La navigation de ce fichier fait foi (cinq onglets), pas celle du prototype.
 
