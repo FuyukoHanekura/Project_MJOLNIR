@@ -49,6 +49,9 @@ export default function ExercisesPage() {
         <Link to="/exercices/import" className="inline-flex min-h-11 items-center rounded-lg border border-line bg-surface px-4 font-semibold text-accent">
           {t('exercises.importExercises')}
         </Link>
+        <Link to="/exercices/paquet" className="inline-flex min-h-11 items-center rounded-lg border border-line bg-surface px-4 font-semibold text-accent">
+          {t('exercises.exportPack')}
+        </Link>
       </div>
 
       <div className="mt-4 space-y-3">

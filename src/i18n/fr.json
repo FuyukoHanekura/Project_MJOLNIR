@@ -43,7 +43,8 @@
     "reset": "Réinitialiser les filtres",
     "newExercise": "Nouvel exercice",
     "importExercises": "Importer des exercices",
-    "custom": "Perso"
+    "custom": "Perso",
+    "exportPack": "Exporter un paquet"
   },
   "detail": {
     "notFound": "Exercice introuvable.",
@@ -368,7 +369,7 @@
   },
   "bulk": {
     "title": "Importer des exercices",
-    "help": "Choisis un fichier JSON contenant une liste d'exercices. Seuls le nom, le groupe, le matériel et un muscle principal sont obligatoires ; le reste est complété.",
+    "help": "Choisis un fichier JSON contenant une liste d'exercices, ou un paquet d'exercices partagé par quelqu'un. Seuls le nom, le groupe, le matériel et un muscle principal sont obligatoires ; le reste est complété.",
     "formatTitle": "Voir le format attendu",
     "formatNote": "Groupes : back, chest, shoulders, arms, legs, abs. Matériel : machine, cable, barbell, dumbbell, bodyweight, smith, kettlebell, band. Muscles : chest, shoulders, rear_delts, traps, lats, mid_back, lower_back, biceps, triceps, forearms, abs, obliques, quads, hamstrings, glutes, calves, adductors.",
     "file": "Choisir un fichier",
@@ -379,6 +380,32 @@
     "import_one": "Importer {{count}} exercice",
     "import_other": "Importer {{count}} exercices",
     "done": "{{added}} ajoutés, {{updated}} mis à jour.",
+    "back": "Retour aux exercices",
+    "packNewer": "Ce paquet vient d'une version plus récente de l'application. Mets l'application à jour pour l'importer.",
+    "packTitle": "Paquet : {{name}}",
+    "conflictTitle_one": "{{count}} exercice existe déjà",
+    "conflictTitle_other": "{{count}} exercices existent déjà",
+    "conflictHelp": "Ils ont le même identifiant qu'un de tes exercices personnalisés. Que faire ?",
+    "conflictLabel": "Si un exercice existe déjà",
+    "ignore": "Ignorer",
+    "replace": "Remplacer",
+    "copy": "Importer en copie",
+    "skipped_one": "{{count}} ignoré.",
+    "skipped_other": "{{count}} ignorés."
+  },
+  "pack": {
+    "title": "Exporter un paquet",
+    "help": "Partage une sélection de tes exercices personnalisés sous forme de fichier. Les notes personnelles ne sont jamais incluses. Le destinataire l'importe depuis Exercices > Importer des exercices.",
+    "empty": "Tu n'as pas encore d'exercice personnalisé. Crée-en d'abord, puis reviens les partager.",
+    "name": "Nom du paquet",
+    "description": "Description (facultative)",
+    "selection": "Exercices à inclure",
+    "all": "Tout sélectionner",
+    "none": "Tout désélectionner",
+    "selected_one": "{{count}} exercice sélectionné",
+    "selected_other": "{{count}} exercices sélectionnés",
+    "export": "Télécharger le paquet",
+    "done": "Paquet téléchargé : {{file}}",
     "back": "Retour aux exercices"
   }
 }

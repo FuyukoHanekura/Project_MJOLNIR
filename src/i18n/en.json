@@ -43,7 +43,8 @@
     "reset": "Reset filters",
     "newExercise": "New exercise",
     "importExercises": "Import exercises",
-    "custom": "Custom"
+    "custom": "Custom",
+    "exportPack": "Export a pack"
   },
   "detail": {
     "notFound": "Exercise not found.",
@@ -368,7 +369,7 @@
   },
   "bulk": {
     "title": "Import exercises",
-    "help": "Choose a JSON file containing a list of exercises. Only the name, group, equipment and one primary muscle are required; the rest is filled in.",
+    "help": "Choose a JSON file containing a list of exercises, or an exercise pack shared by someone else. Only the name, group, equipment and one primary muscle are required; the rest is filled in.",
     "formatTitle": "See the expected format",
     "formatNote": "Groups: back, chest, shoulders, arms, legs, abs. Equipment: machine, cable, barbell, dumbbell, bodyweight, smith, kettlebell, band. Muscles: chest, shoulders, rear_delts, traps, lats, mid_back, lower_back, biceps, triceps, forearms, abs, obliques, quads, hamstrings, glutes, calves, adductors.",
     "file": "Choose a file",
@@ -379,6 +380,32 @@
     "import_one": "Import {{count}} exercise",
     "import_other": "Import {{count}} exercises",
     "done": "{{added}} added, {{updated}} updated.",
+    "back": "Back to exercises",
+    "packNewer": "This pack comes from a newer version of the app. Update the app to import it.",
+    "packTitle": "Pack: {{name}}",
+    "conflictTitle_one": "{{count}} exercise already exists",
+    "conflictTitle_other": "{{count}} exercises already exist",
+    "conflictHelp": "They have the same id as one of your custom exercises. What should happen?",
+    "conflictLabel": "If an exercise already exists",
+    "ignore": "Skip",
+    "replace": "Replace",
+    "copy": "Import as copy",
+    "skipped_one": "{{count}} skipped.",
+    "skipped_other": "{{count}} skipped."
+  },
+  "pack": {
+    "title": "Export a pack",
+    "help": "Share a selection of your custom exercises as a file. Personal notes are never included. The recipient imports it from Exercises > Import exercises.",
+    "empty": "You have no custom exercise yet. Create some first, then come back to share them.",
+    "name": "Pack name",
+    "description": "Description (optional)",
+    "selection": "Exercises to include",
+    "all": "Select all",
+    "none": "Select none",
+    "selected_one": "{{count}} exercise selected",
+    "selected_other": "{{count}} exercises selected",
+    "export": "Download the pack",
+    "done": "Pack downloaded: {{file}}",
     "back": "Back to exercises"
   }
 }

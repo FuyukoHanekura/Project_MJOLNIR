@@ -11,6 +11,7 @@ import SettingsPage from './pages/SettingsPage'
 // Less frequent pages: loaded on demand to keep the first load light.
 const ExerciseFormPage = lazy(() => import('./pages/ExerciseFormPage'))
 const BulkImportPage = lazy(() => import('./pages/BulkImportPage'))
+const PackExportPage = lazy(() => import('./pages/PackExportPage'))
 const TrackingPage = lazy(() => import('./pages/TrackingPage'))
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="exercices" element={<ExercisesPage />} />
             <Route path="exercices/nouveau" element={<ExerciseFormPage />} />
             <Route path="exercices/import" element={<BulkImportPage />} />
+            <Route path="exercices/paquet" element={<PackExportPage />} />
             <Route path="exercices/:id/modifier" element={<ExerciseFormPage />} />
             <Route path="exercices/:id" element={<ExerciseDetailPage />} />
             <Route path="suivi" element={<TrackingPage />} />
