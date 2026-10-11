@@ -14,7 +14,7 @@ Mobile-first, confortable sur PC, installable sur l'écran d'accueil et utilisab
 | Suivi | Poids de corps et moyenne glissante, RPE moyen, records, courbes de progression |
 | Réglages | Langue, thème, export/import, rappel d'export, données de démonstration |
 
-Les noms d'exercices, de machines et de muscles s'affichent en gros dans leur langue d'origine, avec l'anglais en plus petit dessous. La langue de l'interface ne change que les textes de l'application.
+Les noms d'exercices, de machines et de muscles suivent la langue de l'interface : en anglais, le nom anglais seul ; en français, le nom d'origine en gros avec l'anglais en plus petit dessous. La recherche fonctionne dans les deux langues (« dos » comme « back », « barre » comme « barbell »).
 
 ## Démarrage
 

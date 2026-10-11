@@ -106,8 +106,12 @@ Export { version, exportedAt, exercises (custom), exerciseNotes, sessions, bodyW
 
 ## Affichage bilingue
 
-- La langue de l'interface ne change que les textes de l'interface (fichiers de traduction).
-- Les noms d'exercices, de machines et de muscles s'affichent toujours en gros dans leur langue d'origine (`name`), avec l'anglais (`nameEn`) en plus petit dessous. Si les deux sont identiques, une seule ligne.
+- Les textes de l'interface viennent des fichiers de traduction ; les consignes d'exécution suivent aussi la langue de l'interface.
+- Les noms d'exercices, de machines et de muscles suivent la langue de l'interface :
+  - **interface en anglais** : le nom anglais (`nameEn`) seul, sans seconde ligne ; repli sur `name` s'il n'y a pas de nom anglais ;
+  - **interface en français** : le nom d'origine (`name`) en gros, avec l'anglais (`nameEn`) en plus petit dessous ; une seule ligne si les deux sont identiques.
+- Cette règle s'applique partout : listes, fiches, filtres, silhouettes (y compris `aria-label` et infobulles), séances, suivi, formulaires. Le tri des exercices se fait sur le nom affiché. On passe par `BilingualName` (deux lignes) ou `useNames` (libellé simple), jamais par `.name` directement.
+- La recherche d'exercices est bilingue : noms, machines, muscles, groupes et matériel sont cherchés en français et en anglais, quelle que soit la langue de l'interface.
 
 ## Identité visuelle
 

@@ -2,6 +2,16 @@
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), versionnage [SemVer](https://semver.org/lang/fr/).
 
+## [1.1.0] - 2026-10-11
+
+### Changed
+- Les noms d'exercices, de machines et de muscles suivent la langue de l'interface : en anglais, le nom anglais seul (au lieu du français en gros avec l'anglais dessous) ; en français, inchangé. S'applique aux listes, fiches, filtres, silhouettes (libellés d'accessibilité et infobulles compris), séances, suivi et formulaires.
+- Le tri de la liste des exercices se fait sur le nom affiché : par ordre alphabétique anglais en interface anglaise.
+- La recherche d'exercices couvre aussi le groupe et le matériel dans les deux langues (« dos » et « back », « barre » et « barbell »).
+
+### Added
+- Tests du nom affiché, du tri selon la langue et de la recherche bilingue (les 17 muscles dans les deux langues).
+
 ## [1.0.1] - 2026-10-10
 
 ### Changed
