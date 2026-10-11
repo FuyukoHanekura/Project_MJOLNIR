@@ -2,6 +2,23 @@
 
 Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), versionnage [SemVer](https://semver.org/lang/fr/).
 
+## [1.2.0] - 2026-10-11
+
+### Added
+- The equipment filter on the exercise list is now a multi-select: tick several types (barbell and dumbbell, for example) and every exercise that uses any of them is shown. The filter combines with the group, muscle and search filters.
+- Three equipment types: `smith` (Smith machine), `kettlebell` and `band` (resistance band), available in the filter, the custom exercise form, imports and search (French and English labels).
+- 321 new exercises, bringing the catalogue to 421 (back 75, chest 63, shoulders 50, arms 68, legs 111, abs 54). They cover barbell, dumbbell, cable, machine (including plate-loaded), Smith machine, kettlebell, resistance band and bodyweight variations, including Pendlay and Meadows rows, landmine work, ring exercises, unilateral machine variants, weighted push-ups, sissy squats and more. Each one has French and English names, short instructions in both languages and its alternatives, antagonists and complements.
+- Quality tests on the catalogue: original exercise ids are never lost, French and English names are unique, movement patterns are valid, instructions are short and present in both languages, every exercise has at least one alternative, every group and equipment type is well covered.
+
+### Changed
+- Existing databases are upgraded automatically at startup (seed version 2). Personal notes and video links on exercises are kept.
+- "Curl pupitre" is now explicitly the machine version ("Curl pupitre à la machine" / "Machine preacher curl"), since the barbell version now exists as "Curl pupitre barre". Its id is unchanged, so existing sessions keep their history.
+- "Assisted pull-ups" now lists the forearms as a secondary muscle, like the other pulling exercises.
+- Alternatives, antagonists and complements of the original exercises were recomputed with the larger catalogue.
+
+### Notes
+- Muscle and equipment data were cross-checked against an open exercise dataset (MIT licence) used as a factual reference only. Names and instructions are original; no text or media was copied from third-party sites.
+
 ## [1.1.0] - 2026-10-11
 
 ### Changed

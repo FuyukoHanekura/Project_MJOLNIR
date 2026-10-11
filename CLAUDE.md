@@ -79,7 +79,7 @@ Exercise {
   name, nameEn,
   group,                  // back | chest | shoulders | arms | legs | abs (libellés via i18n)
   movementPattern,        // schéma de mouvement du prototype (vpull, hpush...)
-  equipmentType,          // machine | cable | barbell | dumbbell | bodyweight
+  equipmentType,          // machine | cable | barbell | dumbbell | bodyweight | smith | kettlebell | band
   machineType?, machineTypeEn?,   // ex. "Poulie haute" / "High pulley"
   primaryMuscles[], secondaryMuscles[],   // ids de Muscle
   alternatives[],         // ids : même zone musculaire, autre matériel ou angle
@@ -161,6 +161,14 @@ Il est en français uniquement, stocke dans localStorage, a 4 onglets (Aperçu, 
 - Les listes `alternatives`, `antagonists` et `complements` sont générées une seule fois à partir de la logique du prototype (`REL`), puis écrites en dur en ids statiques. Je ne livre pas le moteur de calcul du prototype.
 - Tests obligatoires sur le seed : tous les ids référencés existent, aucun exercice ne se référence lui-même, pas de doublon d'id, chaque exercice a au moins un muscle principal, chaque muscle appartient à la liste des 17.
 - Les traductions anglaises utilisent la terminologie courante de salle ; l'utilisateur relira un échantillon.
+
+### Catalogue extension (1.2.0)
+
+- The catalogue grew from the ~100 prototype exercises to 421 (back, chest, shoulders, arms, legs, abs), built in batches per group. Relations (`alternatives`, `antagonists`, `complements`) were recomputed once for the whole catalogue and written out as static ids.
+- Each exercise has exactly one `equipmentType`: variants with different equipment are separate exercises, so history, records and progression curves stay comparable. The equipment filter is a multi-select (OR) instead of giving one exercise several equipment types.
+- Instructions are original, short (one or two sentences) and bilingual. Third-party datasets may only be used as a factual reference (muscles, equipment); never copy their texts or media.
+- Any change to `exercises.seed.ts` requires bumping `SEED_VERSION` in `src/db/seed.ts`, so existing databases are resynchronised (personal notes and videos are preserved). Existing exercise ids never change: `src/data/exercises.seed.test.ts` checks the 100 original ids.
+- Writing language: code comments, documentation and tests are written in English from this point on; the translation of existing French files is tracked separately.
 
 ## Conventions de code
 

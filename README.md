@@ -10,7 +10,7 @@ Mobile-first, confortable sur PC, installable sur l'écran d'accueil et utilisab
 | --- | --- |
 | Aperçu | Heatmap du corps (volume par muscle sur 7, 30, 90 jours ou tout), calendrier des jours d'entraînement, statistiques résumées |
 | Séances | Création, saisie des séries (reps × poids × RPE optionnel), rappel de la dernière performance, duplication |
-| Exercices | 100 exercices bilingues, recherche et filtres, fiche avec silhouette, exercices personnalisés, import en masse |
+| Exercices | Plus de 420 exercices bilingues, recherche et filtres (matériel en multi-sélection), fiche avec silhouette, exercices personnalisés, import en masse |
 | Suivi | Poids de corps et moyenne glissante, RPE moyen, records, courbes de progression |
 | Réglages | Langue, thème, export/import, rappel d'export, données de démonstration |
 
