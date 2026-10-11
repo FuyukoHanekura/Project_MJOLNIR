@@ -163,6 +163,12 @@ In the Golden State Valkyries colours: purple `#AD96DC`, black `#010101`, white,
 - Instructions are original, short (one or two sentences) and bilingual. Third-party datasets may only be used as a factual reference (muscles, equipment); never copy their texts or media.
 - Any change to `exercises.seed.ts` requires bumping `SEED_VERSION` in `src/db/seed.ts`, so existing databases are resynchronised (personal notes and videos are preserved). Existing exercise ids never change: `src/data/exercises.seed.test.ts` checks the 100 original ids.
 
+## Exercise packs (1.3.0)
+
+- A pack is a JSON file `{ kind: "exercise-pack", version, name, description?, exportedAt, exercises }`. `version` is a pack schema integer, independent of the export version and the app version; any change to it needs a migration path like the export format.
+- Packs hold custom exercises only. Personal `notes` are never exported; relations to custom exercises outside the pack are dropped, relations to built-in exercises are kept.
+- Import goes through the bulk importer (`parseExerciseList` then `computeImport`); conflicts on an existing custom id are resolved by `resolveConflicts` (skip, replace or copy). Logic lives in `src/lib/exercisePack.ts`.
+
 ## Code conventions
 
 - Strict TypeScript, no `any` without a comment justifying it.

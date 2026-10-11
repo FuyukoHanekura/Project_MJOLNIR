@@ -2,6 +2,15 @@
 
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versioned with [SemVer](https://semver.org/).
 
+## [1.3.0] - 2026-10-12
+
+### Added
+- Exercise packs: Exercises > Export a pack lets you pick some of your custom exercises, name the pack (with an optional description) and download it as a JSON file. Personal notes are never included, and links to custom exercises outside the pack are dropped (links to built-in exercises are kept).
+- Importing a pack uses the existing bulk importer (Exercises > Import exercises), which now shows the pack name and description.
+- Conflict handling on import: when an imported exercise has the id of one of your custom exercises, choose to skip it (default), replace it or import it as a copy (new id, “ (2)” suffix, relations inside the pack follow the copy). This applies to plain bulk imports too.
+- A pack from a newer format version is refused with a clear message. Pack format: `{ "kind": "exercise-pack", "version": 1, "name", "description?", "exportedAt", "exercises" }`.
+- Tests for pack building, metadata, conflict detection and the three conflict modes.
+
 ## [1.2.1] - 2026-10-11
 
 ### Changed

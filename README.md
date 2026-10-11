@@ -10,7 +10,7 @@ Mobile-first, comfortable on desktop, installable on the home screen and usable 
 | --- | --- |
 | Overview | Body heatmap (volume per muscle over 7, 30, 90 days or everything), training-day calendar, summary statistics |
 | Sessions | Create sessions, log sets (reps × weight × optional RPE), reminder of the last performance, duplication |
-| Exercises | 420+ bilingual exercises, search and filters (multi-select equipment), exercise page with silhouette, custom exercises, bulk import |
+| Exercises | 420+ bilingual exercises, search and filters (multi-select equipment), exercise page with silhouette, custom exercises, bulk import, shareable exercise packs |
 | Tracking | Body weight and rolling average, average RPE, records, progression charts |
 | Settings | Language, theme, export/import, export reminder, demo data |
 
@@ -100,6 +100,21 @@ The export file is versioned JSON:
 - Settings (language, theme, reminder) are not exported and are never overwritten by an import. Demo data is never exported.
 - “Merge” import: adds the content; on equal id or date, the file replaces the existing item. “Replace” import: deletes sessions, body weights and custom exercises, then imports (confirmation required).
 - Bulk exercise import (Exercises > Import exercises): a JSON array; only `name`, `group`, `equipmentType` and `primaryMuscles` are required.
+
+### Exercise packs
+
+Share some of your custom exercises with someone else: Exercises > Export a pack, tick the exercises, name the pack and download the JSON file. The recipient imports it from Exercises > Import exercises. Personal notes are never included. If an imported exercise has the same id as one of the recipient's custom exercises, they choose to skip it, replace it or import it as a copy.
+
+```json
+{
+  "kind": "exercise-pack",
+  "version": 1,
+  "name": "My pack",
+  "description": "Optional",
+  "exportedAt": "2026-10-12T09:00:00.000Z",
+  "exercises": []
+}
+```
 
 ### Changing origin
 
