@@ -1,7 +1,8 @@
 {
   "name": "carnet-de-salle",
   "private": true,
-  "version": "1.2.0",
+  "license": "MIT",
+  "version": "1.2.1",
   "type": "module",
   "engines": {
     "node": ">=24"
