@@ -10,31 +10,31 @@ const byId = (id: string): Exercise => {
 }
 
 describe('normalize', () => {
-  it('retire accents et casse', () => {
+  it('removes accents and case', () => {
     expect(normalize('  Épaules ÉLÉVATION ')).toBe('epaules elevation')
   })
 })
 
 describe('bilingual', () => {
-  it('une seule ligne si identique (accents et casse ignorés)', () => {
+  it('a single line if identical (accents and case ignored)', () => {
     expect(bilingual('Face pull', 'face pull')).toEqual({ main: 'Face pull' })
     expect(bilingual('Biceps', undefined)).toEqual({ main: 'Biceps' })
   })
-  it('anglais en dessous sinon', () => {
+  it('English below otherwise', () => {
     expect(bilingual('Tractions pronation', 'Pull-ups')).toEqual({ main: 'Tractions pronation', sub: 'Pull-ups' })
   })
 })
 
 describe('filterExercises', () => {
-  it('cherche en français et en anglais, sans accents', () => {
+  it('searches in French and in English, without accents', () => {
     expect(filterExercises(EXERCISES_SEED, { query: 'elevations laterales' }).length).toBeGreaterThan(0)
     expect(filterExercises(EXERCISES_SEED, { query: 'lateral raises' }).length).toBeGreaterThan(0)
   })
-  it('cherche par muscle', () => {
+  it('searches by muscle', () => {
     const r = filterExercises(EXERCISES_SEED, { query: 'quadriceps' })
     expect(r.some((e) => e.id === 'leg_extension')).toBe(true)
   })
-  it('combine requête et filtres', () => {
+  it('combines query and filters', () => {
     const r = filterExercises(EXERCISES_SEED, { group: 'back', equipment: ['cable'], query: 'tirage' })
     expect(r.length).toBeGreaterThan(0)
     expect(r.every((e) => e.group === 'back' && e.equipmentType === 'cable')).toBe(true)
@@ -50,18 +50,18 @@ describe('filterExercises', () => {
   it('an empty equipment list means no equipment filter', () => {
     expect(filterExercises(EXERCISES_SEED, { equipment: [] })).toHaveLength(EXERCISES_SEED.length)
   })
-  it('filtre par muscle principal', () => {
+  it('filters by primary muscle', () => {
     const r = filterExercises(EXERCISES_SEED, { muscle: 'calves' })
     expect(r.map((e) => e.id)).toContain('mollets_debout')
     expect(r.every((e) => e.primaryMuscles.includes('calves'))).toBe(true)
   })
-  it('renvoie tout sans filtre', () => {
+  it('returns everything without a filter', () => {
     expect(filterExercises(EXERCISES_SEED, {})).toHaveLength(EXERCISES_SEED.length)
   })
 })
 
 describe('sortExercises', () => {
-  it('groupe puis nom, sans modifier l\'entrée', () => {
+  it('group then name, without mutating the input', () => {
     const input = [byId('crunch'), byId('tractions'), byId('curl_barre')]
     const sorted = sortExercises(input)
     expect(sorted.map((e) => e.group)).toEqual(['back', 'arms', 'abs'])
@@ -70,7 +70,7 @@ describe('sortExercises', () => {
 })
 
 describe('mergeSeedExercise', () => {
-  it('garde les notes et la vidéo de l\'utilisateur, met à jour le reste', () => {
+  it("keeps the user's notes and video, updates the rest", () => {
     const seed = byId('tractions')
     const existing: Exercise = { ...seed, name: 'ancien nom', notes: 'ma note', videoUrl: 'https://x.test' }
     const merged = mergeSeedExercise(seed, existing)
@@ -78,13 +78,13 @@ describe('mergeSeedExercise', () => {
     expect(merged.notes).toBe('ma note')
     expect(merged.videoUrl).toBe('https://x.test')
   })
-  it('renvoie le seed s\'il n\'existe pas encore', () => {
+  it('returns the seed if it does not exist yet', () => {
     expect(mergeSeedExercise(byId('crunch'), undefined)).toEqual(byId('crunch'))
   })
 })
 
 describe('cycleMuscle', () => {
-  it('passe de aucun à principal, secondaire, puis aucun', () => {
+  it('goes from none to primary, secondary, then none', () => {
     const a = cycleMuscle([], [], 'lats')
     expect(a).toEqual({ primary: ['lats'], secondary: [] })
     const b = cycleMuscle(a.primary, a.secondary, 'lats')
@@ -92,7 +92,7 @@ describe('cycleMuscle', () => {
     const c = cycleMuscle(b.primary, b.secondary, 'lats')
     expect(c).toEqual({ primary: [], secondary: [] })
   })
-  it('ne touche pas aux autres muscles ni aux tableaux d\'origine', () => {
+  it('does not touch the other muscles or the original arrays', () => {
     const primary = ['chest']
     const secondary = ['triceps']
     expect(cycleMuscle(primary, secondary, 'biceps')).toEqual({ primary: ['chest', 'biceps'], secondary: ['triceps'] })

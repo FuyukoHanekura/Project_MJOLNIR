@@ -10,7 +10,7 @@ permissions:
   pages: write
   id-token: write
 
-# Un seul déploiement à la fois ; un push plus récent annule celui en cours.
+# One deployment at a time; a newer push cancels the one in progress.
 concurrency:
   group: pages
   cancel-in-progress: true
@@ -33,7 +33,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          # Le site vit dans /<nom-du-repo>/ ; le manifest PWA (scope, start_url) en dérive.
+          # The site lives under /<repo-name>/; the PWA manifest (scope, start_url) derives from it.
           VITE_BASE: /${{ github.event.repository.name }}/
 
       - uses: actions/upload-pages-artifact@v3

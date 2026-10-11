@@ -23,7 +23,7 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
 }
 
 interface FormProps {
-  /** Exercice à modifier ; absent pour une création. */
+  /** Exercise to edit; absent when creating. */
   exercise?: Exercise
   allExercises: readonly Exercise[]
 }
@@ -176,7 +176,7 @@ function ExerciseForm({ exercise, allExercises }: FormProps) {
   )
 }
 
-/** Création (`/exercices/nouveau`) ou modification (`/exercices/:id/modifier`) d'un exercice personnalisé. */
+/** Creation (`/exercices/nouveau`) or editing (`/exercices/:id/modifier`) of a custom exercise. */
 export default function ExerciseFormPage() {
   const { id } = useParams()
   const { t } = useTranslation()
@@ -190,7 +190,7 @@ export default function ExerciseFormPage() {
 
   if (!all) return <p className="text-muted">{t('common.loading')}</p>
   const exercise = id ? all.find((e) => e.id === id) : undefined
-  // Seuls les exercices personnalisés se modifient : ceux de la base de départ sont gérés par l'application.
+  // Only custom exercises can be edited: built-in ones are managed by the app.
   if (id && (!exercise || !exercise.isCustom)) {
     return (
       <section>

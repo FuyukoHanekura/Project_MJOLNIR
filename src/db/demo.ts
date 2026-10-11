@@ -13,8 +13,8 @@ export async function demoCounts(): Promise<DemoCounts> {
 }
 
 /**
- * Ajoute les données de démonstration. Une mesure de poids réelle n'est jamais écrasée :
- * si tu as déjà une valeur ce jour-là, la mesure de démo est ignorée.
+ * Adds the demo data. A real weight measurement is never overwritten:
+ * if you already have a value that day, the demo measurement is skipped.
  */
 export async function loadDemo(): Promise<DemoCounts> {
   const demo = buildDemoData(todayLocal())
@@ -27,7 +27,7 @@ export async function loadDemo(): Promise<DemoCounts> {
   })
 }
 
-/** Supprime uniquement les données marquées démo ; tes séances et mesures ne sont pas touchées. */
+/** Removes only the data marked as demo; your sessions and measurements are untouched. */
 export async function removeDemo(): Promise<void> {
   await db.transaction('rw', db.sessions, db.bodyWeights, async () => {
     await db.sessions.filter((s) => s.demo === true).delete()

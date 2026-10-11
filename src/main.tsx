@@ -8,8 +8,8 @@ import { seedExercises } from './db/seed'
 import { loadSavedLanguage } from './i18n'
 
 /**
- * Thème et langue enregistrés sont appliqués avant le premier rendu, pour éviter un flash
- * du mauvais thème. Si le stockage est lent ou indisponible, on affiche l'appli après 800 ms.
+ * The saved theme and language are applied before the first render, to avoid a flash
+ * of the wrong theme. If storage is slow or unavailable, the app is shown after 800 ms.
  */
 async function start() {
   const timeout = new Promise<void>((resolve) => setTimeout(resolve, 800))
@@ -25,7 +25,7 @@ async function start() {
     </StrictMode>,
   )
 
-  // La base de départ se charge en arrière-plan ; les listes se mettent à jour toutes seules.
+  // The built-in catalogue loads in the background; lists update on their own.
   void seedExercises().catch((e: unknown) => console.error(e))
 }
 

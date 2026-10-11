@@ -9,40 +9,40 @@ import { availableMetrics, personalRecords, progression, rpeTrend } from './trac
 const session = (id: string, date: string, entries: Session['entries']): Session => ({ id, date, name: id, entries })
 const set = (reps: number, weight: number, rpe?: number) => ({ reps, weight, ...(rpe ? { rpe } : {}) })
 
-describe('volume par muscle : cas limites', () => {
+describe('volume per muscle: edge cases', () => {
   const exercises = new Map([['row', { primaryMuscles: ['lats'], secondaryMuscles: ['biceps'] }]])
 
-  it('un exercice sans série ne compte pas, même comme dernier entraînement', () => {
+  it('an exercise without sets does not count, even as the last workout', () => {
     const r = muscleStats([session('a', '2026-03-10', [{ exerciseId: 'row', sets: [] }])], exercises, 30, '2026-03-11')
     expect(r.load).toEqual({})
     expect(r.last).toEqual({})
   })
 
-  it('« Tout » avec uniquement des séances futures vaut une semaine et aucun volume', () => {
+  it('“All” with only future sessions is one week and no volume', () => {
     const r = muscleStats([session('f', '2026-04-01', [{ exerciseId: 'row', sets: [set(5, 5)] }])], exercises, 0, '2026-03-11')
     expect(r.weeks).toBe(1)
     expect(r.load).toEqual({})
   })
 
-  it('la pleine chaleur sur 30 jours demande 15 séries par semaine, soit environ 64 séries', () => {
+  it('full heat over 30 days needs 15 sets per week, about 64 sets', () => {
     expect(heatLevel(64.2, 30 / 7)).toBeCloseTo(0.998, 2)
     expect(heatLevel(32, 30 / 7)).toBeCloseTo(0.5, 1)
   })
 })
 
-describe('calendrier : cas limites', () => {
-  it('quand aujourd\'hui est un lundi, seule la première case de la dernière colonne est passée', () => {
+describe('calendar: edge cases', () => {
+  it('when today is a Monday, only the first cell of the last column is in the past', () => {
     const last = calendarWeeks('2026-03-09').at(-1)
     expect(last?.map((d) => d.future)).toEqual([false, true, true, true, true, true, true])
   })
-  it('quand aujourd\'hui est un dimanche, toute la dernière colonne est passée', () => {
+  it('when today is a Sunday, the whole last column is in the past', () => {
     const last = calendarWeeks('2026-03-15').at(-1)
     expect(last?.every((d) => !d.future)).toBe(true)
   })
 })
 
-describe('statistiques : cas limites', () => {
-  it('plusieurs séances le même jour comptent chacune, mais comptent pour une seule semaine d\'affilée', () => {
+describe('statistics: edge cases', () => {
+  it('several sessions on the same day each count, but count as a single week in the streak', () => {
     const s = (id: string) => session(id, '2026-03-10', [{ exerciseId: 'x', sets: [set(1, 1)] }])
     const r = overviewStats([s('a'), s('b')], '2026-03-11')
     expect(r.sessions30).toBe(2)
@@ -50,8 +50,8 @@ describe('statistiques : cas limites', () => {
   })
 })
 
-describe('suivi : cas limites', () => {
-  it('le poids du corps donne un volume nul mais des répétitions et un RPE', () => {
+describe('tracking: edge cases', () => {
+  it('bodyweight gives zero volume but reps and an RPE', () => {
     const s = [session('a', '2026-01-01', [{ exerciseId: 'tractions', sets: [set(8, 0, 8), set(6, 0, 9)] }])]
     const p = progression(s, 'tractions')
     expect(p[0]).toMatchObject({ volume: 0, maxWeight: 0, e1rm: 0, maxReps: 8 })
@@ -60,7 +60,7 @@ describe('suivi : cas limites', () => {
     expect(personalRecords(s, 'tractions').maxReps?.reps).toBe(8)
   })
 
-  it('le RPE moyen fusionne deux séances du même jour', () => {
+  it('the average RPE merges two sessions on the same day', () => {
     const s = [
       session('a', '2026-01-01', [{ exerciseId: 'e', sets: [set(5, 50, 7)] }]),
       session('b', '2026-01-01', [{ exerciseId: 'e', sets: [set(5, 50, 9)] }]),
@@ -68,7 +68,7 @@ describe('suivi : cas limites', () => {
     expect(rpeTrend(s, 'e')).toEqual([{ date: '2026-01-01', avg: 8, sets: 2 }])
   })
 
-  it('un même exercice deux fois dans une séance est regroupé dans l\'historique', () => {
+  it('the same exercise twice in a session is grouped in the history', () => {
     const s = [session('a', '2026-01-01', [{ exerciseId: 'e', sets: [set(5, 50)] }, { exerciseId: 'e', sets: [set(5, 55)] }])]
     expect(exerciseHistory(s, 'e')[0].sets).toHaveLength(2)
     expect(lastPerformance(s, 'e')?.sets).toEqual([set(5, 50), set(5, 55)])
@@ -76,13 +76,13 @@ describe('suivi : cas limites', () => {
   })
 })
 
-describe('recherche : cas limites', () => {
-  it('plusieurs mots doivent tous correspondre, dans n\'importe quel ordre', () => {
+describe('search: edge cases', () => {
+  it('several words must all match, in any order', () => {
     const r = filterExercises(EXERCISES_SEED, { query: 'poulie biceps' })
     expect(r.length).toBeGreaterThan(0)
     expect(filterExercises(EXERCISES_SEED, { query: 'biceps poulie' }).map((e) => e.id)).toEqual(r.map((e) => e.id))
   })
-  it('une requête sans correspondance ne renvoie rien', () => {
+  it('a query with no match returns nothing', () => {
     expect(filterExercises(EXERCISES_SEED, { query: 'zzzzz' })).toEqual([])
   })
 })

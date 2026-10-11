@@ -3,14 +3,14 @@ import { todayLocal } from '../lib/date'
 import { formatLocalDate, numberFormatter } from '../lib/format'
 import { isRecent, type Records, type SetRecord } from '../lib/tracking'
 
-/** Un record est « récent » s'il date de moins de 30 jours. */
+/** A record is “recent” if it is less than 30 days old. */
 const RECENT_DAYS = 30
 
 interface Props {
   records: Records
 }
 
-/** Records personnels d'un exercice, avec mise en évidence des plus récents. */
+/** Personal records of an exercise, highlighting the most recent. */
 export default function RecordsList({ records }: Props) {
   const { t, i18n } = useTranslation()
   const fmt = numberFormatter(i18n.language)

@@ -9,7 +9,7 @@ import BilingualName from './BilingualName'
 
 interface Props {
   entry: DraftEntry
-  /** undefined si l'exercice n'existe plus. */
+  /** undefined if the exercise no longer exists. */
   exercise?: Exercise
   last?: Performance
   isFirst: boolean

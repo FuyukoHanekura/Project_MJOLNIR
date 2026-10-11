@@ -3,19 +3,19 @@ import { dayIndex } from '../lib/date'
 import type { ChartSeries } from './LineChart'
 
 interface Props {
-  /** Points du graphique : une `date` plus une valeur numérique par série (clé = `series[].key`). */
+  /** Chart points: a `date` plus a numeric value per series (key = `series[].key`). */
   data: readonly { date: string }[]
   series: ChartSeries[]
   lang: string
-  /** Bornes de l'axe Y ; par défaut automatique. */
+  /** Y axis bounds; automatic by default. */
   yDomain?: [number | ((min: number) => number), number | ((max: number) => number)]
 }
 
-// Bornes entières pour des graduations lisibles.
+// Whole-number bounds for readable ticks.
 const DEFAULT_Y_DOMAIN: [(min: number) => number, (max: number) => number] = [(min) => Math.floor(min), (max) => Math.ceil(max)]
 const DAY_MS = 86_400_000
 const locale = (lang: string) => (lang === 'en' ? 'en-GB' : 'fr-FR')
-// L'axe X est numérique (jours) pour respecter l'espacement réel entre les dates.
+// The X axis is numeric (days) to respect the real spacing between dates.
 const dayLabel = (day: number, lang: string, long = false) =>
   new Date(day * DAY_MS).toLocaleDateString(locale(lang), {
     timeZone: 'UTC',
@@ -54,7 +54,7 @@ export default function LineChartImpl({ data, series, lang, yDomain = DEFAULT_Y_
           contentStyle={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 8, color: 'var(--ink)' }}
           labelStyle={{ color: 'var(--ink2)' }}
           itemStyle={{ color: 'var(--ink)' }}
-          // Filet or au survol, comme le liseré du maillot (le gris par défaut de Recharts est retiré).
+          // Gold line on hover, like the jersey trim (Recharts' default grey is removed).
           cursor={{ stroke: 'var(--gold)', strokeWidth: 1.5, strokeDasharray: '4 3' }}
         />
         {series.map((s) => (

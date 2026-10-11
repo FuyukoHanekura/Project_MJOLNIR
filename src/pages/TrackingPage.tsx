@@ -79,7 +79,7 @@ export default function TrackingPage() {
   const exerciseList = useLiveQuery(() => db.exercises.toArray())
   const exercises = new Map((exerciseList ?? []).map((e) => [e.id, e]))
 
-  // Navigation clavier du tablist : flèches gauche/droite, début/fin.
+  // Keyboard navigation for the tablist: left/right arrows, Home/End.
   const onKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
     const i = TABS.indexOf(tab)
     const next =

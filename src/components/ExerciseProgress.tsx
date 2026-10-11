@@ -13,7 +13,7 @@ interface Props {
 
 const sectionTitle = 'font-display text-2xl font-extrabold tracking-wide text-ink uppercase'
 
-/** Records, courbe de progression et courbe du RPE moyen d'un exercice. */
+/** Records, progression chart and average RPE chart of an exercise. */
 export default function ExerciseProgress({ exerciseId, sessions }: Props) {
   const { t, i18n } = useTranslation()
   const fmt = numberFormatter(i18n.language)

@@ -11,18 +11,18 @@ const base: Session = {
 }
 
 describe('toDraft / toSession', () => {
-  it('affiche la virgule décimale si demandé, et la relit', () => {
+  it('shows the decimal comma if requested, and reads it back', () => {
     const session: Session = { ...base, entries: [{ exerciseId: 'e', sets: [{ reps: 10, weight: 22.5 }] }] }
     const draft = toDraft(session, ',')
     expect(draft.entries[0].sets[0].weight).toBe('22,5')
     expect(toSession('s1', draft).entries[0].sets[0].weight).toBe(22.5)
   })
 
-  it('fait un aller-retour sans perte', () => {
+  it('round-trips without loss', () => {
     expect(toSession('s1', toDraft(base))).toEqual(base)
   })
 
-  it('ignore les séries incomplètes ou invalides mais garde l\'exercice', () => {
+  it('ignores incomplete or invalid sets but keeps the exercise', () => {
     const draft: SessionDraft = {
       name: '  Push ',
       date: '2026-05-05',
@@ -48,7 +48,7 @@ describe('toDraft / toSession', () => {
     })
   })
 
-  it('accepte la virgule décimale et un RPE valide uniquement', () => {
+  it('accepts the decimal comma and only a valid RPE', () => {
     const draft: SessionDraft = {
       name: 'x',
       date: '2026-05-05',

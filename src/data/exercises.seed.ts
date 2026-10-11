@@ -1,6 +1,7 @@
 // Starter exercise database. Built once from the prototype list, then extended in batches;
 // relations (alternatives, antagonists, complements) are computed once and written out as static ids.
 // Never change an existing id: sessions reference them.
+// Licensed under CC BY-NC 4.0 (attribution, non-commercial): see LICENSE-CATALOGUE.md.
 import type { Exercise } from '../types'
 
 export const EXERCISES_SEED: Exercise[] = [

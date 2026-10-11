@@ -1,10 +1,10 @@
 @import 'tailwindcss';
 
 /*
- * Noto Sans, auto-hébergée (aucune requête vers Google) : police variable avec ses trois axes,
- * graisse 100 à 900, largeur 62,5 à 100 % et italique. Seul le sous-ensemble « latin » est inclus :
- * il couvre le français et l'anglais (accents, œ, ponctuation). Les autres caractères retombent
- * sur la police du système.
+ * Noto Sans, self-hosted (no request to Google): variable font with its three axes,
+ * weight 100 to 900, width 62.5 to 100 % and italic. Only the “latin” subset is included:
+ * it covers French and English (accents, œ, punctuation). Other characters fall back
+ * to the system font.
  */
 @font-face {
   font-family: 'Noto Sans Variable';
@@ -27,14 +27,14 @@
 
 /*
  * Palette Golden State Valkyries.
- * Clair : maillot Heroine (blanc, violet, or). Sombre : maillot Explorer inversé (noir en couleur
- * principale, violet en secondaire). Couleurs officielles : violet #AD96DC, noir #010101, or #B9975B.
- * - accent : violet assez foncé pour servir de texte ou de bordure sur le fond (liens, focus).
- * - brand : violet officiel, pour les fonds de boutons et de pastilles, avec du texte brand-ink.
- * - gold : filets décoratifs uniquement (jamais du texte).
- * - chart-1 / chart-2 : séries des graphiques (violet puis or), assez contrastées pour des traits (3:1).
- * Le thème sombre automatique (système) et le thème sombre forcé doivent rester identiques :
- * un test le vérifie.
+ * Light: Heroine jersey (white, purple, gold). Dark: inverted Explorer jersey (black as the
+ * main colour, purple as secondary). Official colours: purple #AD96DC, black #010101, gold #B9975B.
+ * - accent: purple dark enough to serve as text or border on the background (links, focus).
+ * - brand: official purple, for button and chip backgrounds, with brand-ink text.
+ * - gold: decorative rules only (never text).
+ * - chart-1 / chart-2: chart series (purple then gold), contrasted enough for lines (3:1).
+ * The automatic (system) dark theme and the forced dark theme must stay identical:
+ * a test checks it.
  */
 :root {
   color-scheme: light dark;
@@ -130,12 +130,12 @@ body {
   font-family: var(--font-sans);
 }
 
-/* Titres : Noto Sans en largeur étroite et graisse forte (le côté condensé du maillot). */
+/* Headings: Noto Sans in a narrow width and heavy weight (the condensed look of the jersey). */
 .font-display {
   font-stretch: 75%;
 }
 
-/* Filet or sous chaque titre de page, comme le liseré du maillot. */
+/* Gold rule under every page title, like the jersey trim. */
 h1::after {
   content: '';
   display: block;
@@ -175,7 +175,7 @@ h1::after {
   }
 }
 
-/* Silhouette interactive (heatmap du corps) */
+/* Interactive silhouette (body heatmap) */
 .sil-mu * {
   stroke: var(--surface);
   stroke-width: 1;

@@ -3,7 +3,7 @@ export type TabId = 'overview' | 'sessions' | 'exercises' | 'tracking' | 'settin
 export interface TabDef {
   id: TabId
   path: string
-  /** Clé de traduction : nav.<id> */
+  /** Translation key: nav.<id> */
   labelKey: `nav.${TabId}`
 }
 

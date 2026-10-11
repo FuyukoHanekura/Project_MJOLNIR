@@ -9,8 +9,8 @@ export class CarnetDB extends Dexie {
 
   constructor() {
     super('carnet-de-salle')
-    // Version du schéma Dexie : indépendante de `version` dans l'export JSON.
-    // Toute évolution ajoute un db.version(n+1) avec son upgrade().
+    // Dexie schema version: independent of `version` in the JSON export.
+    // Any change adds a db.version(n+1) with its upgrade().
     this.version(1).stores({
       exercises: 'id, group, equipmentType, isCustom',
       sessions: 'id, date',

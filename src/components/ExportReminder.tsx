@@ -8,7 +8,7 @@ import { diffDaysText } from '../lib/agoText'
 import { todayLocal } from '../lib/date'
 import { DEFAULT_REMINDER_WEEKS, exportReminderDue } from '../lib/exportFormat'
 
-/** Bandeau de rappel de sauvegarde, affiché quand le dernier export date de plus de X semaines. */
+/** Backup reminder banner, shown when the last export is more than X weeks old. */
 export default function ExportReminder() {
   const { t } = useTranslation()
   const [dismissed, setDismissed] = useState(false)
@@ -16,7 +16,7 @@ export default function ExportReminder() {
     const [weeks, lastExportAt, firstSession, firstWeight] = await Promise.all([
       getSetting<number>('exportReminderWeeks'),
       getSetting<string>('lastExportAt'),
-      // Les données de démonstration ne comptent pas : elles ne sont jamais exportées.
+      // Demo data does not count: it is never exported.
       db.sessions.orderBy('date').filter((s) => !s.demo).first(),
       db.bodyWeights.orderBy('date').filter((w) => !w.demo).first(),
     ])

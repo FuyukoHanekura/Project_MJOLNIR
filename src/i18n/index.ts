@@ -9,7 +9,7 @@ export const LANGUAGES: readonly Language[] = ['fr', 'en']
 
 const isLanguage = (v: unknown): v is Language => v === 'fr' || v === 'en'
 
-/** Langue par défaut selon le navigateur : fr ou en, sans autre détection automatique. */
+/** Default language from the browser: fr or en, with no other automatic detection. */
 export function defaultLanguage(): Language {
   return navigator.language.toLowerCase().startsWith('fr') ? 'fr' : 'en'
 }
@@ -26,7 +26,7 @@ void i18n.use(initReactI18next).init({
 })
 applyLanguage(i18n.language as Language)
 
-/** Applique la langue enregistrée dans les réglages, si elle existe. */
+/** Applies the language saved in the settings, if any. */
 export async function loadSavedLanguage(): Promise<void> {
   const saved = await getSetting<unknown>('language')
   if (isLanguage(saved) && saved !== i18n.language) {

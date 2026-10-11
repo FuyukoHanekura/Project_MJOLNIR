@@ -5,7 +5,7 @@ export const DEMO_WEEKS = 12
 
 type Template = { name: string; exercises: { id: string; base: number; step: number; sets: number; reps: number }[] }
 
-// Jours de la semaine (0 = lundi) → séance type. Les charges de départ progressent de `step` kg par semaine.
+// Weekdays (0 = Monday) → template session. Starting weights increase by `step` kg per week.
 const PUSH: Template = {
   name: 'Push',
   exercises: [
@@ -37,7 +37,7 @@ const LEGS: Template = {
   ],
 }
 
-/** Lundi, mercredi, vendredi ; une séance Push supplémentaire le samedi une semaine sur deux. */
+/** Monday, Wednesday, Friday; an extra Push session on Saturday every other week. */
 const WEEK_PLAN: readonly [dayOffset: number, template: Template][] = [
   [0, PUSH],
   [2, PULL],
@@ -53,9 +53,9 @@ export interface DemoData {
 }
 
 /**
- * Jeu de démonstration déterministe sur les 12 dernières semaines : trois séances par semaine,
- * charges qui progressent, RPE qui monte en fin de série, poids de corps tous les trois jours.
- * Rien n'est daté après `today`.
+ * Deterministic demo set over the last 12 weeks: three sessions per week,
+ * progressing weights, RPE rising towards the end of a set, body weight every three days.
+ * Nothing is dated after `today`.
  */
 export function buildDemoData(today: string): DemoData {
   const monday = mondayOf(today)
@@ -78,7 +78,7 @@ export function buildDemoData(today: string): DemoData {
           sets: Array.from({ length: ex.sets }, (_, i) => ({
             reps: ex.reps - (i === ex.sets - 1 ? 1 : 0),
             weight: ex.base === 0 ? 0 : round(ex.base + ex.step * w, 0.25),
-            // 7 à 8 en début de série, jusqu'à 9,5 sur la dernière.
+            // 7 to 8 at the start of a set, up to 9.5 on the last one.
             rpe: Math.min(9.5, 7 + (w % 3) * 0.5 + i * 0.5),
           })),
         })),

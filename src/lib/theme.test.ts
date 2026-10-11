@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { applyTheme, parseTheme } from './theme'
 
-describe('thème', () => {
-  it('accepte clair et sombre, retombe sur système sinon', () => {
+describe('theme', () => {
+  it('accepts light and dark, falls back to system otherwise', () => {
     expect(parseTheme('light')).toBe('light')
     expect(parseTheme('dark')).toBe('dark')
     expect(parseTheme('system')).toBe('system')
@@ -11,7 +11,7 @@ describe('thème', () => {
     expect(parseTheme(42)).toBe('system')
   })
 
-  it('force le thème par data-theme et le retire pour « système »', () => {
+  it('forces the theme through data-theme and removes it for “system”', () => {
     const attrs = new Map<string, string>()
     const root = {
       setAttribute: (k: string, v: string) => attrs.set(k, v),

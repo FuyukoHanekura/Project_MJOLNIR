@@ -11,7 +11,7 @@ import LineChart from './LineChart'
 
 const field = 'min-h-11 w-full rounded-lg border border-line bg-surface px-3 text-base text-ink'
 
-/** Poids de corps : saisie rapide, courbe et moyenne glissante sur 7 jours. */
+/** Body weight: quick entry, chart and 7-day rolling average. */
 export default function BodyWeightPanel() {
   const { t, i18n } = useTranslation()
   const fmt = numberFormatter(i18n.language)
@@ -31,7 +31,7 @@ export default function BodyWeightPanel() {
       return
     }
     setInvalid(false)
-    // Une seule valeur par date : saisir à nouveau le même jour remplace la mesure.
+    // One value per date: entering the same day again replaces the measurement.
     void db.bodyWeights.put({ date, kg: Math.round(value * 100) / 100 }).then(() => setKg(''))
   }
 

@@ -4,11 +4,11 @@ import { displayNames } from '../lib/displayName'
 interface Props {
   name: string
   nameEn?: string
-  /** Classes du nom principal (taille, graisse). */
+  /** Classes of the main name (size, weight). */
   mainClassName?: string
 }
 
-/** Interface en anglais : le nom anglais seul. En français : nom d'origine en gros, anglais en plus petit dessous. */
+/** English interface: the English name alone. French: original name in large type, English smaller below. */
 export default function BilingualName({ name, nameEn, mainClassName = 'text-base font-semibold text-ink' }: Props) {
   const { i18n } = useTranslation()
   const { main, sub } = displayNames(name, nameEn, i18n.language)

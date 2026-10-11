@@ -36,7 +36,7 @@ interface Done {
 
 const message = (e: unknown) => (e instanceof Error ? e.message : String(e))
 
-/** Réglages > Données : export, import (fusion ou remplacement) et rappel d'export. */
+/** Settings > Data: export, import (merge or replace) and export reminder. */
 export default function DataPanel() {
   const { t } = useTranslation()
   const lastExportAt = useLiveQuery(async () => (await getSetting<string>('lastExportAt')) ?? null)
@@ -61,7 +61,7 @@ export default function DataPanel() {
 
   const onFile = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
-    e.target.value = '' // permet de rechoisir le même fichier
+    e.target.value = '' // lets the user pick the same file again
     setChosen(null)
     setDone(null)
     setError(null)

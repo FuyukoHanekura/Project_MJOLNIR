@@ -8,7 +8,7 @@ interface Props {
   exercise: Exercise
 }
 
-/** Ligne cliquable vers la fiche d'un exercice. */
+/** Clickable row linking to an exercise page. */
 export default function ExerciseLink({ exercise: ex }: Props) {
   const { t } = useTranslation()
   const names = useNames()

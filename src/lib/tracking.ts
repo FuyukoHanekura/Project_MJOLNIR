@@ -11,11 +11,11 @@ const round = (n: number, digits = 1) => {
 export interface BodyWeightPoint {
   date: string
   kg: number
-  /** Moyenne des mesures des `windowDays` derniers jours (jour courant inclus). */
+  /** Average of the measurements of the last `windowDays` days (current day included). */
   avg: number
 }
 
-/** Poids de corps triés par date, avec moyenne glissante sur une fenêtre de jours calendaires. */
+/** Body weights sorted by date, with a rolling average over a window of calendar days. */
 export function withMovingAverage(points: readonly BodyWeight[], windowDays = 7): BodyWeightPoint[] {
   const sorted = [...points].sort((a, b) => a.date.localeCompare(b.date))
   return sorted.map((p, i) => {
@@ -38,9 +38,9 @@ export function isValidBodyWeight(kg: number): boolean {
   return Number.isFinite(kg) && kg >= MIN_BODY_KG && kg <= MAX_BODY_KG
 }
 
-/* ---------- Séries d'un exercice ---------- */
+/* ---------- Sets of an exercise ---------- */
 
-/** Séries d'un exercice regroupées par date (plusieurs séances le même jour sont fusionnées). */
+/** Sets of an exercise grouped by date (several sessions on the same day are merged). */
 function setsByDate(sessions: readonly Session[], exerciseId: string): Map<string, SetEntry[]> {
   const byDate = new Map<string, SetEntry[]>()
   for (const s of sessions) {
@@ -50,7 +50,7 @@ function setsByDate(sessions: readonly Session[], exerciseId: string): Map<strin
   return byDate
 }
 
-/** Estimation de la charge maximale sur 1 répétition (formule d'Epley). 0 si poids nul. */
+/** Estimated one-rep max (Epley formula). 0 if the weight is zero. */
 export function estimateOneRepMax(weight: number, reps: number): number {
   if (weight <= 0 || reps < 1) return 0
   return round(reps === 1 ? weight : weight * (1 + reps / 30))
@@ -62,12 +62,12 @@ export interface ProgressPoint {
   date: string
   maxWeight: number
   e1rm: number
-  /** Somme de répétitions × poids. */
+  /** Sum of reps × weight. */
   volume: number
   maxReps: number
 }
 
-/** Évolution d'un exercice, une valeur par date, de la plus ancienne à la plus récente. */
+/** Progress of an exercise, one value per date, from oldest to most recent. */
 export function progression(sessions: readonly Session[], exerciseId: string): ProgressPoint[] {
   return [...setsByDate(sessions, exerciseId)]
     .sort(([a], [b]) => a.localeCompare(b))
@@ -80,7 +80,7 @@ export function progression(sessions: readonly Session[], exerciseId: string): P
     }))
 }
 
-/** Métriques qui ont une valeur : un exercice au poids du corps n'a que les répétitions. */
+/** Metrics that have a value: a bodyweight exercise only has reps. */
 export function availableMetrics(points: readonly ProgressPoint[]): ProgressMetric[] {
   const metrics: ProgressMetric[] = []
   if (points.some((p) => p.maxWeight > 0)) metrics.push('maxWeight', 'e1rm', 'volume')
@@ -92,13 +92,13 @@ export function availableMetrics(points: readonly ProgressPoint[]): ProgressMetr
 
 export interface RpePoint {
   date: string
-  /** RPE moyen des séries renseignées ce jour-là. */
+  /** Average RPE of the sets logged that day. */
   avg: number
-  /** Nombre de séries avec RPE. */
+  /** Number of sets with RPE. */
   sets: number
 }
 
-/** Courbe du RPE moyen d'un exercice. Les séries sans RPE sont ignorées. */
+/** Average RPE curve of an exercise. Sets without RPE are ignored. */
 export function rpeTrend(sessions: readonly Session[], exerciseId: string): RpePoint[] {
   const out: RpePoint[] = []
   for (const [date, sets] of [...setsByDate(sessions, exerciseId)].sort(([a], [b]) => a.localeCompare(b))) {
@@ -114,7 +114,7 @@ export interface SetRecord {
   date: string
   reps: number
   weight: number
-  /** Valeur du record (charge, 1RM estimé ou répétitions selon le cas). */
+  /** Record value (weight, estimated 1RM or reps, depending on the case). */
   value: number
 }
 
@@ -125,8 +125,8 @@ export interface Records {
 }
 
 /**
- * Records personnels d'un exercice. À valeur égale, le premier record atteint est conservé.
- * Charge max et 1RM estimé ne concernent que les séries avec poids > 0.
+ * Personal records of an exercise. On a tie, the first record reached is kept.
+ * Max weight and estimated 1RM only apply to sets with weight > 0.
  */
 export function personalRecords(sessions: readonly Session[], exerciseId: string): Records {
   const records: Records = {}
@@ -134,7 +134,7 @@ export function personalRecords(sessions: readonly Session[], exerciseId: string
   for (const [date, sets] of ascending) {
     for (const s of sets) {
       if (s.weight > 0) {
-        // À charge égale, plus de répétitions fait un meilleur record.
+        // At equal weight, more reps make a better record.
         const w = records.maxWeight
         if (!w || s.weight > w.weight || (s.weight === w.weight && s.reps > w.reps)) {
           records.maxWeight = { date, reps: s.reps, weight: s.weight, value: s.weight }
@@ -151,7 +151,7 @@ export function personalRecords(sessions: readonly Session[], exerciseId: string
   return records
 }
 
-/** Ids des exercices ayant au moins une série, du plus récemment pratiqué au plus ancien. */
+/** Ids of exercises with at least one set, from most recently practised to oldest. */
 export function exercisesWithData(sessions: readonly Session[]): string[] {
   const last = new Map<string, string>()
   for (const s of sessions) {
@@ -162,7 +162,7 @@ export function exercisesWithData(sessions: readonly Session[]): string[] {
   return [...last].sort((a, b) => b[1].localeCompare(a[1]) || a[0].localeCompare(b[0])).map(([id]) => id)
 }
 
-/** Vrai si `date` est dans les `days` derniers jours (aujourd'hui inclus). */
+/** True if `date` is within the last `days` days (today included). */
 export function isRecent(date: string, today: string, days: number): boolean {
   const diff = dayIndex(today) - dayIndex(date)
   return diff >= 0 && diff < days

@@ -35,11 +35,11 @@ const session = (id: string, date: string): Session => ({ id, date, name: id, en
 const empty: ParsedExport = { sessions: [], bodyWeights: [], exercises: [], exerciseNotes: [] }
 
 describe('slugify / uniqueExerciseId', () => {
-  it('retire accents, ponctuation et espaces', () => {
+  it('removes accents, punctuation and spaces', () => {
     expect(slugify('  Développé  nuque (barre) ')).toBe('developpe_nuque_barre')
     expect(slugify('!!!')).toBe('')
   })
-  it('préfixe custom_ et évite les collisions', () => {
+  it('prefixes custom_ and avoids collisions', () => {
     expect(uniqueExerciseId('Curl', new Set())).toBe('custom_curl')
     expect(uniqueExerciseId('Curl', new Set(['custom_curl']))).toBe('custom_curl_2')
     expect(uniqueExerciseId('Curl', new Set(['custom_curl', 'custom_curl_2']))).toBe('custom_curl_3')
@@ -48,7 +48,7 @@ describe('slugify / uniqueExerciseId', () => {
 })
 
 describe('parseExercise', () => {
-  it('complète les champs optionnels avec des valeurs par défaut', () => {
+  it('fills optional fields with default values', () => {
     const r = parseExercise(valid, ctx())
     expect(r.ok && r.exercise).toMatchObject({
       id: 'custom_developpe_nuque',
@@ -62,7 +62,7 @@ describe('parseExercise', () => {
     })
   })
 
-  it('exige nom, groupe, matériel et muscle principal', () => {
+  it('requires name, group, equipment and primary muscle', () => {
     const reason = (raw: unknown) => {
       const r = parseExercise(raw, ctx())
       return r.ok ? 'ok' : r.reason
@@ -76,18 +76,18 @@ describe('parseExercise', () => {
     expect(reason({ ...valid, secondaryMuscles: ['inconnu'] })).toBe('unknownMuscle')
   })
 
-  it('refuse de remplacer un exercice de la base de départ', () => {
+  it('refuses to replace a built-in exercise', () => {
     const r = parseExercise({ ...valid, id: 'tractions' }, ctx())
     expect(r).toEqual({ ok: false, reason: 'seedIdConflict' })
   })
 
-  it('rejette un id mal formé et garde un id valide', () => {
+  it('rejects a malformed id and keeps a valid id', () => {
     expect(parseExercise({ ...valid, id: 'Mon Id!' }, ctx())).toEqual({ ok: false, reason: 'badId' })
     const r = parseExercise({ ...valid, id: 'mon_exo' }, ctx())
     expect(r.ok && r.exercise.id).toBe('mon_exo')
   })
 
-  it('nettoie : doublons, muscle secondaire déjà principal, auto-référence, vidéo non http', () => {
+  it('cleans up: duplicates, secondary muscle already primary, self-reference, non-http video', () => {
     const r = parseExercise(
       { ...valid, id: 'a', primaryMuscles: ['shoulders', 'shoulders'], secondaryMuscles: ['shoulders', 'triceps'], alternatives: ['a', 'b', 'b'], videoUrl: 'javascript:alert(1)' },
       ctx(),
@@ -98,12 +98,12 @@ describe('parseExercise', () => {
     expect(ok.ok && ok.exercise.videoUrl).toBe('https://exemple.test/v')
   })
 
-  it('renseigne la machine en anglais par défaut', () => {
+  it('defaults the English machine name', () => {
     const r = parseExercise({ ...valid, machineType: 'Poulie haute' }, ctx())
     expect(r.ok && r.exercise).toMatchObject({ machineType: 'Poulie haute', machineTypeEn: 'Poulie haute' })
   })
 
-  it('génère des ids distincts pour deux exercices du même nom dans un même fichier', () => {
+  it('generates distinct ids for two exercises with the same name in one file', () => {
     const c = ctx()
     const a = parseExercise(valid, c)
     const b = parseExercise(valid, c)
@@ -112,7 +112,7 @@ describe('parseExercise', () => {
 })
 
 describe('parseExerciseList / bulkExerciseArray', () => {
-  it('importe les lignes valides et signale les autres avec leur position', () => {
+  it('imports the valid lines and reports the others with their position', () => {
     const r = parseExerciseList([valid, { name: 'Sans groupe' }, 42, { ...valid, name: 'Autre' }], ctx())
     expect(r.exercises.map((e) => e.name)).toEqual(['Développé nuque', 'Autre'])
     expect(r.issues).toEqual([
@@ -120,13 +120,13 @@ describe('parseExerciseList / bulkExerciseArray', () => {
       { kind: 'exercise', index: 3, reason: 'notObject', label: undefined },
     ])
   })
-  it('accepte un tableau ou { exercises: [...] }', () => {
+  it('accepts an array or { exercises: [...] }', () => {
     expect(bulkExerciseArray([1])).toEqual([1])
     expect(bulkExerciseArray({ exercises: [2] })).toEqual([2])
     expect(bulkExerciseArray({ autre: [] })).toBeUndefined()
     expect(bulkExerciseArray('x')).toBeUndefined()
   })
-  it('un même id plusieurs fois : le dernier gagne', () => {
+  it('the same id several times: the last one wins', () => {
     const r = parseExerciseList([{ ...valid, id: 'x', name: 'A' }, { ...valid, id: 'x', name: 'B' }], ctx())
     expect(r.exercises).toHaveLength(1)
     expect(r.exercises[0].name).toBe('B')
@@ -134,7 +134,7 @@ describe('parseExerciseList / bulkExerciseArray', () => {
 })
 
 describe('parseSession / parseBodyWeight', () => {
-  it('valide la date et nettoie les séries', () => {
+  it('validates the date and cleans up the sets', () => {
     const r = parseSession({
       id: 's1',
       date: '2026-03-10',
@@ -144,13 +144,13 @@ describe('parseSession / parseBodyWeight', () => {
     expect(r.ok && r.session.entries).toEqual([{ exerciseId: 'crunch', sets: [{ reps: 10, weight: 20, rpe: 8 }] }])
     expect(r.ok && r.droppedSets).toBe(2)
   })
-  it('rejette une date invalide et génère un id manquant', () => {
+  it('rejects an invalid date and generates a missing id', () => {
     expect(parseSession({ date: '2026-02-30' })).toEqual({ ok: false, reason: 'badDate' })
     expect(parseSession(null)).toEqual({ ok: false, reason: 'notObject' })
     const r = parseSession({ date: '2026-02-20', entries: [] })
     expect(r.ok && r.session.id.length).toBeGreaterThan(10)
   })
-  it('valide le poids de corps', () => {
+  it('validates the body weight', () => {
     expect(parseBodyWeight({ date: '2026-03-10', kg: 75.456 })).toEqual({ ok: true, value: { date: '2026-03-10', kg: 75.46 } })
     expect(parseBodyWeight({ date: '2026-03-10', kg: 5 })).toEqual({ ok: false, reason: 'badWeight' })
     expect(parseBodyWeight({ date: 'x', kg: 70 })).toEqual({ ok: false, reason: 'badDate' })
@@ -158,7 +158,7 @@ describe('parseSession / parseBodyWeight', () => {
 })
 
 describe('buildExportFile', () => {
-  it('exporte les exercices personnalisés et les notes des exercices de base, pas la base elle-même', () => {
+  it('exports custom exercises and notes on built-in exercises, not the catalogue itself', () => {
     const file = buildExportFile(
       [seed('crunch'), { ...seed('tractions'), notes: 'ma note', videoUrl: 'https://x.test' }, custom('zz'), custom('aa', { notes: 'perso' })],
       [session('b', '2026-02-01'), session('a', '2026-01-01')],
@@ -173,7 +173,7 @@ describe('buildExportFile', () => {
     expect(file.sessions.map((s) => s.id)).toEqual(['a', 'b'])
     expect(file.bodyWeights.map((w) => w.date)).toEqual(['2026-01-01', '2026-02-01'])
   })
-  it('nomme le fichier selon la date', () => {
+  it('names the file after the date', () => {
     expect(exportFileName('2026-03-10')).toBe('carnet-de-salle-2026-03-10.json')
   })
 })
@@ -183,13 +183,13 @@ describe('runMigrations', () => {
     1: (d: Record<string, unknown>) => ({ ...d, renamed: d.old }),
     2: (d: Record<string, unknown>) => ({ ...d, extra: true }),
   }
-  it('enchaîne les migrations dans l\'ordre et met la version à jour', () => {
+  it('chains the migrations in order and updates the version', () => {
     expect(runMigrations({ version: 1, old: 'x' }, 1, 3, migrations)).toEqual({ version: 3, old: 'x', renamed: 'x', extra: true })
   })
-  it('ne fait rien si déjà à jour', () => {
+  it('does nothing if already up to date', () => {
     expect(runMigrations({ version: 3 }, 3, 3, migrations)).toEqual({ version: 3 })
   })
-  it('échoue si une migration manque', () => {
+  it('fails if a migration is missing', () => {
     expect(() => runMigrations({ version: 1 }, 1, 3, { 1: (d) => d })).toThrow(/2 -> 3/)
   })
 })
@@ -197,7 +197,7 @@ describe('runMigrations', () => {
 describe('parseExportText', () => {
   const file = (over: Record<string, unknown> = {}) => JSON.stringify({ version: 1, exportedAt: 'x', exercises: [], exerciseNotes: [], sessions: [], bodyWeights: [], ...over })
 
-  it('refuse un fichier illisible ou sans version', () => {
+  it('rejects an unreadable file or one without a version', () => {
     expect(parseExportText('{pas du json', ctx())).toEqual({ ok: false, error: 'notJson' })
     expect(parseExportText('[1,2]', ctx())).toEqual({ ok: false, error: 'notObject' })
     expect(parseExportText('{"sessions":[]}', ctx())).toEqual({ ok: false, error: 'noVersion' })
@@ -205,14 +205,14 @@ describe('parseExportText', () => {
     expect(parseExportText('{"version":0}', ctx())).toEqual({ ok: false, error: 'noVersion' })
     expect(parseExportText('{"version":1.5}', ctx())).toEqual({ ok: false, error: 'noVersion' })
   })
-  it('refuse un fichier d\'une version plus récente que l\'appli', () => {
+  it('rejects a file from a newer version than the app', () => {
     expect(parseExportText(file({ version: EXPORT_VERSION + 1 }), ctx())).toEqual({ ok: false, error: 'newerVersion' })
   })
-  it('accepte un fichier minimal (sections absentes)', () => {
+  it('accepts a minimal file (missing sections)', () => {
     const r = parseExportText('{"version":1}', ctx())
     expect(r.ok && r.data).toEqual({ sessions: [], bodyWeights: [], exercises: [], exerciseNotes: [] })
   })
-  it('relit un export complet sans perte', () => {
+  it('reads back a full export without loss', () => {
     const built = buildExportFile(
       [{ ...seed('tractions'), notes: 'n' }, custom('mon_exo', { notes: 'perso' })],
       [session('s1', '2026-01-01')],
@@ -227,7 +227,7 @@ describe('parseExportText', () => {
     expect(r.data.exerciseNotes).toEqual(built.exerciseNotes)
     expect(r.data.exercises[0]).toMatchObject({ id: 'mon_exo', notes: 'perso', isCustom: true })
   })
-  it('importe le valide, rapporte le reste', () => {
+  it('imports what is valid, reports the rest', () => {
     const r = parseExportText(
       file({
         sessions: [{ id: 'ok', date: '2026-01-01', entries: [] }, { id: 'ko', date: 'hier' }],
@@ -265,7 +265,7 @@ describe('computeImport', () => {
     exerciseNotes: [{ id: 'crunch', notes: 'nouvelle' }, { id: 'fantome', notes: 'x' }],
   }
 
-  it('fusion : ajoute, remplace à identifiant égal, ne supprime rien', () => {
+  it('merge: adds, replaces on equal id, deletes nothing', () => {
     const p = computeImport(current, incoming, 'merge')
     expect(p.sessionIdsDelete).toEqual([])
     expect(p.exerciseIdsDelete).toEqual([])
@@ -279,19 +279,19 @@ describe('computeImport', () => {
     expect(p.sessionsPut.find((s) => s.id === 's2')?.name).toBe('importée')
   })
 
-  it('fusion : restaure les notes sans toucher aux autres exercices de base', () => {
+  it('merge: restores the notes without touching the other built-in exercises', () => {
     const p = computeImport(current, incoming, 'merge')
     expect(p.exercisesPut.find((e) => e.id === 'crunch')?.notes).toBe('nouvelle')
-    expect(p.exercisesPut.some((e) => e.id === 'tractions')).toBe(false) // notes locales conservées
+    expect(p.exercisesPut.some((e) => e.id === 'tractions')).toBe(false) // local notes kept
     expect(p.issues).toEqual([{ kind: 'note', index: 2, reason: 'unknownExercise', label: 'fantome' }])
   })
 
-  it('retire les relations vers des exercices qui n\'existeront pas', () => {
+  it('removes relations to exercises that will not exist', () => {
     const p = computeImport(current, incoming, 'merge')
     expect(p.exercisesPut.find((e) => e.id === 'perso_c')?.alternatives).toEqual(['crunch'])
   })
 
-  it('remplacement : supprime séances, poids et exercices personnalisés, puis importe', () => {
+  it('replace: deletes sessions, weights and custom exercises, then imports', () => {
     const p = computeImport(current, incoming, 'replace')
     expect(p.sessionIdsDelete.sort()).toEqual(['s1', 's2'])
     expect(p.bodyWeightDatesDelete).toEqual(['2026-01-01'])
@@ -300,7 +300,7 @@ describe('computeImport', () => {
     expect(p.summary.exercises).toEqual({ added: 2, updated: 0 })
   })
 
-  it('remplacement : efface les notes absentes du fichier et garde celles du fichier', () => {
+  it('replace: erases notes absent from the file and keeps those in the file', () => {
     const p = computeImport(current, incoming, 'replace')
     const tractions = p.exercisesPut.find((e) => e.id === 'tractions')
     expect(tractions).toBeDefined()
@@ -309,18 +309,18 @@ describe('computeImport', () => {
     expect(p.exercisesPut.find((e) => e.id === 'crunch')?.notes).toBe('nouvelle')
   })
 
-  it('remplacement : les relations vers un ancien exercice personnalisé supprimé disparaissent', () => {
+  it('replace: relations to a deleted custom exercise disappear', () => {
     const p = computeImport(current, { ...incoming, exercises: [custom('perso_c', { alternatives: ['perso_a', 'crunch'] })] }, 'replace')
     expect(p.exercisesPut.find((e) => e.id === 'perso_c')?.alternatives).toEqual(['crunch'])
   })
 
-  it('un fichier vide en remplacement vide les données', () => {
+  it('an empty file in replace mode empties the data', () => {
     const p = computeImport(current, empty, 'replace')
     expect(p.sessionIdsDelete).toHaveLength(2)
     expect(p.sessionsPut).toEqual([])
   })
 
-  it('n\'écrit jamais les exercices de base hors notes', () => {
+  it('never writes built-in exercises other than notes', () => {
     const p = computeImport(current, empty, 'merge')
     expect(p.exercisesPut).toEqual([])
   })
@@ -328,19 +328,19 @@ describe('computeImport', () => {
 
 describe('exportReminderDue', () => {
   const base = { today: '2026-03-11' }
-  it('désactivé à 0 semaine ou sans donnée', () => {
+  it('disabled at 0 weeks or with no data', () => {
     expect(exportReminderDue({ ...base, weeks: 0, lastExportAt: '2020-01-01' })).toBe(false)
     expect(exportReminderDue({ ...base, weeks: 4 })).toBe(false)
   })
-  it('compare au dernier export', () => {
+  it('compares with the last export', () => {
     expect(exportReminderDue({ ...base, weeks: 4, lastExportAt: '2026-02-11' })).toBe(true) // 28 jours
     expect(exportReminderDue({ ...base, weeks: 4, lastExportAt: '2026-02-12' })).toBe(false) // 27 jours
   })
-  it('sans export, compare à la plus ancienne donnée', () => {
+  it('without an export, compares with the oldest data', () => {
     expect(exportReminderDue({ ...base, weeks: 2, oldestDataDate: '2026-02-25' })).toBe(true)
     expect(exportReminderDue({ ...base, weeks: 2, oldestDataDate: '2026-03-01' })).toBe(false)
   })
-  it('le dernier export prime sur la plus ancienne donnée', () => {
+  it('the last export takes precedence over the oldest data', () => {
     expect(exportReminderDue({ ...base, weeks: 2, lastExportAt: '2026-03-10', oldestDataDate: '2025-01-01' })).toBe(false)
   })
 })

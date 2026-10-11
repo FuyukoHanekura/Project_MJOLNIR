@@ -8,12 +8,12 @@ export interface Muscle {
 }
 
 export interface Exercise {
-  /** Slug stable (ex. "tirage_vertical"), jamais modifié. */
+  /** Stable slug (e.g. "tirage_vertical"), never changed. */
   id: string
   name: string
   nameEn: string
   group: ExerciseGroup
-  /** Schéma de mouvement du prototype (vpull, hpush...). */
+  /** Movement pattern (vpull, hpush...). */
   movementPattern: string
   equipmentType: EquipmentType
   machineType?: string
@@ -36,7 +36,7 @@ export interface Exercise {
 export interface SetEntry {
   reps: number
   weight: number
-  /** De 6 à 10 par demi-points. */
+  /** From 6 to 10 in half points. */
   rpe?: number
 }
 
@@ -52,7 +52,7 @@ export interface Session {
   name: string
   notes?: string
   entries: SessionEntry[]
-  /** Donnée de démonstration : jamais exportée, retirable en un clic. Disparaît dès que la séance est modifiée. */
+  /** Demo data: never exported, removable in one click. Stops being demo data as soon as the session is edited. */
   demo?: boolean
 }
 
@@ -60,7 +60,7 @@ export interface BodyWeight {
   /** YYYY-MM-DD, heure locale. Une valeur par date. */
   date: string
   kg: number
-  /** Donnée de démonstration : jamais exportée, retirable en un clic. */
+  /** Demo data: never exported, removable in one click. */
   demo?: boolean
 }
 
@@ -71,20 +71,20 @@ export interface Setting {
   value: unknown
 }
 
-/** Notes et lien vidéo saisis par l'utilisateur sur un exercice de la base de départ. */
+/** Notes and video link the user entered on a built-in exercise. */
 export interface ExerciseNote {
   id: string
   notes?: string
   videoUrl?: string
 }
 
-/** `version` est un entier de schéma d'export, indépendant de la version SemVer de l'appli. */
+/** `version` is an export schema integer, independent of the app's SemVer version. */
 export interface ExportFile {
   version: number
   exportedAt: string
-  /** Exercices personnalisés uniquement (isCustom). */
+  /** Custom exercises only (isCustom). */
   exercises: Exercise[]
-  /** Notes et vidéos des exercices de la base de départ (non exportés, donc sauvegardés à part). */
+  /** Notes and videos of built-in exercises (the exercises themselves are not exported, so these are saved separately). */
   exerciseNotes: ExerciseNote[]
   sessions: Session[]
   bodyWeights: BodyWeight[]

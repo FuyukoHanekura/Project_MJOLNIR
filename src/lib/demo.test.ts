@@ -11,23 +11,23 @@ const TODAY = '2026-10-10' // samedi
 describe('buildDemoData', () => {
   const { sessions, bodyWeights } = buildDemoData(TODAY)
 
-  it('génère des séances et des mesures, toutes marquées démo', () => {
+  it('generates sessions and measurements, all flagged as demo', () => {
     expect(sessions.length).toBeGreaterThan(30)
     expect(bodyWeights.length).toBeGreaterThan(20)
     expect(sessions.every((s) => s.demo === true)).toBe(true)
     expect(bodyWeights.every((w) => w.demo === true)).toBe(true)
   })
 
-  it('est déterministe', () => {
+  it('is deterministic', () => {
     expect(buildDemoData(TODAY)).toEqual({ sessions, bodyWeights })
   })
 
-  it('n\'utilise que des exercices de la base de départ', () => {
+  it('only uses built-in exercises', () => {
     const ids = new Set(EXERCISES_SEED.map((e) => e.id))
     for (const s of sessions) for (const e of s.entries) expect(ids.has(e.exerciseId), e.exerciseId).toBe(true)
   })
 
-  it('ne date rien dans le futur ni au-delà de la fenêtre', () => {
+  it('dates nothing in the future or beyond the window', () => {
     const oldest = dayIndex(TODAY) - DEMO_WEEKS * 7 - 6
     for (const x of [...sessions, ...bodyWeights]) {
       expect(x.date <= TODAY).toBe(true)
@@ -35,18 +35,18 @@ describe('buildDemoData', () => {
     }
   })
 
-  it('ne produit aucune séance future même un lundi (premier jour de la semaine)', () => {
+  it('produces no future session, even on a Monday (first day of the week)', () => {
     const monday = buildDemoData('2026-10-05')
     expect(monday.sessions.every((s) => s.date <= '2026-10-05')).toBe(true)
     expect(monday.bodyWeights.every((w) => w.date <= '2026-10-05')).toBe(true)
   })
 
-  it('a des identifiants et des dates uniques', () => {
+  it('has unique ids and dates', () => {
     expect(new Set(sessions.map((s) => s.id)).size).toBe(sessions.length)
     expect(new Set(bodyWeights.map((w) => w.date)).size).toBe(bodyWeights.length)
   })
 
-  it('produit des séries valides : reps entières, poids positifs ou nuls, RPE autorisé', () => {
+  it('produces valid sets: whole reps, positive or zero weights, allowed RPE', () => {
     for (const s of sessions) {
       for (const e of s.entries) {
         expect(e.sets.length).toBeGreaterThan(0)
@@ -59,16 +59,16 @@ describe('buildDemoData', () => {
     }
   })
 
-  it('fait progresser les charges au fil des semaines', () => {
+  it('makes the weights progress over the weeks', () => {
     const squat = sessions.filter((s) => s.entries.some((e) => e.exerciseId === 'squat_barre')).map((s) => s.entries.find((e) => e.exerciseId === 'squat_barre')?.sets[0].weight ?? 0)
     expect(squat[squat.length - 1]).toBeGreaterThan(squat[0])
   })
 
-  it('a des poids de corps plausibles', () => {
+  it('has plausible body weights', () => {
     expect(bodyWeights.every((w) => isValidBodyWeight(w.kg))).toBe(true)
   })
 
-  it('est exclu de l\'export', () => {
+  it('is excluded from the export', () => {
     const file = buildExportFile([], [...sessions, { id: 'reelle', date: '2026-01-01', name: 'Ma séance', entries: [] }], [...bodyWeights, { date: '2026-01-01', kg: 70 }])
     expect(file.sessions.map((s) => s.id)).toEqual(['reelle'])
     expect(file.bodyWeights).toEqual([{ date: '2026-01-01', kg: 70 }])

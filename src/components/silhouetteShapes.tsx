@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-// Formes reprises du prototype (viewBox 200 × 362).
+// Shapes (viewBox 200 × 362).
 export const BASE = (
   <g className="sil-base">
     <circle cx="100" cy="26" r="17" />

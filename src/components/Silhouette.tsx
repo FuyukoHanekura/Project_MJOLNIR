@@ -10,7 +10,7 @@ interface Props {
   secondary: readonly string[]
 }
 
-/** Silhouette avant ou arrière : muscles principaux en couleur forte, secondaires en couleur claire. */
+/** Front or back silhouette: primary muscles in a strong colour, secondary ones in a light colour. */
 export default function Silhouette({ view, primary, secondary }: Props) {
   const { t } = useTranslation()
   const { muscle } = useNames()

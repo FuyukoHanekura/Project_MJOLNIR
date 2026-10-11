@@ -4,18 +4,18 @@ import { BACK, BASE, FRONT } from './silhouetteShapes'
 
 interface Props {
   view: 'front' | 'back'
-  /** Intensité de 0 à 1 par id de muscle. */
+  /** Intensity from 0 to 1 per muscle id. */
   heat: Readonly<Record<string, number>>
   dark: boolean
   selected?: string
   onSelect: (muscleId: string) => void
-  /** Texte lu pour un muscle (nom et valeur), pour les lecteurs d'écran. */
+  /** Text read for a muscle (name and value), for screen readers. */
   describe: (muscleId: string) => string
-  /** Nom de la vue (« de face » / « de dos »). */
+  /** Name of the view (“front” / “back”). */
   label: string
 }
 
-/** Silhouette colorée par intensité ; chaque muscle est un bouton (clavier et tactile). */
+/** Silhouette coloured by intensity; each muscle is a button (keyboard and touch). */
 export default function HeatSilhouette({ view, heat, dark, selected, onSelect, describe, label }: Props) {
   const { muscle } = useNames()
   return (

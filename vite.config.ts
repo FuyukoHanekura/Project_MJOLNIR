@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
-// VITE_BASE : "/" par défaut, "/<nom-du-repo>/" sur GitHub Pages.
+// VITE_BASE: "/" by default, "/<repo-name>/" on GitHub Pages.
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const raw = env.VITE_BASE || '/'
@@ -36,7 +36,7 @@ export default defineConfig(({ mode }) => {
           ],
         },
         workbox: {
-          // Tout est précaché, polices auto-hébergées comprises : l'appli s'ouvre hors ligne dès la première visite.
+          // Everything is precached, self-hosted fonts included: the app opens offline from the first visit.
           globPatterns: ['**/*.{js,css,html,svg,png,ico,woff2}'],
         },
       }),

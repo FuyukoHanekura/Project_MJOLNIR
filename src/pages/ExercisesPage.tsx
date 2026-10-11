@@ -17,7 +17,7 @@ export default function ExercisesPage() {
   const [query, setQuery] = useState('')
   const [group, setGroup] = useState<ExerciseGroup | undefined>()
   const [equipment, setEquipment] = useState<EquipmentType[]>([])
-  // Le lien « Voir les exercices » de l'aperçu arrive avec ?muscle=<id>.
+  // The “See exercises” link on the overview arrives with ?muscle=<id>.
   const [params] = useSearchParams()
   const [muscle, setMuscle] = useState<string | undefined>(() => {
     const m = params.get('muscle')

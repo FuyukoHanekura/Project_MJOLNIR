@@ -22,7 +22,7 @@ export default function SessionsPage() {
 
   const [error, setError] = useState<string | null>(null)
 
-  /** Ajoute la séance puis l'ouvre ; en cas d'échec (stockage indisponible...), affiche la raison. */
+  /** Adds the session then opens it; on failure (storage unavailable...), shows the reason. */
   const addAndOpen = async (session: Session) => {
     try {
       setError(null)

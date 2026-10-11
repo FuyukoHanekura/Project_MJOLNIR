@@ -15,7 +15,7 @@ type Metric = 'sets' | 'volume'
 const WEEKS = 26
 const DAY_FMT: Intl.DateTimeFormatOptions = { weekday: 'long', day: 'numeric', month: 'long' }
 
-/** Calendrier des jours d'entraînement : 26 semaines, une colonne par semaine (lundi en haut). */
+/** Training-day calendar: 26 weeks, one column per week (Monday at the top). */
 export default function CalendarHeatmap({ sessions }: { sessions: readonly Session[] }) {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
@@ -40,7 +40,7 @@ export default function CalendarHeatmap({ sessions }: { sessions: readonly Sessi
       : t('overview.calendar.cellVolume', { date: name, n: fmt(Math.round(d.volume)) })
   }
 
-  // Déplacement au clavier : ←/→ changent de semaine, ↑/↓ de jour. On ne dépasse pas aujourd'hui.
+  // Keyboard movement: ←/→ change week, ↑/↓ change day. Never go past today.
   const onKeyDown = (e: KeyboardEvent<HTMLButtonElement>, date: string) => {
     const delta = { ArrowRight: 7, ArrowLeft: -7, ArrowDown: 1, ArrowUp: -1 }[e.key]
     if (delta === undefined) return

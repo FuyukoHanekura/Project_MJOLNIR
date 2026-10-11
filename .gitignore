@@ -1,4 +1,4 @@
-# Dépendances
+# Dependencies
 node_modules/
 
 # Build
@@ -7,7 +7,7 @@ dist-ssr/
 dev-dist/
 *.local
 
-# Variables d'environnement (pas de secrets prévus, mais par précaution)
+# Environment variables (no secrets planned, but just in case)
 .env
 .env.*
 !.env.example
@@ -20,16 +20,16 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Tests et couverture
+# Tests and coverage
 coverage/
 .vitest-cache/
 
-# Cache des outils
+# Tool caches
 .vite/
 .eslintcache
 *.tsbuildinfo
 
-# Éditeurs et système
+# Editors and system files
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
@@ -38,5 +38,5 @@ coverage/
 Thumbs.db
 *.swp
 
-# Claude Code : config personnelle uniquement
+# Claude Code: personal config only
 .claude/settings.local.json

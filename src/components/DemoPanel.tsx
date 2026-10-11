@@ -6,7 +6,7 @@ import ConfirmDeleteButton from './ConfirmDeleteButton'
 
 const sectionTitle = 'font-display text-2xl font-extrabold tracking-wide text-ink uppercase'
 
-/** Réglages > Démo : charge ou retire des données d'exemple pour voir les heatmaps et les courbes. */
+/** Settings > Demo: loads or removes sample data to see the heatmaps and charts. */
 export default function DemoPanel() {
   const { t } = useTranslation()
   const counts = useLiveQuery(demoCounts)

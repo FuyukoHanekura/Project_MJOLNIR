@@ -4,13 +4,13 @@ import { useTranslation } from 'react-i18next'
 interface Props {
   ariaLabel: string
   onConfirm: () => void
-  /** Texte du premier bouton ; « Supprimer » par défaut. */
+  /** Text of the first button; “Delete” by default. */
   label?: string
-  /** Texte du bouton de confirmation ; « Confirmer la suppression » par défaut. */
+  /** Text of the confirmation button; “Confirm deletion” by default. */
   confirmLabel?: string
 }
 
-/** Action destructive en deux temps : un premier appui demande confirmation. */
+/** Two-step destructive action: the first press asks for confirmation. */
 export default function ConfirmDeleteButton({ ariaLabel, onConfirm, label, confirmLabel }: Props) {
   const { t } = useTranslation()
   const [confirming, setConfirming] = useState(false)

@@ -11,7 +11,7 @@ interface Props {
   onClose: () => void
 }
 
-/** Recherche d'un exercice à ajouter à la séance. */
+/** Search for an exercise to add to the session. */
 export default function ExercisePicker({ exercises, onPick, onClose }: Props) {
   const { t } = useTranslation()
   const { lang } = useNames()

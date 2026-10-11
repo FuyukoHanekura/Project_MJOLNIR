@@ -20,7 +20,7 @@ interface Props {
 
 const periodKey = (p: Period) => (p === 0 ? 'all' : `d${p}`)
 
-/** Silhouette face/dos colorée par volume par muscle, avec classement et détail du muscle choisi. */
+/** Front/back silhouette coloured by volume per muscle, with a ranking and details for the selected muscle. */
 export default function BodyHeatmap({ sessions, exercises }: Props) {
   const { t, i18n } = useTranslation()
   const dark = useIsDark()

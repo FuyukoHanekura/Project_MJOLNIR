@@ -1,4 +1,4 @@
-/** Déclenche le téléchargement d'un fichier JSON côté navigateur. */
+/** Triggers the download of a JSON file in the browser. */
 export function downloadJson(fileName: string, data: unknown): void {
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
   const url = URL.createObjectURL(blob)
@@ -8,9 +8,9 @@ export function downloadJson(fileName: string, data: unknown): void {
   document.body.appendChild(a)
   a.click()
   a.remove()
-  // Laisse au navigateur le temps de démarrer le téléchargement avant de libérer l'URL.
+  // Gives the browser time to start the download before releasing the URL.
   setTimeout(() => URL.revokeObjectURL(url), 10_000)
 }
 
-/** Taille maximale d'un fichier d'import : au-delà, c'est presque sûrement le mauvais fichier. */
+/** Maximum size of an import file: beyond that, it is almost certainly the wrong file. */
 export const MAX_IMPORT_BYTES = 10 * 1024 * 1024

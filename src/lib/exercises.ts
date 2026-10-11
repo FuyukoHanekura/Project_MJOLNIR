@@ -7,14 +7,14 @@ import type { EquipmentType, Exercise, ExerciseGroup } from '../types'
 export const GROUPS: readonly ExerciseGroup[] = ['back', 'chest', 'shoulders', 'arms', 'legs', 'abs']
 export const EQUIPMENT_TYPES: readonly EquipmentType[] = ['machine', 'cable', 'barbell', 'dumbbell', 'bodyweight', 'smith', 'kettlebell', 'band']
 
-/** Minuscules sans accents, pour des recherches tolérantes. */
+/** Lowercase without accents, for forgiving searches. */
 export function normalize(s: string): string {
   return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim()
 }
 
 /**
- * Nom en gros (langue d'origine) et, en dessous, l'anglais s'il diffère.
- * `sub` est undefined quand les deux sont identiques (une seule ligne).
+ * Name in large type (original language) and, below it, the English name if it differs.
+ * `sub` is undefined when both are identical (a single line).
  */
 export function bilingual(main: string, en: string | undefined): { main: string; sub?: string } {
   if (!en || normalize(en) === normalize(main)) return { main }
@@ -26,7 +26,7 @@ export interface ExerciseFilters {
   group?: ExerciseGroup
   /** Equipment types to show: an exercise matches if its equipment is any of them. Empty or absent = no filter. */
   equipment?: readonly EquipmentType[]
-  /** Id de muscle, comparé aux muscles principaux. */
+  /** Muscle id, compared with the primary muscles. */
   muscle?: string
 }
 
@@ -35,7 +35,7 @@ function searchText(ex: Exercise): string {
     const m = MUSCLE_BY_ID.get(id)
     return m ? [m.name, m.nameEn] : []
   })
-  // Groupe et matériel sont cherchés dans les deux langues : « dos » comme « back », « barre » comme « barbell ».
+  // Group and equipment are searched in both languages: “dos” as well as “back”, “barre” as well as “barbell”.
   const labels = [fr.groups[ex.group], en.groups[ex.group], fr.equipment[ex.equipmentType], en.equipment[ex.equipmentType]]
   return normalize([ex.name, ex.nameEn, ex.machineType ?? '', ex.machineTypeEn ?? '', ...muscles, ...labels].join(' '))
 }
@@ -52,7 +52,7 @@ export function filterExercises(exercises: readonly Exercise[], f: ExerciseFilte
   })
 }
 
-/** Tri par groupe (ordre de GROUPS) puis par nom tel qu'affiché dans la langue de l'interface. */
+/** Sorted by group (GROUPS order) then by name as displayed in the interface language. */
 export function sortExercises(exercises: readonly Exercise[], lang = 'fr'): Exercise[] {
   return [...exercises].sort(
     (a, b) =>
@@ -62,8 +62,8 @@ export function sortExercises(exercises: readonly Exercise[], lang = 'fr'): Exer
 }
 
 /**
- * Met à jour un exercice de la base de départ sans écraser les données de l'utilisateur
- * (notes, lien vidéo saisis par lui).
+ * Updates a built-in exercise without overwriting the user's data
+ * (notes and video link entered by the user).
  */
 export function mergeSeedExercise(seed: Exercise, existing: Exercise | undefined): Exercise {
   if (!existing) return seed
@@ -76,7 +76,7 @@ export function mergeSeedExercise(seed: Exercise, existing: Exercise | undefined
 
 export type MuscleLevel = 'primary' | 'secondary'
 
-/** Un appui sur un muscle : aucun → principal → secondaire → aucun. */
+/** One press on a muscle: none → primary → secondary → none. */
 export function cycleMuscle(
   primary: readonly string[],
   secondary: readonly string[],

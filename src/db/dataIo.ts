@@ -10,7 +10,7 @@ export async function readAll(): Promise<CurrentData> {
   return { exercises, sessions, bodyWeights }
 }
 
-/** Ids déjà utilisés et ids réservés à la base de départ, pour valider des exercices importés. */
+/** Ids already in use and ids reserved for the built-in catalogue, to validate imported exercises. */
 export async function exerciseContext(): Promise<ExerciseContext> {
   const exercises = await db.exercises.toArray()
   return {
@@ -24,12 +24,12 @@ export async function buildExport(): Promise<ExportFile> {
   return buildExportFile(exercises, sessions, bodyWeights)
 }
 
-/** Mémorise la date du dernier export (heure locale) pour le rappel. */
+/** Stores the date of the last export (local time) for the reminder. */
 export function markExported(): Promise<void> {
   return setSetting('lastExportAt', todayLocal())
 }
 
-/** Télécharge l'export et mémorise la date du dernier export. Renvoie le nom du fichier. */
+/** Downloads the export and stores the date of the last export. Returns the file name. */
 export async function exportAndDownload(): Promise<string> {
   const file = await buildExport()
   const name = exportFileName(todayLocal())
@@ -38,7 +38,7 @@ export async function exportAndDownload(): Promise<string> {
   return name
 }
 
-/** Applique un plan d'import en une seule transaction : tout est écrit, ou rien. */
+/** Applies an import plan in a single transaction: everything is written, or nothing. */
 export async function applyImport(plan: ImportPlan): Promise<void> {
   await db.transaction('rw', db.exercises, db.sessions, db.bodyWeights, async () => {
     await db.sessions.bulkDelete(plan.sessionIdsDelete)

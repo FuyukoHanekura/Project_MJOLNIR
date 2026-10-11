@@ -1,4 +1,4 @@
-// Génère les icônes placeholder (monogramme « C ») sans dépendance : npm run icons
+// Generates the placeholder icons (“C” monogram) with no dependency: npm run icons
 import { deflateSync } from 'node:zlib'
 import { mkdirSync, writeFileSync } from 'node:fs'
 
@@ -7,7 +7,7 @@ const FG = [0xad, 0x96, 0xdc] // violet Valkyries
 const OUT = new URL('../public/icons/', import.meta.url)
 mkdirSync(OUT, { recursive: true })
 
-// Anneau ouvert à droite (ouverture de ±40°), en coordonnées normalisées [0,1].
+// Ring open on the right (opening of ±40°), in normalised coordinates [0,1].
 function coverage(x, y, scale) {
   const dx = x - 0.5
   const dy = y - 0.5
@@ -65,10 +65,10 @@ function png(size, scale) {
 
 writeFileSync(new URL('icon-192.png', OUT), png(192, 1))
 writeFileSync(new URL('icon-512.png', OUT), png(512, 1))
-// Maskable : motif réduit pour rester dans la zone de sécurité (80 %).
+// Maskable: reduced motif to stay inside the safe zone (80 %).
 writeFileSync(new URL('maskable-512.png', OUT), png(512, 0.8))
 
-// SVG : trait de 0,13 de large, rayon moyen 0,235 (équivalent de l'anneau ci-dessus).
+// SVG: stroke 0.13 wide, mean radius 0.235 (equivalent to the ring above).
 const r = 0.235 * 512
 const a = (40 * Math.PI) / 180
 const x = 256 + r * Math.cos(a)
@@ -77,4 +77,4 @@ writeFileSync(
   new URL('icon.svg', OUT),
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="#010101"/><path d="M ${x.toFixed(1)} ${y.toFixed(1)} A ${r} ${r} 0 1 0 ${x.toFixed(1)} ${(512 - y).toFixed(1)}" fill="none" stroke="#AD96DC" stroke-width="${(0.13 * 512).toFixed(1)}"/></svg>\n`,
 )
-console.log('Icônes générées dans public/icons/')
+console.log('Icons generated in public/icons/')

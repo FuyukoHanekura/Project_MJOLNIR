@@ -1,11 +1,11 @@
 import { lazy, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 
-// Recharts est lourd : il n'est chargé que lorsqu'une courbe s'affiche.
+// Recharts is heavy: it is only loaded when a chart is displayed.
 const LineChartImpl = lazy(() => import('./LineChartImpl'))
 
 export interface ChartSeries {
-  /** Clé de la valeur dans chaque point de `data`. */
+  /** Key of the value in each `data` point. */
   key: string
   label: string
   /** Couleur CSS, ex. "var(--accent)". */
@@ -14,12 +14,12 @@ export interface ChartSeries {
 }
 
 interface Props {
-  /** Points du graphique : une `date` plus une valeur numérique par série (clé = `series[].key`). */
+  /** Chart points: a `date` plus a numeric value per series (key = `series[].key`). */
   data: readonly { date: string }[]
   series: ChartSeries[]
-  /** Nom de la courbe, lu par les lecteurs d'écran. */
+  /** Name of the curve, read by screen readers. */
   label: string
-  /** Résumé textuel des valeurs (première, dernière...), lu par les lecteurs d'écran. */
+  /** Text summary of the values (first, last...), read by screen readers. */
   summary: string
   yDomain?: [number, number]
 }

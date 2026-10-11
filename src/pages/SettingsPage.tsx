@@ -13,7 +13,7 @@ const sectionTitle = 'font-display text-3xl font-extrabold tracking-wide text-in
 
 export default function SettingsPage() {
   const { t, i18n } = useTranslation()
-  // Vérifie que la base IndexedDB est ouverte et lisible (undefined = en cours de chargement).
+  // Checks that the IndexedDB database is open and readable (undefined = still loading).
   const sessionCount = useLiveQuery(() => db.sessions.count())
   const theme = parseTheme(useLiveQuery(() => getSetting<unknown>('theme')))
 

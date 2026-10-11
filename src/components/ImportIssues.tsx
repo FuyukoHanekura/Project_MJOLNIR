@@ -5,11 +5,11 @@ const MAX_SHOWN = 10
 
 interface Props {
   issues: readonly ImportIssue[]
-  /** Séries invalides ignorées dans les séances importées. */
+  /** Invalid sets skipped in imported sessions. */
   droppedSets?: number
 }
 
-/** Éléments ignorés à l'import, avec leur position dans le fichier et la raison. */
+/** Items skipped on import, with their position in the file and the reason. */
 export default function ImportIssues({ issues, droppedSets = 0 }: Props) {
   const { t } = useTranslation()
   if (issues.length === 0 && droppedSets === 0) return null

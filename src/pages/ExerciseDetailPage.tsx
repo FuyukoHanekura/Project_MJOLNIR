@@ -14,12 +14,12 @@ import { formatLocalDate, numberFormatter } from '../lib/format'
 import { exerciseHistory, formatSets } from '../lib/sessions'
 import type { Exercise } from '../types'
 
-/** N'affiche un lien que pour http(s) : jamais de javascript: venant d'un import. */
+/** Only shows a link for http(s): never a javascript: URL coming from an import. */
 const isHttpUrl = (url: string) => /^https?:\/\//i.test(url)
 
 const sectionTitle ='font-display text-2xl font-extrabold tracking-wide text-ink uppercase'
 
-/** Liste d'exercices liés (alternatives, antagonistes, complémentaires), cliquables. */
+/** List of related exercises (alternatives, antagonists, complements), clickable. */
 function RelatedList({ title, ids }: { title: string; ids: string[] }) {
   const related = useLiveQuery(() => db.exercises.bulkGet(ids), [ids.join(',')])
   const found = (related ?? []).filter((e): e is Exercise => Boolean(e))
@@ -61,7 +61,7 @@ function MuscleList({ title, ids }: { title: string; ids: string[] }) {
   )
 }
 
-/** Dernières performances de l'utilisateur sur cet exercice. */
+/** The user's latest performances on this exercise. */
 function History({ exerciseId }: { exerciseId: string }) {
   const { t, i18n } = useTranslation()
   const sessions = useLiveQuery(() => db.sessions.toArray())
@@ -93,7 +93,7 @@ function History({ exerciseId }: { exerciseId: string }) {
   )
 }
 
-/** Records et courbes de l'exercice, affichés seulement une fois qu'il a été pratiqué. */
+/** Records and charts of the exercise, shown only once it has been practised. */
 function Progress({ exerciseId }: { exerciseId: string }) {
   const sessions = useLiveQuery(() => db.sessions.toArray())
   if (!sessions || exerciseHistory(sessions, exerciseId).length === 0) return null
@@ -104,7 +104,7 @@ function Progress({ exerciseId }: { exerciseId: string }) {
   )
 }
 
-/** Modifier ou supprimer un exercice personnalisé (la base de départ n'est pas modifiable). */
+/** Edit or delete a custom exercise (built-in exercises cannot be edited). */
 function CustomActions({ exercise }: { exercise: Exercise }) {
   const { t } = useTranslation()
   const names = useNames()

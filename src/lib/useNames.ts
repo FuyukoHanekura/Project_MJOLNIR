@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { MUSCLE_BY_ID } from '../data/muscles'
 import { localizedName } from './displayName'
 
-/** Noms d'exercices et de muscles dans la langue de l'interface, pour les libellés simples (listes, aria-label). */
+/** Exercise and muscle names in the interface language, for plain labels (lists, aria-label). */
 export function useNames() {
   const { i18n } = useTranslation()
   const lang = i18n.language

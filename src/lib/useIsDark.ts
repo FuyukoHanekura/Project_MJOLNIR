@@ -10,7 +10,7 @@ function currentIsDark(): boolean {
 function subscribe(onChange: () => void): () => void {
   const mq = query()
   mq.addEventListener('change', onChange)
-  // Le réglage de thème (phase 7) force clair ou sombre via data-theme sur <html>.
+  // The theme setting forces light or dark through data-theme on <html>.
   const observer = new MutationObserver(onChange)
   observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
   return () => {
@@ -19,7 +19,7 @@ function subscribe(onChange: () => void): () => void {
   }
 }
 
-/** Thème sombre actif, selon le système ou le réglage forcé. Les couleurs de chaleur en dépendent. */
+/** Whether the dark theme is active, from the system or the forced setting. Heat colours depend on it. */
 export function useIsDark(): boolean {
   return useSyncExternalStore(subscribe, currentIsDark, () => false)
 }

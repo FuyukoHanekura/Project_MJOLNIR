@@ -5,7 +5,7 @@ import { EQUIPMENT_TYPES, GROUPS } from './exercises'
 import { newId, normalizeSet } from './sessions'
 import { isValidBodyWeight } from './tracking'
 
-/** Version du format d'export (entier de schéma). Toute évolution du format ajoute une migration. */
+/** Export format version (schema integer). Any format change adds a migration. */
 export const EXPORT_VERSION = 1
 
 /* ---------- Rapport ---------- */
@@ -24,12 +24,12 @@ export type IssueReason =
   | 'badId'
   | 'unknownExercise'
 
-/** Élément ignoré à l'import : `index` est sa position (à partir de 1) dans le fichier. */
+/** Item skipped on import: `index` is its position (starting at 1) in the file. */
 export interface ImportIssue {
   kind: IssueKind
   index: number
   reason: IssueReason
-  /** Nom ou id lisible de l'élément, quand on en connaît un. */
+  /** Readable name or id of the item, when known. */
   label?: string
 }
 
@@ -43,7 +43,7 @@ const asHttpUrl = (v: unknown): string | undefined => {
   return /^https?:\/\/\S+$/i.test(s) ? s : undefined
 }
 
-/** Minuscules sans accents, mots séparés par « _ » : « Développé nuque » → « developpe_nuque ». */
+/** Lowercase without accents, words separated by “_”: “Développé nuque” → “developpe_nuque”. */
 export function slugify(name: string): string {
   return name
     .normalize('NFD')
@@ -54,7 +54,7 @@ export function slugify(name: string): string {
     .slice(0, 48)
 }
 
-/** Id stable d'un exercice personnalisé, unique parmi `taken`. */
+/** Stable id of a custom exercise, unique among `taken`. */
 export function uniqueExerciseId(name: string, taken: ReadonlySet<string>): string {
   const base = `custom_${slugify(name) || 'exercice'}`
   if (!taken.has(base)) return base
@@ -63,20 +63,20 @@ export function uniqueExerciseId(name: string, taken: ReadonlySet<string>): stri
 
 const ID_PATTERN = /^[a-z0-9][a-z0-9_]{0,63}$/
 
-/* ---------- Validation d'un exercice ---------- */
+/* ---------- Exercise validation ---------- */
 
 export interface ExerciseContext {
-  /** Ids déjà utilisés (base de départ et exercices existants) : sert à générer des ids uniques. */
+  /** Ids already in use (built-in and existing exercises): used to generate unique ids. */
   takenIds: Set<string>
-  /** Ids de la base de départ : un exercice importé ne peut pas les remplacer. */
+  /** Built-in ids: an imported exercise cannot replace them. */
   seedIds: ReadonlySet<string>
 }
 
 export type ExerciseResult = { ok: true; exercise: Exercise } | { ok: false; reason: IssueReason }
 
 /**
- * Valide et complète un exercice personnalisé (saisi dans le formulaire, importé en masse ou lu dans
- * un export). Seuls le nom, le groupe, le matériel et un muscle principal sont obligatoires.
+ * Validates and completes a custom exercise (entered in the form, bulk imported or read from
+ * an export). Only the name, group, equipment and one primary muscle are required.
  */
 export function parseExercise(raw: unknown, ctx: ExerciseContext): ExerciseResult {
   if (!isRecord(raw)) return { ok: false, reason: 'notObject' }
@@ -129,7 +129,7 @@ export function parseExercise(raw: unknown, ctx: ExerciseContext): ExerciseResul
   return { ok: true, exercise }
 }
 
-/** Valide une liste d'exercices (fichier d'import en masse ou section d'un export). */
+/** Validates a list of exercises (bulk import file or section of an export). */
 export function parseExerciseList(raw: unknown, ctx: ExerciseContext): { exercises: Exercise[]; issues: ImportIssue[] } {
   const list = Array.isArray(raw) ? raw : []
   const byId = new Map<string, Exercise>()
@@ -143,8 +143,8 @@ export function parseExerciseList(raw: unknown, ctx: ExerciseContext): { exercis
 }
 
 /**
- * Fichier d'import en masse : un tableau d'exercices, ou un objet `{ "exercises": [...] }`.
- * undefined si le contenu n'a aucune de ces deux formes.
+ * Bulk import file: an array of exercises, or an object `{ "exercises": [...] }`.
+ * undefined if the content has neither shape.
  */
 export function bulkExerciseArray(raw: unknown): unknown[] | undefined {
   if (Array.isArray(raw)) return raw
@@ -152,7 +152,7 @@ export function bulkExerciseArray(raw: unknown): unknown[] | undefined {
   return undefined
 }
 
-/* ---------- Validation séances et poids de corps ---------- */
+/* ---------- Session and body weight validation ---------- */
 
 type SessionResult = { ok: true; session: Session; droppedSets: number } | { ok: false; reason: IssueReason }
 
@@ -191,8 +191,8 @@ export function parseBodyWeight(raw: unknown): { ok: true; value: BodyWeight } |
 /* ---------- Export ---------- */
 
 /**
- * Construit le fichier d'export : exercices personnalisés, notes des exercices de base, séances, poids.
- * Les données de démonstration en sont exclues.
+ * Builds the export file: custom exercises, notes on built-in exercises, sessions, weights.
+ * Demo data is excluded.
  */
 export function buildExportFile(
   exercises: readonly Exercise[],
@@ -224,8 +224,8 @@ export function exportFileName(date: string): string {
 type Migration = (data: Record<string, unknown>) => Record<string, unknown>
 
 /**
- * `MIGRATIONS[n]` transforme un fichier de version n en version n+1. Vide tant que le format
- * est en version 1 ; à chaque évolution, incrémenter EXPORT_VERSION et ajouter la migration.
+ * `MIGRATIONS[n]` turns a version n file into version n+1. Empty as long as the format
+ * is at version 1; on each change, bump EXPORT_VERSION and add the migration.
  */
 export const MIGRATIONS: Readonly<Record<number, Migration>> = {}
 
@@ -244,7 +244,7 @@ export function runMigrations(
   return current
 }
 
-/* ---------- Lecture d'un fichier d'export ---------- */
+/* ---------- Reading an export file ---------- */
 
 export type FileError = 'notJson' | 'notObject' | 'noVersion' | 'newerVersion'
 
@@ -259,7 +259,7 @@ export type ParseResult =
   | { ok: true; data: ParsedExport; issues: ImportIssue[]; droppedSets: number }
   | { ok: false; error: FileError }
 
-/** Lit le texte d'un export : JSON, version, migrations, puis validation élément par élément. */
+/** Reads the text of an export: JSON, version, migrations, then item-by-item validation. */
 export function parseExportText(text: string, ctx: ExerciseContext): ParseResult {
   let raw: unknown
   try {
@@ -338,7 +338,7 @@ export interface ImportSummary {
   sessions: Counter
   bodyWeights: Counter
   exercises: Counter
-  /** Exercices de base dont les notes ou la vidéo ont été restaurées. */
+  /** Built-in exercises whose notes or video were restored. */
   notes: number
 }
 
@@ -350,15 +350,15 @@ export interface ImportPlan {
   bodyWeightsPut: BodyWeight[]
   bodyWeightDatesDelete: string[]
   summary: ImportSummary
-  /** Éléments ignorés détectés au calcul du plan (notes d'un exercice inconnu). */
+  /** Skipped items detected while computing the plan (notes of an unknown exercise). */
   issues: ImportIssue[]
 }
 
 /**
- * Calcule les écritures à faire, sans toucher à la base.
- * - « Fusionner » : ajoute ce qui manque ; à identifiant ou date égal, le fichier remplace l'existant.
- * - « Remplacer » : vide séances, poids et exercices personnalisés, puis importe le fichier (les
- *   notes des exercices de base absentes du fichier sont effacées). Les réglages ne sont pas concernés.
+ * Computes the writes to perform, without touching the database.
+ * - “Merge”: adds what is missing; on equal id or date, the file replaces the existing item.
+ * - “Replace”: clears sessions, weights and custom exercises, then imports the file (notes
+ *   on built-in exercises absent from the file are erased). Settings are not affected.
  */
 export function computeImport(current: CurrentData, data: ParsedExport, mode: ImportMode): ImportPlan {
   const replace = mode === 'replace'
@@ -368,7 +368,7 @@ export function computeImport(current: CurrentData, data: ParsedExport, mode: Im
   const keptCustom = replace ? [] : current.exercises.filter((e) => e.isCustom)
   const finalIds = new Set([...baseExercises, ...keptCustom, ...data.exercises].map((e) => e.id))
 
-  // Les références vers des exercices qui n'existent pas dans le résultat final sont retirées.
+  // References to exercises that do not exist in the final result are removed.
   const clean = (e: Exercise): Exercise => ({
     ...e,
     alternatives: e.alternatives.filter((id) => finalIds.has(id)),
@@ -382,7 +382,7 @@ export function computeImport(current: CurrentData, data: ParsedExport, mode: Im
   }
   const existingCustom = new Set(current.exercises.filter((e) => e.isCustom).map((e) => e.id))
 
-  // Notes et vidéos des exercices de base.
+  // Notes and videos of built-in exercises.
   const notesById = new Map(data.exerciseNotes.map((n) => [n.id, n]))
   const exercisesPut: Exercise[] = data.exercises.map(clean)
   let restoredNotes = 0
@@ -426,8 +426,8 @@ export const REMINDER_WEEK_OPTIONS: readonly number[] = [0, 1, 2, 4, 8, 12]
 export const DEFAULT_REMINDER_WEEKS = 4
 
 /**
- * Faut-il rappeler d'exporter ? Référence : le dernier export, sinon la plus ancienne donnée.
- * Sans donnée ni export, jamais ; `weeks` à 0 désactive le rappel.
+ * Should we remind the user to export? Reference: the last export, otherwise the oldest data.
+ * With no data and no export, never; `weeks` at 0 disables the reminder.
  */
 export function exportReminderDue(opts: { weeks: number; today: string; lastExportAt?: string; oldestDataDate?: string }): boolean {
   if (opts.weeks <= 0) return false

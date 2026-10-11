@@ -9,7 +9,7 @@ interface Props {
   onChange: (primary: string[], secondary: string[]) => void
 }
 
-/** Choix des muscles par clic sur la silhouette : principal, secondaire ou aucun. */
+/** Muscle selection by clicking the silhouette: primary, secondary or none. */
 export default function MusclePicker({ primary, secondary, onChange }: Props) {
   const { t } = useTranslation()
   const level = (id: string) => (primary.includes(id) ? 'primary' : secondary.includes(id) ? 'secondary' : 'none')

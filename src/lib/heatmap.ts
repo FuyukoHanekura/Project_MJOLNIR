@@ -1,27 +1,27 @@
 import type { Exercise, Session } from '../types'
 import { addDays, dayIndex, mondayOf } from './date'
 
-/** Pleine chaleur : 15 séries par semaine et par muscle. */
+/** Full heat: 15 sets per week per muscle. */
 export const REFERENCE_SETS_PER_WEEK = 15
 
-/** Fenêtre en jours ; 0 = tout l'historique. */
+/** Window in days; 0 = whole history. */
 export type Period = 7 | 30 | 90 | 0
 export const PERIODS: readonly Period[] = [7, 30, 90, 0]
 
 type MuscleSource = Pick<Exercise, 'primaryMuscles' | 'secondaryMuscles'>
 
 export interface MuscleStats {
-  /** Séries pondérées par muscle sur la période : 1 par série pour un principal, 0,5 pour un secondaire. */
+  /** Weighted sets per muscle over the period: 1 per set for a primary muscle, 0.5 for a secondary. */
   load: Record<string, number>
-  /** Dernière séance travaillant le muscle en principal (toutes périodes confondues). */
+  /** Last session working the muscle as a primary (across all periods). */
   last: Record<string, string>
-  /** Durée de la période en semaines (au moins 1 pour « Tout »). */
+  /** Length of the period in weeks (at least 1 for “All”). */
   weeks: number
 }
 
 /**
- * Volume par muscle sur la période. Les séances postérieures à `today` sont ignorées.
- * Les exercices inconnus (supprimés) sont ignorés.
+ * Volume per muscle over the period. Sessions after `today` are ignored.
+ * Unknown (deleted) exercises are ignored.
  */
 export function muscleStats(
   sessions: readonly Session[],
@@ -54,7 +54,7 @@ export function muscleStats(
   return { load, last, weeks }
 }
 
-/** Intensité de 0 à 1 (plafonnée) : séries par semaine rapportées à la référence. */
+/** Intensity from 0 to 1 (capped): sets per week relative to the reference. */
 export function heatLevel(load: number, weeks: number): number {
   return Math.min(1, Math.max(0, load / (REFERENCE_SETS_PER_WEEK * weeks)))
 }
@@ -63,7 +63,7 @@ export function heatLevel(load: number, weeks: number): number {
 
 export interface DayTotal {
   sets: number
-  /** Somme de répétitions × poids (0 pour les séries au poids du corps). */
+  /** Sum of reps × weight (0 for bodyweight sets). */
   volume: number
   sessions: Session[]
 }
@@ -89,7 +89,7 @@ export interface CalendarDay {
   future: boolean
 }
 
-/** Colonnes de 7 jours (lundi à dimanche) sur `weeks` semaines, la dernière contenant `today`. */
+/** Columns of 7 days (Monday to Sunday) over `weeks` weeks, the last one containing `today`. */
 export function calendarWeeks(today: string, weeks = 26): CalendarDay[][] {
   const monday = mondayOf(today)
   if (!monday) return []
@@ -103,8 +103,8 @@ export function calendarWeeks(today: string, weeks = 26): CalendarDay[][] {
 }
 
 /**
- * Valeur de pleine chaleur du calendrier : le 90e centile des jours actifs, pour qu'un jour
- * exceptionnel n'écrase pas toutes les autres cases. Au moins 1.
+ * Full-heat value of the calendar: the 90th percentile of active days, so that one
+ * exceptional day does not wash out all the other cells. At least 1.
  */
 export function calendarReference(values: readonly number[]): number {
   const v = values.filter((x) => x > 0).sort((a, b) => a - b)
@@ -112,14 +112,14 @@ export function calendarReference(values: readonly number[]): number {
   return Math.max(v[Math.min(v.length - 1, Math.floor(v.length * 0.9))], 1)
 }
 
-/* ---------- Statistiques résumées ---------- */
+/* ---------- Summary statistics ---------- */
 
 export interface OverviewStats {
-  /** Séances sur les 30 derniers jours (aujourd'hui inclus). */
+  /** Sessions over the last 30 days (today included). */
   sessions30: number
-  /** Séries depuis le lundi de la semaine en cours. */
+  /** Sets since Monday of the current week. */
   setsThisWeek: number
-  /** Semaines consécutives avec au moins une séance. */
+  /** Consecutive weeks with at least one session. */
   streakWeeks: number
 }
 
@@ -129,7 +129,7 @@ export function overviewStats(sessions: readonly Session[], today: string): Over
   const monday = mondayOf(today) as string
   const weeksWithSession = new Set(past.map((s) => mondayOf(s.date)))
 
-  // Une semaine en cours encore vide ne casse pas la série : on repart de la précédente.
+  // An empty current week does not break the streak: we start from the previous one.
   let week = monday
   if (!weeksWithSession.has(week)) week = addDays(week, -7) as string
   let streakWeeks = 0

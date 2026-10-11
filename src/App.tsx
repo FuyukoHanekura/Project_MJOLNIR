@@ -8,7 +8,7 @@ import ExercisesPage from './pages/ExercisesPage'
 import ExerciseDetailPage from './pages/ExerciseDetailPage'
 import SettingsPage from './pages/SettingsPage'
 
-// Pages moins fréquentes : chargées à la demande pour alléger le premier chargement.
+// Less frequent pages: loaded on demand to keep the first load light.
 const ExerciseFormPage = lazy(() => import('./pages/ExerciseFormPage'))
 const BulkImportPage = lazy(() => import('./pages/BulkImportPage'))
 const TrackingPage = lazy(() => import('./pages/TrackingPage'))

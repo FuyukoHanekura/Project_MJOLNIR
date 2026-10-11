@@ -1,7 +1,7 @@
 import type { TFunction } from 'i18next'
 import { dayIndex } from './date'
 
-/** « jamais », « aujourd'hui », « hier » ou « il y a N jours » entre une date et aujourd'hui. */
+/** “never”, “today”, “yesterday” or “N days ago” between a date and today. */
 export function diffDaysText(date: string | undefined, today: string, t: TFunction): string {
   if (!date) return t('overview.ago.never')
   const n = dayIndex(today) - dayIndex(date)

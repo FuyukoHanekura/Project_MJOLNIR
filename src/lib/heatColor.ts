@@ -1,4 +1,4 @@
-// Dégradé de chaleur du prototype : violet clair → rose → orange (versions claire et sombre).
+// Heat gradient: light purple → pink → orange (light and dark versions).
 const LIGHT: readonly (readonly [number, number, number])[] = [
   [183, 168, 241],
   [232, 69, 139],
@@ -10,7 +10,7 @@ const DARK: readonly (readonly [number, number, number])[] = [
   [255, 154, 31],
 ]
 
-/** Couleur CSS pour une intensité de 0 à 1 ; null pour 0 (case non colorée). */
+/** CSS colour for an intensity from 0 to 1; null for 0 (uncoloured cell). */
 export function heatColor(t: number, dark: boolean): string | null {
   if (!(t > 0)) return null
   const x = (0.1 + 0.9 * Math.min(1, t)) * 2

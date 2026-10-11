@@ -1,12 +1,12 @@
 import type { Session } from '../types'
 import { newId, normalizeSet, parseNumberInput } from './sessions'
 
-/** Brouillon d'édition : les champs numériques restent du texte tant que l'utilisateur tape. */
+/** Editing draft: numeric fields stay text while the user is typing. */
 export interface DraftSet {
   key: string
   reps: string
   weight: string
-  /** '' = pas de RPE */
+  /** '' = no RPE */
   rpe: string
 }
 
@@ -27,7 +27,7 @@ export function emptyDraftSet(): DraftSet {
   return { key: newId(), reps: '', weight: '', rpe: '' }
 }
 
-/** `decimalSeparator` : le séparateur affiché dans les champs (virgule en français). */
+/** `decimalSeparator`: the separator shown in the fields (comma in French). */
 export function toDraft(session: Session, decimalSeparator: '.' | ',' = '.'): SessionDraft {
   const numToText = (n: number) => String(n).replace('.', decimalSeparator)
   return {
@@ -48,8 +48,8 @@ export function toDraft(session: Session, decimalSeparator: '.' | ',' = '.'): Se
 }
 
 /**
- * Brouillon → séance stockée. Les séries incomplètes ou invalides (reps vides ou < 1,
- * poids illisible) ne sont pas enregistrées. Un poids vide compte pour 0 (poids du corps).
+ * Draft → stored session. Incomplete or invalid sets (empty reps or < 1,
+ * unreadable weight) are not saved. An empty weight counts as 0 (bodyweight).
  */
 export function toSession(id: string, draft: SessionDraft): Session {
   const session: Session = {

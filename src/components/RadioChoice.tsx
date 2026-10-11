@@ -12,7 +12,7 @@ interface Props<T extends string> {
   onChange: (value: T) => void
 }
 
-/** Groupe de boutons radio présentés en pastilles (langue, thème). Accessible au clavier. */
+/** Group of radio buttons shown as chips (language, theme). Keyboard accessible. */
 export default function RadioChoice<T extends string>({ name, legend, help, options, value, onChange }: Props<T>) {
   return (
     <fieldset className="mt-6">

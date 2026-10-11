@@ -29,7 +29,7 @@ interface Ready {
 
 const message = (e: unknown) => (e instanceof Error ? e.message : String(e))
 
-/** Import en masse d'exercices personnalisés depuis un fichier JSON, avec rapport des lignes ignorées. */
+/** Bulk import of custom exercises from a JSON file, with a report of skipped lines. */
 export default function BulkImportPage() {
   const { t } = useTranslation()
   const names = useNames()
@@ -65,7 +65,7 @@ export default function BulkImportPage() {
   const runImport = async () => {
     if (!ready) return
     try {
-      // Même chemin que l'import de sauvegarde : les liens vers des exercices inexistants sont retirés.
+      // Same path as the backup import: links to non-existent exercises are removed.
       const plan = computeImport(await readAll(), { sessions: [], bodyWeights: [], exercises: ready.exercises, exerciseNotes: [] }, 'merge')
       await applyImport(plan)
       setDone({ ...plan.summary.exercises, issues: ready.issues })

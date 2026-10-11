@@ -10,11 +10,11 @@ interface Props {
   exercises: readonly Exercise[]
   selected: readonly string[]
   onChange: (ids: string[]) => void
-  /** Exercice en cours d'édition, exclu des propositions. */
+  /** Exercise being edited, excluded from the suggestions. */
   excludeId?: string
 }
 
-/** Sélection de plusieurs exercices : puces retirables et recherche pour en ajouter. */
+/** Multi-exercise selection: removable chips and a search to add more. */
 export default function ExerciseMultiPicker({ label, exercises, selected, onChange, excludeId }: Props) {
   const { t } = useTranslation()
   const names = useNames()

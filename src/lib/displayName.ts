@@ -3,18 +3,18 @@ interface Named {
   nameEn?: string
 }
 
-/** Minuscules sans accents : pour savoir si deux noms sont « identiques ». */
+/** Lowercase without accents: to tell whether two names are “identical”. */
 const flat = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim()
 
-/** Nom d'un exercice, d'un muscle ou d'une machine dans la langue de l'interface (repli sur `name`). */
+/** Name of an exercise, muscle or machine in the interface language (falls back to `name`). */
 export function localizedName(item: Named, lang: string): string {
   return lang === 'en' ? item.nameEn?.trim() || item.name : item.name
 }
 
 /**
- * Ce qu'affiche un nom selon la langue de l'interface :
- * - anglais : le nom anglais seul ;
- * - français : le nom d'origine en gros et l'anglais en petit dessous (une seule ligne s'ils sont identiques).
+ * What a name displays depending on the interface language:
+ * - English: the English name alone;
+ * - French: the original name in large type and the English name smaller below (a single line if they are identical).
  */
 export function displayNames(name: string, nameEn: string | undefined, lang: string): { main: string; sub?: string } {
   if (lang === 'en') return { main: nameEn?.trim() || name }

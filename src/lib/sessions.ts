@@ -1,12 +1,12 @@
 import type { Session, SessionEntry, SetEntry } from '../types'
 
-/** RPE de 6 à 10 par demi-points. */
+/** RPE from 6 to 10 in half points. */
 export const RPE_VALUES: readonly number[] = [6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10]
 
 /**
- * Identifiant unique (format UUID v4). `crypto.randomUUID` n'existe qu'en contexte sécurisé
- * (HTTPS ou localhost) : en HTTP sur le réseau local (test sur téléphone), on se rabat sur
- * `getRandomValues`, qui reste disponible.
+ * Unique identifier (UUID v4 format). `crypto.randomUUID` only exists in a secure context
+ * (HTTPS or localhost): over HTTP on the local network (testing on a phone), we fall back to
+ * `getRandomValues`, which remains available.
  */
 export function newId(): string {
   if (typeof crypto.randomUUID === 'function') return crypto.randomUUID()
@@ -21,7 +21,7 @@ export function createSession(date: string, id: string = newId()): Session {
   return { id, date, name: '', entries: [] }
 }
 
-/** Série valide : répétitions entières ≥ 1, poids ≥ 0, RPE absent ou dans RPE_VALUES. */
+/** Valid set: whole reps ≥ 1, weight ≥ 0, RPE absent or in RPE_VALUES. */
 export function normalizeSet(set: { reps: number; weight: number; rpe?: number }): SetEntry | null {
   const reps = Math.round(set.reps)
   if (!Number.isFinite(reps) || reps < 1) return null
@@ -32,8 +32,8 @@ export function normalizeSet(set: { reps: number; weight: number; rpe?: number }
 }
 
 /**
- * Copie d'une séance à une nouvelle date : mêmes exercices et mêmes séries
- * (point de départ), sans les notes.
+ * Copy of a session to a new date: same exercises and same sets
+ * (as a starting point), without the notes.
  */
 export function duplicateSession(source: Session, date: string, id: string = newId()): Session {
   return {
@@ -50,7 +50,7 @@ export interface Performance {
   sets: SetEntry[]
 }
 
-/** Toutes les performances d'un exercice, de la plus récente à la plus ancienne. */
+/** All performances of an exercise, from most recent to oldest. */
 export function exerciseHistory(sessions: readonly Session[], exerciseId: string): Performance[] {
   const out: Performance[] = []
   for (const s of sessions) {
@@ -61,8 +61,8 @@ export function exerciseHistory(sessions: readonly Session[], exerciseId: string
 }
 
 /**
- * Dernière performance connue d'un exercice, hors séance courante et pas plus
- * récente que `onOrBefore` (pour ne pas citer le futur quand on saisit une séance passée).
+ * Last known performance of an exercise, excluding the current session and no more
+ * recent than `onOrBefore` (so as not to cite the future when logging a past session).
  */
 export function lastPerformance(
   sessions: readonly Session[],
@@ -75,7 +75,7 @@ export function lastPerformance(
   return exerciseHistory(candidates, exerciseId)[0]
 }
 
-/** « 3×12 @ 45 kg, 10 @ 50 kg » : les séries identiques consécutives sont regroupées. */
+/** “3×12 @ 45 kg, 10 @ 50 kg”: identical consecutive sets are grouped. */
 export function formatSets(sets: readonly SetEntry[], fmt: (n: number) => string = String): string {
   const parts: string[] = []
   for (let i = 0; i < sets.length; ) {
@@ -94,12 +94,12 @@ export function countSets(entries: readonly SessionEntry[]): number {
   return entries.reduce((n, e) => n + e.sets.length, 0)
 }
 
-/** Tri par date décroissante. */
+/** Sorted by date, newest first. */
 export function sortSessions(sessions: readonly Session[]): Session[] {
   return [...sessions].sort((a, b) => b.date.localeCompare(a.date))
 }
 
-/** Parse un nombre saisi, virgule ou point décimal. NaN si invalide ou vide. */
+/** Parses a typed number, comma or decimal point. NaN if invalid or empty. */
 export function parseNumberInput(raw: string): number {
   const s = raw.trim().replace(',', '.')
   return s === '' || !/^\d*\.?\d*$/.test(s) ? NaN : Number(s)

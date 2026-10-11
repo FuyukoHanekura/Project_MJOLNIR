@@ -12,7 +12,7 @@ import type { Exercise, Session } from '../types'
 
 const input = 'min-h-11 w-full rounded-lg border border-line bg-surface px-3 text-base text-ink'
 
-/** Éditeur : le brouillon est la source de vérité et s'enregistre à chaque modification. */
+/** Editor: the draft is the source of truth and is saved on every change. */
 function SessionEditor({ session }: { session: Session }) {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
@@ -24,7 +24,7 @@ function SessionEditor({ session }: { session: Session }) {
   const sessions = useLiveQuery(() => db.sessions.toArray())
   const byId = new Map((exercises ?? []).map((e) => [e.id, e]))
 
-  // Sauvegarde automatique (pas à l'ouverture : le brouillon est encore identique).
+  // Autosave (not on open: the draft is still identical).
   useEffect(() => {
     if (draft === initial.current) return
     void db.sessions.put(toSession(session.id, draft))
@@ -74,7 +74,7 @@ function SessionEditor({ session }: { session: Session }) {
             type="date"
             className={`${input} mt-1 font-normal`}
             value={draft.date}
-            // Un champ date vidé donne '' : on garde l'ancienne valeur plutôt qu'une date invalide.
+            // A cleared date field gives '': keep the previous value rather than an invalid date.
             onChange={(e) => e.target.value && patch({ date: e.target.value })}
           />
         </label>
@@ -138,7 +138,7 @@ function SessionEditor({ session }: { session: Session }) {
 export default function SessionEditPage() {
   const { id = '' } = useParams()
   const { t } = useTranslation()
-  // null = introuvable, undefined = chargement. Chargée une fois : l'éditeur gère ensuite son état.
+  // null = not found, undefined = loading. Loaded once: the editor then manages its own state.
   const [session, setSession] = useState<Session | null | undefined>()
 
   useEffect(() => {
