@@ -8,7 +8,7 @@ const muscleIds = new Set(MUSCLES.map((m) => m.id))
 const refs = (ex: (typeof EXERCISES_SEED)[number]) => [...ex.alternatives, ...ex.antagonists, ...ex.complements]
 
 describe('muscles', () => {
-  it('sont 17, sans doublon, avec noms FR et EN', () => {
+  it('has 17 muscles, no duplicates, with FR and EN names', () => {
     expect(MUSCLES).toHaveLength(17)
     expect(muscleIds.size).toBe(17)
     expect(MUSCLES.every((m) => m.name && m.nameEn)).toBe(true)
@@ -104,32 +104,32 @@ describe('catalogue quality', () => {
   })
 })
 
-describe('seed des exercices', () => {
-  it("n'a aucun doublon d'id", () => {
+describe('exercise seed', () => {
+  it("has no duplicate id", () => {
     expect(ids.size).toBe(EXERCISES_SEED.length)
   })
 
-  it('référence uniquement des exercices existants', () => {
+  it('only references existing exercises', () => {
     for (const ex of EXERCISES_SEED) {
       for (const ref of refs(ex)) expect(ids.has(ref), `${ex.id} -> ${ref}`).toBe(true)
     }
   })
 
-  it('ne se référence jamais lui-même', () => {
+  it('never references itself', () => {
     for (const ex of EXERCISES_SEED) expect(refs(ex), ex.id).not.toContain(ex.id)
   })
 
-  it('a au moins un muscle principal', () => {
+  it('has at least one primary muscle', () => {
     for (const ex of EXERCISES_SEED) expect(ex.primaryMuscles.length, ex.id).toBeGreaterThan(0)
   })
 
-  it("n'utilise que les 17 muscles connus", () => {
+  it("only uses the 17 known muscles", () => {
     for (const ex of EXERCISES_SEED) {
       for (const m of [...ex.primaryMuscles, ...ex.secondaryMuscles]) expect(muscleIds.has(m), `${ex.id}: ${m}`).toBe(true)
     }
   })
 
-  it('a des champs bilingues et des énumérations valides', () => {
+  it('has bilingual fields and valid enumerations', () => {
     for (const ex of EXERCISES_SEED) {
       expect(Boolean(ex.name && ex.nameEn && ex.instructions && ex.instructionsEn), ex.id).toBe(true)
       expect(GROUPS).toContain(ex.group)
