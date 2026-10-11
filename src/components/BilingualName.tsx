@@ -1,4 +1,5 @@
-import { bilingual } from '../lib/exercises'
+import { useTranslation } from 'react-i18next'
+import { displayNames } from '../lib/displayName'
 
 interface Props {
   name: string
@@ -7,9 +8,10 @@ interface Props {
   mainClassName?: string
 }
 
-/** Nom d'origine en gros, anglais en plus petit dessous (une seule ligne si identique). */
+/** Interface en anglais : le nom anglais seul. En français : nom d'origine en gros, anglais en plus petit dessous. */
 export default function BilingualName({ name, nameEn, mainClassName = 'text-base font-semibold text-ink' }: Props) {
-  const { main, sub } = bilingual(name, nameEn)
+  const { i18n } = useTranslation()
+  const { main, sub } = displayNames(name, nameEn, i18n.language)
   return (
     <span className="block min-w-0">
       <span className={`block ${mainClassName}`}>{main}</span>

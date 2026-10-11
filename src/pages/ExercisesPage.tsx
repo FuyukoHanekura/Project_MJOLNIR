@@ -6,12 +6,14 @@ import ExerciseLink from '../components/ExerciseLink'
 import { MUSCLE_BY_ID, MUSCLES } from '../data/muscles'
 import { db } from '../db/db'
 import { EQUIPMENT_TYPES, filterExercises, GROUPS, sortExercises } from '../lib/exercises'
+import { useNames } from '../lib/useNames'
 import type { EquipmentType, ExerciseGroup } from '../types'
 
 const selectClass = 'min-h-11 w-full rounded-lg border border-line bg-surface px-3 text-base text-ink'
 
 export default function ExercisesPage() {
   const { t } = useTranslation()
+  const names = useNames()
   const [query, setQuery] = useState('')
   const [group, setGroup] = useState<ExerciseGroup | undefined>()
   const [equipment, setEquipment] = useState<EquipmentType | undefined>()
@@ -24,8 +26,8 @@ export default function ExercisesPage() {
 
   const all = useLiveQuery(() => db.exercises.toArray())
   const shown = useMemo(
-    () => (all ? sortExercises(filterExercises(all, { query, group, equipment, muscle })) : []),
-    [all, query, group, equipment, muscle],
+    () => (all ? sortExercises(filterExercises(all, { query, group, equipment, muscle }), names.lang) : []),
+    [all, query, group, equipment, muscle, names.lang],
   )
   const hasFilters = Boolean(query || group || equipment || muscle)
 
@@ -98,7 +100,7 @@ export default function ExercisesPage() {
             <option value="">{t('exercises.filterMuscle')} : {t('common.all')}</option>
             {MUSCLES.map((m) => (
               <option key={m.id} value={m.id}>
-                {m.name}
+                {names.muscle(m.id)}
               </option>
             ))}
           </select>

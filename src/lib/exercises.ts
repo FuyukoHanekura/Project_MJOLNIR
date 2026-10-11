@@ -1,4 +1,7 @@
 import { MUSCLE_BY_ID } from '../data/muscles'
+import en from '../i18n/en.json'
+import fr from '../i18n/fr.json'
+import { localizedName } from './displayName'
 import type { EquipmentType, Exercise, ExerciseGroup } from '../types'
 
 export const GROUPS: readonly ExerciseGroup[] = ['back', 'chest', 'shoulders', 'arms', 'legs', 'abs']
@@ -31,7 +34,9 @@ function searchText(ex: Exercise): string {
     const m = MUSCLE_BY_ID.get(id)
     return m ? [m.name, m.nameEn] : []
   })
-  return normalize([ex.name, ex.nameEn, ex.machineType ?? '', ex.machineTypeEn ?? '', ...muscles].join(' '))
+  // Groupe et matériel sont cherchés dans les deux langues : « dos » comme « back », « barre » comme « barbell ».
+  const labels = [fr.groups[ex.group], en.groups[ex.group], fr.equipment[ex.equipmentType], en.equipment[ex.equipmentType]]
+  return normalize([ex.name, ex.nameEn, ex.machineType ?? '', ex.machineTypeEn ?? '', ...muscles, ...labels].join(' '))
 }
 
 export function filterExercises(exercises: readonly Exercise[], f: ExerciseFilters): Exercise[] {
@@ -46,10 +51,12 @@ export function filterExercises(exercises: readonly Exercise[], f: ExerciseFilte
   })
 }
 
-/** Tri par groupe (ordre de GROUPS) puis par nom. */
-export function sortExercises(exercises: readonly Exercise[]): Exercise[] {
+/** Tri par groupe (ordre de GROUPS) puis par nom tel qu'affiché dans la langue de l'interface. */
+export function sortExercises(exercises: readonly Exercise[], lang = 'fr'): Exercise[] {
   return [...exercises].sort(
-    (a, b) => GROUPS.indexOf(a.group) - GROUPS.indexOf(b.group) || a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }),
+    (a, b) =>
+      GROUPS.indexOf(a.group) - GROUPS.indexOf(b.group) ||
+      localizedName(a, lang).localeCompare(localizedName(b, lang), lang === 'en' ? 'en' : 'fr', { sensitivity: 'base' }),
   )
 }
 

@@ -8,6 +8,7 @@ import ExerciseProgress from '../components/ExerciseProgress'
 import RecordsList from '../components/RecordsList'
 import { db } from '../db/db'
 import { exercisesWithData, personalRecords } from '../lib/tracking'
+import { useNames } from '../lib/useNames'
 import type { Exercise, Session } from '../types'
 
 type Tab = 'weight' | 'progress' | 'records'
@@ -15,6 +16,7 @@ const TABS: readonly Tab[] = ['weight', 'progress', 'records']
 
 function ProgressPanel({ sessions, exercises }: { sessions: Session[]; exercises: Map<string, Exercise> }) {
   const { t } = useTranslation()
+  const names = useNames()
   const ids = exercisesWithData(sessions)
   const [chosen, setChosen] = useState<string | undefined>()
   const selected = chosen && ids.includes(chosen) ? chosen : ids[0]
@@ -31,7 +33,7 @@ function ProgressPanel({ sessions, exercises }: { sessions: Session[]; exercises
         >
           {ids.map((id) => (
             <option key={id} value={id}>
-              {exercises.get(id)?.name ?? id}
+              {exercises.has(id) ? names.exercise(exercises.get(id) as Exercise) : id}
             </option>
           ))}
         </select>

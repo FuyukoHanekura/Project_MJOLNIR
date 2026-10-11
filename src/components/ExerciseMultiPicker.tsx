@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { filterExercises, sortExercises } from '../lib/exercises'
+import { useNames } from '../lib/useNames'
 import type { Exercise } from '../types'
 import BilingualName from './BilingualName'
 
@@ -16,11 +17,12 @@ interface Props {
 /** Sélection de plusieurs exercices : puces retirables et recherche pour en ajouter. */
 export default function ExerciseMultiPicker({ label, exercises, selected, onChange, excludeId }: Props) {
   const { t } = useTranslation()
+  const names = useNames()
   const [query, setQuery] = useState('')
   const byId = useMemo(() => new Map(exercises.map((e) => [e.id, e])), [exercises])
   const results = useMemo(
-    () => (query.trim() ? sortExercises(filterExercises(exercises, { query }).filter((e) => e.id !== excludeId && !selected.includes(e.id))).slice(0, 8) : []),
-    [exercises, query, excludeId, selected],
+    () => (query.trim() ? sortExercises(filterExercises(exercises, { query }).filter((e) => e.id !== excludeId && !selected.includes(e.id)), names.lang).slice(0, 8) : []),
+    [exercises, query, excludeId, selected, names.lang],
   )
 
   return (
@@ -29,7 +31,8 @@ export default function ExerciseMultiPicker({ label, exercises, selected, onChan
       {selected.length > 0 && (
         <ul className="mt-2 flex flex-wrap gap-2">
           {selected.map((id) => {
-            const name = byId.get(id)?.name ?? id
+            const found = byId.get(id)
+            const name = found ? names.exercise(found) : id
             return (
               <li key={id} className="flex items-center rounded-full border border-line bg-surface pl-3 text-sm text-ink">
                 {name}

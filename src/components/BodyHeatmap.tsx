@@ -8,6 +8,7 @@ import { numberFormatter } from '../lib/format'
 import { heatColor } from '../lib/heatColor'
 import { heatLevel, muscleStats, PERIODS, REFERENCE_SETS_PER_WEEK, type Period } from '../lib/heatmap'
 import { useIsDark } from '../lib/useIsDark'
+import { useNames } from '../lib/useNames'
 import type { Exercise, Session } from '../types'
 import BilingualName from './BilingualName'
 import HeatSilhouette from './HeatSilhouette'
@@ -24,6 +25,7 @@ export default function BodyHeatmap({ sessions, exercises }: Props) {
   const { t, i18n } = useTranslation()
   const dark = useIsDark()
   const fmt = numberFormatter(i18n.language)
+  const names = useNames()
   const today = todayLocal()
   const [period, setPeriod] = useState<Period>(30)
   const [selected, setSelected] = useState<string | undefined>()
@@ -40,7 +42,7 @@ export default function BodyHeatmap({ sessions, exercises }: Props) {
 
   const sets = (v: number) => t('overview.body.sets', { count: v, n: fmt(Math.round(v * 10) / 10) })
   const describe = (id: string) => {
-    const name = MUSCLES.find((m) => m.id === id)?.name ?? id
+    const name = names.muscle(id)
     const v = stats.load[id] ?? 0
     return v ? t('overview.body.muscleValue', { name, count: v, n: fmt(Math.round(v * 10) / 10) }) : t('overview.body.muscleNone', { name })
   }
@@ -126,7 +128,7 @@ export default function BodyHeatmap({ sessions, exercises }: Props) {
                       selected === m.id ? 'bg-accent/10' : 'hover:bg-accent/5'
                     }`}
                   >
-                    <span className="text-ink">{m.name}</span>
+                    <span className="text-ink">{names.muscle(m.id)}</span>
                     <span className="text-sm text-ink2">{v ? sets(v) : '—'}</span>
                     <span className="col-span-2 block h-1.5 overflow-hidden rounded-full bg-[var(--m0)]" aria-hidden="true">
                       <i className="block h-full rounded-full" style={{ width: `${Math.round(heat[m.id] * 100)}%`, background: color ?? undefined }} />

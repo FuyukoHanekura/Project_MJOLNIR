@@ -1,5 +1,5 @@
-import { MUSCLE_BY_ID } from '../data/muscles'
 import { heatColor } from '../lib/heatColor'
+import { useNames } from '../lib/useNames'
 import { BACK, BASE, FRONT } from './silhouetteShapes'
 
 interface Props {
@@ -17,6 +17,7 @@ interface Props {
 
 /** Silhouette colorée par intensité ; chaque muscle est un bouton (clavier et tactile). */
 export default function HeatSilhouette({ view, heat, dark, selected, onSelect, describe, label }: Props) {
+  const { muscle } = useNames()
   return (
     <svg viewBox="0 0 200 362" role="group" aria-label={label} className="h-auto w-full">
       {BASE}
@@ -39,7 +40,7 @@ export default function HeatSilhouette({ view, heat, dark, selected, onSelect, d
               }
             }}
           >
-            <title>{MUSCLE_BY_ID.get(id)?.name ?? id}</title>
+            <title>{muscle(id)}</title>
             {shapes}
           </g>
         )

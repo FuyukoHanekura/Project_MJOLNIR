@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { MUSCLE_BY_ID } from '../data/muscles'
+import { useNames } from '../lib/useNames'
 import type { Exercise } from '../types'
 import BilingualName from './BilingualName'
 
@@ -11,13 +11,8 @@ interface Props {
 /** Ligne cliquable vers la fiche d'un exercice. */
 export default function ExerciseLink({ exercise: ex }: Props) {
   const { t } = useTranslation()
-  const muscles = ex.primaryMuscles
-    .slice(0, 2)
-    .map((id) => {
-      const m = MUSCLE_BY_ID.get(id)
-      return m ? m.name : id
-    })
-    .join(', ')
+  const names = useNames()
+  const muscles = ex.primaryMuscles.slice(0, 2).map(names.muscle).join(', ')
 
   return (
     <Link

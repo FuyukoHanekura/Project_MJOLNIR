@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { MUSCLE_BY_ID } from '../data/muscles'
+import { useNames } from '../lib/useNames'
 import { cycleMuscle } from '../lib/exercises'
 import { BACK, BASE, FRONT } from './silhouetteShapes'
 
@@ -17,7 +17,8 @@ export default function MusclePicker({ primary, secondary, onChange }: Props) {
     const next = cycleMuscle(primary, secondary, id)
     onChange(next.primary, next.secondary)
   }
-  const names = (ids: readonly string[]) => ids.map((id) => MUSCLE_BY_ID.get(id)?.name ?? id)
+  const { muscle } = useNames()
+  const names = (ids: readonly string[]) => ids.map(muscle)
 
   return (
     <div>
@@ -29,7 +30,7 @@ export default function MusclePicker({ primary, secondary, onChange }: Props) {
               {BASE}
               {(view === 'front' ? FRONT : BACK).map(([id, shapes]) => {
                 const state = level(id)
-                const name = MUSCLE_BY_ID.get(id)?.name ?? id
+                const name = muscle(id)
                 return (
                   <g
                     key={id}

@@ -9,6 +9,7 @@ import ExerciseProgress from '../components/ExerciseProgress'
 import Silhouette from '../components/Silhouette'
 import { MUSCLE_BY_ID } from '../data/muscles'
 import { db } from '../db/db'
+import { useNames } from '../lib/useNames'
 import { formatLocalDate, numberFormatter } from '../lib/format'
 import { exerciseHistory, formatSets } from '../lib/sessions'
 import type { Exercise } from '../types'
@@ -106,6 +107,7 @@ function Progress({ exerciseId }: { exerciseId: string }) {
 /** Modifier ou supprimer un exercice personnalisé (la base de départ n'est pas modifiable). */
 function CustomActions({ exercise }: { exercise: Exercise }) {
   const { t } = useTranslation()
+  const names = useNames()
   const navigate = useNavigate()
   const usedIn = useLiveQuery(
     async () => (await db.sessions.toArray()).filter((s) => s.entries.some((e) => e.exerciseId === exercise.id)).length,
@@ -119,7 +121,7 @@ function CustomActions({ exercise }: { exercise: Exercise }) {
         </Link>
         <ConfirmDeleteButton
           label={t('detail.deleteExercise')}
-          ariaLabel={t('detail.deleteExerciseAria', { name: exercise.name })}
+          ariaLabel={t('detail.deleteExerciseAria', { name: names.exercise(exercise) })}
           onConfirm={() => void db.exercises.delete(exercise.id).then(() => navigate('/exercices', { replace: true }))}
         />
       </div>

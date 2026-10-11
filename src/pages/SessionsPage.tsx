@@ -7,6 +7,7 @@ import { db } from '../db/db'
 import { todayLocal } from '../lib/date'
 import { formatLocalDate } from '../lib/format'
 import { countSets, createSession, duplicateSession, sortSessions } from '../lib/sessions'
+import { useNames } from '../lib/useNames'
 import type { Session } from '../types'
 
 export default function SessionsPage() {
@@ -14,7 +15,8 @@ export default function SessionsPage() {
   const navigate = useNavigate()
   const sessions = useLiveQuery(() => db.sessions.toArray())
   const exercises = useLiveQuery(() => db.exercises.toArray())
-  const nameOf = new Map((exercises ?? []).map((e) => [e.id, e.name]))
+  const names = useNames()
+  const nameOf = new Map((exercises ?? []).map((e) => [e.id, names.exercise(e)]))
 
   const open = (id: string) => navigate(`/seances/${id}`)
 
@@ -61,7 +63,7 @@ export default function SessionsPage() {
       <ul className="mt-4 space-y-3">
         {sorted.map((s) => {
           const title = s.name || t('sessions.untitled')
-          const names = s.entries.map((e) => nameOf.get(e.exerciseId) ?? e.exerciseId)
+          const exerciseNames = s.entries.map((e) => nameOf.get(e.exerciseId) ?? e.exerciseId)
           return (
             <li key={s.id} className="rounded-xl border border-line bg-surface p-4">
               <Link to={`/seances/${s.id}`} className="block min-h-11">
@@ -75,10 +77,10 @@ export default function SessionsPage() {
                     ? t('sessions.summary', { count: s.entries.length, sets: countSets(s.entries) })
                     : t('sessions.noExercise')}
                 </span>
-                {names.length > 0 && (
+                {exerciseNames.length > 0 && (
                   <span className="mt-1 block truncate text-sm text-muted">
-                    {names.slice(0, 3).join(' · ')}
-                    {names.length > 3 ? ' …' : ''}
+                    {exerciseNames.slice(0, 3).join(' · ')}
+                    {exerciseNames.length > 3 ? ' …' : ''}
                   </span>
                 )}
               </Link>

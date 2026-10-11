@@ -5,6 +5,7 @@ import ImportIssues from '../components/ImportIssues'
 import { applyImport, exerciseContext, readAll } from '../db/dataIo'
 import { MAX_IMPORT_BYTES } from '../lib/download'
 import { bulkExerciseArray, computeImport, parseExerciseList, type ImportIssue } from '../lib/exportFormat'
+import { useNames } from '../lib/useNames'
 import type { Exercise } from '../types'
 
 const EXAMPLE = `[
@@ -31,6 +32,7 @@ const message = (e: unknown) => (e instanceof Error ? e.message : String(e))
 /** Import en masse d'exercices personnalisés depuis un fichier JSON, avec rapport des lignes ignorées. */
 export default function BulkImportPage() {
   const { t } = useTranslation()
+  const names = useNames()
   const [ready, setReady] = useState<Ready | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [done, setDone] = useState<{ added: number; updated: number; issues: ImportIssue[] } | null>(null)
@@ -108,7 +110,7 @@ export default function BulkImportPage() {
           {ready.exercises.length > 0 && (
             <ul className="mt-2 max-h-48 list-disc space-y-0.5 overflow-y-auto pl-5 text-sm text-ink2">
               {ready.exercises.map((e) => (
-                <li key={e.id}>{e.name}</li>
+                <li key={e.id}>{names.exercise(e)}</li>
               ))}
             </ul>
           )}

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { MUSCLE_BY_ID } from '../data/muscles'
+import { useNames } from '../lib/useNames'
 import { BACK, BASE, FRONT } from './silhouetteShapes'
 
 export type SilhouetteView = 'front' | 'back'
@@ -13,13 +13,8 @@ interface Props {
 /** Silhouette avant ou arrière : muscles principaux en couleur forte, secondaires en couleur claire. */
 export default function Silhouette({ view, primary, secondary }: Props) {
   const { t } = useTranslation()
-  const names = (ids: readonly string[]) =>
-    ids
-      .map((id) => {
-        const m = MUSCLE_BY_ID.get(id)
-        return m ? m.name : id
-      })
-      .join(', ') || t('detail.none')
+  const { muscle } = useNames()
+  const names = (ids: readonly string[]) => ids.map(muscle).join(', ') || t('detail.none')
 
   const label = t('detail.silhouetteLabel', {
     view: t(view === 'front' ? 'detail.front' : 'detail.back'),

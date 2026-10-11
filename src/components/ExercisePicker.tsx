@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { filterExercises, sortExercises } from '../lib/exercises'
+import { useNames } from '../lib/useNames'
 import type { Exercise } from '../types'
 import BilingualName from './BilingualName'
 
@@ -13,8 +14,9 @@ interface Props {
 /** Recherche d'un exercice à ajouter à la séance. */
 export default function ExercisePicker({ exercises, onPick, onClose }: Props) {
   const { t } = useTranslation()
+  const { lang } = useNames()
   const [query, setQuery] = useState('')
-  const results = useMemo(() => sortExercises(filterExercises(exercises, { query })).slice(0, 40), [exercises, query])
+  const results = useMemo(() => sortExercises(filterExercises(exercises, { query }), lang).slice(0, 40), [exercises, query, lang])
 
   return (
     <div className="mt-4 rounded-xl border border-accent bg-surface p-3">

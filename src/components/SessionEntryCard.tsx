@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { formatLocalDate, numberFormatter } from '../lib/format'
+import { useNames } from '../lib/useNames'
 import { emptyDraftSet, type DraftEntry, type DraftSet } from '../lib/sessionDraft'
 import { formatSets, RPE_VALUES, type Performance } from '../lib/sessions'
 import type { Exercise } from '../types'
@@ -24,8 +25,9 @@ const iconBtn = 'flex min-h-11 min-w-11 items-center justify-center rounded-lg b
 
 export default function SessionEntryCard({ entry, exercise, last, isFirst, isLast, onChange, onRemove, onMove, onReuseLast }: Props) {
   const { t, i18n } = useTranslation()
+  const names = useNames()
   const fmt = numberFormatter(i18n.language)
-  const name = exercise?.name ?? entry.exerciseId
+  const name = exercise ? names.exercise(exercise) : entry.exerciseId
 
   const setSets = (sets: DraftSet[]) => onChange({ ...entry, sets })
   const updateSet = (key: string, patch: Partial<DraftSet>) => setSets(entry.sets.map((s) => (s.key === key ? { ...s, ...patch } : s)))
