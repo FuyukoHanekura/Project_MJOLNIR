@@ -5,7 +5,7 @@ import { localizedName } from './displayName'
 import type { EquipmentType, Exercise, ExerciseGroup } from '../types'
 
 export const GROUPS: readonly ExerciseGroup[] = ['back', 'chest', 'shoulders', 'arms', 'legs', 'abs']
-export const EQUIPMENT_TYPES: readonly EquipmentType[] = ['machine', 'cable', 'barbell', 'dumbbell', 'bodyweight']
+export const EQUIPMENT_TYPES: readonly EquipmentType[] = ['machine', 'cable', 'barbell', 'dumbbell', 'bodyweight', 'smith', 'kettlebell', 'band']
 
 /** Minuscules sans accents, pour des recherches tolérantes. */
 export function normalize(s: string): string {
@@ -24,7 +24,8 @@ export function bilingual(main: string, en: string | undefined): { main: string;
 export interface ExerciseFilters {
   query?: string
   group?: ExerciseGroup
-  equipment?: EquipmentType
+  /** Equipment types to show: an exercise matches if its equipment is any of them. Empty or absent = no filter. */
+  equipment?: readonly EquipmentType[]
   /** Id de muscle, comparé aux muscles principaux. */
   muscle?: string
 }
@@ -43,7 +44,7 @@ export function filterExercises(exercises: readonly Exercise[], f: ExerciseFilte
   const words = normalize(f.query ?? '').split(/\s+/).filter(Boolean)
   return exercises.filter((ex) => {
     if (f.group && ex.group !== f.group) return false
-    if (f.equipment && ex.equipmentType !== f.equipment) return false
+    if (f.equipment?.length && !f.equipment.includes(ex.equipmentType)) return false
     if (f.muscle && !ex.primaryMuscles.includes(f.muscle)) return false
     if (!words.length) return true
     const text = searchText(ex)

@@ -35,9 +35,20 @@ describe('filterExercises', () => {
     expect(r.some((e) => e.id === 'leg_extension')).toBe(true)
   })
   it('combine requête et filtres', () => {
-    const r = filterExercises(EXERCISES_SEED, { group: 'back', equipment: 'cable', query: 'tirage' })
+    const r = filterExercises(EXERCISES_SEED, { group: 'back', equipment: ['cable'], query: 'tirage' })
     expect(r.length).toBeGreaterThan(0)
     expect(r.every((e) => e.group === 'back' && e.equipmentType === 'cable')).toBe(true)
+  })
+  it('equipment filter accepts several types at once (OR)', () => {
+    const both = filterExercises(EXERCISES_SEED, { group: 'chest', equipment: ['barbell', 'dumbbell'] })
+    expect(both.length).toBeGreaterThan(0)
+    expect(both.every((e) => e.equipmentType === 'barbell' || e.equipmentType === 'dumbbell')).toBe(true)
+    const barbell = filterExercises(EXERCISES_SEED, { group: 'chest', equipment: ['barbell'] })
+    const dumbbell = filterExercises(EXERCISES_SEED, { group: 'chest', equipment: ['dumbbell'] })
+    expect(both).toHaveLength(barbell.length + dumbbell.length)
+  })
+  it('an empty equipment list means no equipment filter', () => {
+    expect(filterExercises(EXERCISES_SEED, { equipment: [] })).toHaveLength(EXERCISES_SEED.length)
   })
   it('filtre par muscle principal', () => {
     const r = filterExercises(EXERCISES_SEED, { muscle: 'calves' })

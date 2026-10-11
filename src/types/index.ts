@@ -1,5 +1,5 @@
 export type ExerciseGroup = 'back' | 'chest' | 'shoulders' | 'arms' | 'legs' | 'abs'
-export type EquipmentType = 'machine' | 'cable' | 'barbell' | 'dumbbell' | 'bodyweight'
+export type EquipmentType = 'machine' | 'cable' | 'barbell' | 'dumbbell' | 'bodyweight' | 'smith' | 'kettlebell' | 'band'
 
 export interface Muscle {
   id: string

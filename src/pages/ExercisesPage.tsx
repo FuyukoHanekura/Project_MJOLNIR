@@ -16,7 +16,7 @@ export default function ExercisesPage() {
   const names = useNames()
   const [query, setQuery] = useState('')
   const [group, setGroup] = useState<ExerciseGroup | undefined>()
-  const [equipment, setEquipment] = useState<EquipmentType | undefined>()
+  const [equipment, setEquipment] = useState<EquipmentType[]>([])
   // Le lien « Voir les exercices » de l'aperçu arrive avec ?muscle=<id>.
   const [params] = useSearchParams()
   const [muscle, setMuscle] = useState<string | undefined>(() => {
@@ -29,12 +29,12 @@ export default function ExercisesPage() {
     () => (all ? sortExercises(filterExercises(all, { query, group, equipment, muscle }), names.lang) : []),
     [all, query, group, equipment, muscle, names.lang],
   )
-  const hasFilters = Boolean(query || group || equipment || muscle)
+  const hasFilters = Boolean(query || group || equipment.length || muscle)
 
   const reset = () => {
     setQuery('')
     setGroup(undefined)
-    setEquipment(undefined)
+    setEquipment([])
     setMuscle(undefined)
   }
 
@@ -77,20 +77,30 @@ export default function ExercisesPage() {
           ))}
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-2">
-          <select
-            aria-label={t('exercises.filterEquipment')}
-            value={equipment ?? ''}
-            onChange={(e) => setEquipment((e.target.value || undefined) as EquipmentType | undefined)}
-            className={selectClass}
-          >
-            <option value="">{t('exercises.filterEquipment')} : {t('common.all')}</option>
-            {EQUIPMENT_TYPES.map((eq) => (
-              <option key={eq} value={eq}>
-                {t(`equipment.${eq}`)}
-              </option>
-            ))}
-          </select>
+        {/* Equipment: several types can be ticked at once (OR), none = everything. */}
+        <div role="group" aria-label={t('exercises.filterEquipment')}>
+          <p className="mb-2 text-sm font-semibold text-ink2">{t('exercises.filterEquipment')}</p>
+          <div className="flex flex-wrap gap-2">
+            {EQUIPMENT_TYPES.map((eq) => {
+              const on = equipment.includes(eq)
+              return (
+                <button
+                  key={eq}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => setEquipment((prev) => (prev.includes(eq) ? prev.filter((x) => x !== eq) : [...prev, eq]))}
+                  className={`min-h-11 rounded-full border px-4 text-sm font-semibold ${
+                    on ? 'border-brand bg-brand text-brand-ink' : 'border-line bg-surface text-ink2'
+                  }`}
+                >
+                  {t(`equipment.${eq}`)}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        <div>
           <select
             aria-label={t('exercises.filterMuscle')}
             value={muscle ?? ''}

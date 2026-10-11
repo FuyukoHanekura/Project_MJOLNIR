@@ -25,7 +25,10 @@
     "cable": "Cable",
     "barbell": "Barbell",
     "dumbbell": "Dumbbell",
-    "bodyweight": "Bodyweight"
+    "bodyweight": "Bodyweight",
+    "smith": "Smith machine",
+    "kettlebell": "Kettlebell",
+    "band": "Resistance band"
   },
   "exercises": {
     "title": "Exercises",
@@ -367,7 +370,7 @@
     "title": "Import exercises",
     "help": "Choose a JSON file containing a list of exercises. Only the name, group, equipment and one primary muscle are required; the rest is filled in.",
     "formatTitle": "See the expected format",
-    "formatNote": "Groups: back, chest, shoulders, arms, legs, abs. Equipment: machine, cable, barbell, dumbbell, bodyweight. Muscles: chest, shoulders, rear_delts, traps, lats, mid_back, lower_back, biceps, triceps, forearms, abs, obliques, quads, hamstrings, glutes, calves, adductors.",
+    "formatNote": "Groups: back, chest, shoulders, arms, legs, abs. Equipment: machine, cable, barbell, dumbbell, bodyweight, smith, kettlebell, band. Muscles: chest, shoulders, rear_delts, traps, lats, mid_back, lower_back, biceps, triceps, forearms, abs, obliques, quads, hamstrings, glutes, calves, adductors.",
     "file": "Choose a file",
     "notList": "The file must contain a list of exercises (or an object with an \"exercises\" key).",
     "ready_one": "{{count}} exercise ready to import",
