@@ -1,46 +1,48 @@
-# Plan : app de suivi de musculation (pour Claude Code)
+# Plan: gym logbook app (for Claude Code)
 
 Sep 18, 2026 · @Fuyuko
 
-## Objectif et contraintes
+> This is the initial plan the project started from. It is kept for context: `CLAUDE.md` holds the current decisions and takes precedence over it (for example, the app grew a Tracking tab, themes, 421 exercises and an English-first repository since this plan was written).
 
-Une PWA de suivi de musculation, 100 % locale : aucun compte, aucune base distante, les données se sauvegardent et se transfèrent par export/import JSON.
+## Goals and constraints
 
-- Mobile-first, mais confortable sur PC.
-- Installable sur l'écran d'accueil et utilisable hors ligne.
-- Interface bilingue français/anglais, avec sélecteur de langue. Noms d'exercices, de machines et de muscles affichés en gros dans leur langue d'origine, avec l'anglais en plus petit dessous.
-- Deux heatmaps : calendrier des jours d'entraînement et silhouette du corps colorée par volume par muscle.
+A gym logbook PWA, 100 % local: no account, no remote database, data is backed up and transferred with JSON export/import.
 
-## Stack recommandée
+- Mobile-first, but comfortable on desktop.
+- Installable on the home screen and usable offline.
+- Bilingual French/English interface with a language selector. Exercise, machine and muscle names shown in large type in their original language, with the English name smaller below.
+- Two heatmaps: a training-day calendar and a body silhouette coloured by volume per muscle.
 
-Vite, React et TypeScript, avec un stockage 100 % dans le navigateur.
+## Recommended stack
 
-| Besoin | Choix |
+Vite, React and TypeScript, with storage entirely in the browser.
+
+| Need | Choice |
 | --- | --- |
 | Framework | Vite + React + TypeScript |
 | Style | Tailwind CSS, mobile-first |
-| Stockage local | IndexedDB via Dexie (plus fiable que localStorage) |
-| Graphiques | Recharts (poids de corps, RPE) |
-| Silhouette musculaire | SVG avec muscles colorables (`react-body-highlighter` ou SVG maison) |
-| Heatmap calendrier | Grille CSS maison, sans dépendance |
-| Installation et hors ligne | `vite-plugin-pwa` |
-| Hébergement | Netlify, Vercel ou GitHub Pages (gratuit) |
+| Local storage | IndexedDB through Dexie (more reliable than localStorage) |
+| Charts | Recharts (body weight, RPE) |
+| Muscle silhouette | SVG with colourable muscles (`react-body-highlighter` or a custom SVG) |
+| Calendar heatmap | Custom CSS grid, no dependency |
+| Installation and offline | `vite-plugin-pwa` |
+| Hosting | Netlify, Vercel or GitHub Pages (free) |
 
-## Modèle de données
+## Data model
 
-Trois entités suffisent ; l'export JSON les regroupe avec un numéro de version pour gérer les migrations futures.
+Three entities are enough; the JSON export groups them with a version number to handle future migrations.
 
 ```ts
 Exercise {
-  id, name, nameEn,     // nom d'origine (en gros) + anglais (en petit)
+  id, name, nameEn,     // original name (large) + English (small)
   primaryMuscles[], secondaryMuscles[],
-  equipment,            // "machine", "haltères", "poulie"...
-  machineType?,         // "Poulie haute", "Smith"...
+  equipment,            // "machine", "dumbbells", "cable"...
+  machineType?,         // "High pulley", "Smith"...
   machineTypeEn?,       // "High pulley"...
-  alternatives[],       // ids d'exercices proches
-  complements[],        // ids d'exercices antagonistes/complémentaires
+  alternatives[],       // ids of similar exercises
+  complements[],        // ids of antagonist/complementary exercises
   videoUrl?, notes?,
-  isCustom              // true si créé par l'utilisateur
+  isCustom              // true if created by the user
 }
 
 Session {
@@ -55,75 +57,75 @@ BodyWeight { date, kg }
 Export { version, exercises (custom), sessions, bodyWeights }
 ```
 
-## Fonctionnalités
+## Features
 
-Six blocs, du plus utilisé au quotidien au plus occasionnel.
+Six blocks, from the most used daily to the most occasional.
 
-**Séances**
+**Sessions**
 
-- Créer une séance (nom + date), y ajouter des exercices puis les séries (reps × poids).
-- Affichage type « Tirage vertical 3×12 @ 45 kg », avec la dernière performance sur le même exercice en rappel.
-- Dupliquer une ancienne séance (Pull, Push, Legs).
+- Create a session (name + date), add exercises then sets (reps × weight).
+- Display such as “Lat pulldown 3×12 @ 45 kg”, with the last performance on the same exercise as a reminder.
+- Duplicate an old session (Pull, Push, Legs).
 
-**Fiche exercice**
+**Exercise page**
 
-- Silhouette avant/arrière : muscles principaux en couleur forte, secondaires en couleur claire.
-- Type de machine, vidéo, notes.
-- Alternatives (même groupe musculaire) et complémentaires (muscles antagonistes), toutes cliquables.
-- Historique de tes performances et courbe de progression.
+- Front/back silhouette: primary muscles in a strong colour, secondary muscles in a light colour.
+- Machine type, video, notes.
+- Alternatives (same muscle group) and complements (antagonist muscles), all clickable.
+- History of your performances and a progression chart.
 
 **Heatmaps**
 
-- Calendrier : intensité par jour (nombre de séries ou volume).
-- Corps : volume par muscle sur 7, 30 ou 90 jours. Une série compte 1 pour un muscle principal et 0,5 pour un secondaire, puis on normalise en couleurs. Cela révèle les muscles négligés.
+- Calendar: intensity per day (number of sets or volume).
+- Body: volume per muscle over 7, 30 or 90 days. A set counts 1 for a primary muscle and 0.5 for a secondary one, then values are normalised into colours. This reveals neglected muscles.
 
-**Suivi**
+**Tracking**
 
-- Poids de corps : saisie rapide, courbe, moyenne glissante.
-- RPE moyen par exercice (saisi à chaque série, de 6 à 10 par demi-points) : courbe dans le temps pour voir une même charge devenir plus facile. Records personnels mis en évidence.
+- Body weight: quick entry, chart, rolling average.
+- Average RPE per exercise (entered on every set, from 6 to 10 in half points): chart over time to see the same weight getting easier. Personal records highlighted.
 
-**Ajouter des exercices**
+**Adding exercises**
 
-- Bouton « Nouvel exercice » : formulaire (nom d'origine + nom anglais) avec sélecteur de muscles (clic sur la silhouette), équipement, alternatives, complémentaires, lien vidéo.
-- Import en masse par fichier JSON.
-- Base de départ : importer *free-exercise-db* (open source) en l'adaptant, ou faire générer une base d'environ 80 exercices courants en français et en anglais avec alternatives et complémentaires.
+- “New exercise” button: form (original name + English name) with a muscle picker (click on the silhouette), equipment, alternatives, complements, video link.
+- Bulk import from a JSON file.
+- Starter catalogue: import *free-exercise-db* (open source) and adapt it, or generate a catalogue of about 80 common exercises in French and English with alternatives and complements.
 
-**Données**
+**Data**
 
-- Export JSON (téléchargement) et import, au choix « fusionner » ou « remplacer ».
-- Rappel d'export toutes les X semaines : Safari sur iPhone peut purger le stockage local d'un site peu utilisé.
+- JSON export (download) and import, with a choice of “merge” or “replace”.
+- Export reminder every X weeks: Safari on iPhone may purge the local storage of a rarely used site.
 
-## Phases de développement
+## Development phases
 
-Sept phases, avec une validation de ta part avant de passer à la suivante.
+Seven phases, with your validation before moving to the next one.
 
-| # | Phase | Contenu |
+| # | Phase | Content |
 | --- | --- | --- |
-| 1 | Base | Init du projet, PWA, navigation mobile (Séances, Exercices, Stats, Réglages), Dexie, modèle de données |
-| 2 | Exercices | Seed bilingue FR/EN, i18n de l'interface, liste avec recherche et filtres, fiche exercice, silhouette SVG |
-| 3 | Séances | Création, saisie des séries, historique, duplication |
-| 4 | Suivi | Poids de corps, RPE et records, graphiques |
-| 5 | Heatmaps | Calendrier puis corps |
-| 6 | Données | Export/import, exercices personnalisés, import en masse |
-| 7 | Finitions | Mode sombre, tests des calculs (RPE moyen, volume par muscle), déploiement |
+| 1 | Base | Project init, PWA, mobile navigation (Sessions, Exercises, Stats, Settings), Dexie, data model |
+| 2 | Exercises | Bilingual FR/EN seed, interface i18n, list with search and filters, exercise page, SVG silhouette |
+| 3 | Sessions | Creation, set entry, history, duplication |
+| 4 | Tracking | Body weight, RPE and records, charts |
+| 5 | Heatmaps | Calendar then body |
+| 6 | Data | Export/import, custom exercises, bulk import |
+| 7 | Polish | Dark mode, calculation tests (average RPE, volume per muscle), deployment |
 
-## Prompt de départ pour Claude Code
+## Starting prompt for Claude Code
 
-À coller tel quel dans Claude Code, avec ce document (ou ses sections Modèle de données et Fonctionnalités) en contexte.
+To paste as is into Claude Code, with this document (or its Data model and Features sections) in context.
 
 ```text
-Construis une PWA de suivi de musculation, mobile-first mais responsive sur PC.
-Stack : Vite, React, TypeScript, Tailwind, Dexie (IndexedDB), Recharts.
-Aucune API ni compte : tout est local, avec export/import JSON versionné.
-Fonctionnalités : séances (exercices, séries reps × poids), fiche exercice
-(silhouette avec muscles principaux/secondaires, machine, vidéo, alternatives,
-complémentaires), heatmap calendrier + heatmap corps (volume par muscle),
-suivi du poids de corps, RPE par série (courbe par exercice) et records, ajout d'exercices
-personnalisés et import en masse. Interface bilingue FR/EN avec
-sélecteur ; noms d'exercices, machines et muscles en gros dans leur langue
-d'origine, en petit en anglais.
-Commence par lire le plan, propose l'arborescence du projet, puis implémente
-la phase 1 uniquement et attends ma validation.
+Build a gym logbook PWA, mobile-first but responsive on desktop.
+Stack: Vite, React, TypeScript, Tailwind, Dexie (IndexedDB), Recharts.
+No API or account: everything is local, with versioned JSON export/import.
+Features: sessions (exercises, sets as reps × weight), exercise page
+(silhouette with primary/secondary muscles, machine, video, alternatives,
+complements), calendar heatmap + body heatmap (volume per muscle),
+body weight tracking, RPE per set (chart per exercise) and records, custom
+exercises and bulk import. Bilingual FR/EN interface with a selector;
+exercise, machine and muscle names in large type in their original language,
+with the English name smaller.
+Start by reading the plan, propose the project tree, then implement
+phase 1 only and wait for my validation.
 ```
 
-Conseil : demande aussi à Claude Code de créer un fichier `CLAUDE.md` à la racine avec ces décisions, pour qu'il garde le cap d'une session à l'autre.
+Tip: also ask Claude Code to create a `CLAUDE.md` file at the root with these decisions, so it keeps its bearings from one session to the next.

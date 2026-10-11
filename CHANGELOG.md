@@ -1,6 +1,20 @@
 # Changelog
 
-Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), versionnage [SemVer](https://semver.org/lang/fr/).
+Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versioned with [SemVer](https://semver.org/).
+
+## [1.2.1] - 2026-10-11
+
+### Changed
+- The whole repository is now written in English ahead of its publication: code comments, test titles, README, CHANGELOG, CLAUDE.md, `docs/plan.md`, the deployment workflow and the scripts. The interface stays bilingual: `fr.json`, `en.json` and the French fields of the exercise catalogue are product data and are unchanged. No change in behaviour.
+
+### Added
+- Licences: the code is under the MIT licence (`LICENSE`); the exercise catalogue is under CC BY-NC 4.0, with attribution and non-commercial use (`LICENSE-CATALOGUE.md`). `package.json` declares the code licence.
+
+### Removed
+- `docs/prototype.html`, the French-only prototype (about 1,900 lines) used as a reference during the first phases. It stays available in the Git history.
+
+### Fixed
+- The 0.5.0 heading was missing from this changelog.
 
 ## [1.2.0] - 2026-10-11
 
@@ -22,99 +36,99 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), versi
 ## [1.1.0] - 2026-10-11
 
 ### Changed
-- Les noms d'exercices, de machines et de muscles suivent la langue de l'interface : en anglais, le nom anglais seul (au lieu du français en gros avec l'anglais dessous) ; en français, inchangé. S'applique aux listes, fiches, filtres, silhouettes (libellés d'accessibilité et infobulles compris), séances, suivi et formulaires.
-- Le tri de la liste des exercices se fait sur le nom affiché : par ordre alphabétique anglais en interface anglaise.
-- La recherche d'exercices couvre aussi le groupe et le matériel dans les deux langues (« dos » et « back », « barre » et « barbell »).
+- Exercise, machine and muscle names follow the interface language: in English, the English name alone (instead of the French name in large type with the English one below); in French, unchanged. This applies to lists, exercise pages, filters, silhouettes (accessibility labels and tooltips included), sessions, tracking and forms.
+- The exercise list is sorted on the displayed name: alphabetical English order in the English interface.
+- Exercise search also covers the group and the equipment in both languages (“dos” and “back”, “barre” and “barbell”).
 
 ### Added
-- Tests du nom affiché, du tri selon la langue et de la recherche bilingue (les 17 muscles dans les deux langues).
+- Tests for the displayed name, language-aware sorting and bilingual search (all 17 muscles in both languages).
 
 ## [1.0.1] - 2026-10-10
 
 ### Changed
-- Graphiques aux couleurs des Valkyries : série principale en violet, seconde série (moyenne glissante, RPE) en or, à la place du rose de la heatmap. Deux variables de palette, `--chart-1` et `--chart-2`, suffisamment contrastées pour des traits (3:1) dans les deux thèmes.
-- Infobulle des graphiques : filet or au survol (au lieu du gris par défaut de Recharts), points cerclés de la couleur de la carte.
+- Charts in the Valkyries colours: main series in purple, second series (rolling average, RPE) in gold instead of the heatmap pink. Two palette variables, `--chart-1` and `--chart-2`, contrasted enough for lines (3:1) in both themes.
+- Chart tooltip: gold rule on hover (instead of Recharts' default grey), dots outlined in the card colour.
 
 ### Added
-- Légende visible sous les graphiques à deux séries (poids de corps et moyenne sur 7 jours).
-- Test de contraste des couleurs de graphique.
+- Visible legend under two-series charts (body weight and 7-day average).
+- Contrast test for the chart colours.
 
 ## [1.0.0] - 2026-10-10
 
 ### Added
-- Thème Système, Clair ou Sombre dans les Réglages, enregistré et appliqué avant le premier rendu (sans flash). Les champs natifs (date, listes) suivent le thème.
-- Données de démonstration : chargement et retrait en un clic depuis les Réglages. Elles sont marquées, ne sont jamais exportées et ne déclenchent pas le rappel d'export.
-- Workflow GitHub Actions de déploiement sur GitHub Pages (lint, tests, build, publication).
-- Test de contraste WCAG sur les deux thèmes, et test de cohérence entre le thème sombre automatique et forcé.
-- Tests de cas limites des calculs (volume par muscle, calendrier, RPE, records, recherche).
-- README complet : installation, déploiement (GitHub Pages et Raspberry Pi), sauvegarde, calculs, architecture.
-- Dépendance `@fontsource-variable/noto-sans` (licence OFL) pour auto-héberger la police.
+- System, Light or Dark theme in Settings, saved and applied before the first render (no flash). Native fields (date, lists) follow the theme.
+- Demo data: load and remove in one click from Settings. It is flagged, never exported and does not trigger the export reminder.
+- GitHub Actions workflow deploying to GitHub Pages (lint, tests, build, publish).
+- WCAG contrast test on both themes, and a consistency test between the automatic and forced dark themes.
+- Edge-case tests for the calculations (volume per muscle, calendar, RPE, records, search).
+- Complete README: installation, deployment (GitHub Pages and Raspberry Pi), backup, calculations, architecture.
+- `@fontsource-variable/noto-sans` dependency (OFL licence) to self-host the font.
 
 ### Changed
-- Nouvelle identité visuelle aux couleurs des Golden State Valkyries : thème clair inspiré du maillot Heroine, thème sombre du maillot Explorer avec le noir en couleur principale. Boutons et pastilles actives en violet officiel avec texte noir, filet or sous les titres et au-dessus de la barre d'onglets, trait violet sur l'onglet actif. Le dégradé de la heatmap est conservé.
-- Police Noto Sans variable (graisse, largeur et italique) auto-hébergée, à la place de Big Shoulders Display et Figtree : plus aucune requête vers Google, et la police est précachée pour le hors-ligne.
-- Icône de l'application (fond noir, « C » violet) et couleur de la barre du navigateur (violet en clair, noir en sombre) alignées sur la palette.
-- Tous les textes atteignent 4,5:1 de contraste dans les deux thèmes (vérifié par test).
-- Couleurs des muscles secondaires et premier palier de la heatmap plus distincts du gris des muscles non travaillés, dans les deux thèmes.
-- Thème et langue enregistrés sont chargés avant le premier affichage.
+- New visual identity in the Golden State Valkyries colours: light theme inspired by the Heroine jersey, dark theme by the Explorer jersey with black as the main colour. Buttons and active chips in official purple with black text, gold rule under the titles and above the tab bar, purple stroke on the active tab. The heatmap gradient is kept.
+- Self-hosted Noto Sans variable font (weight, width and italic) instead of Big Shoulders Display and Figtree: no more requests to Google, and the font is precached for offline use.
+- App icon (black background, purple “C”) and browser bar colour (purple in light, black in dark) aligned with the palette.
+- All text reaches 4.5:1 contrast in both themes (checked by a test).
+- Secondary muscle colours and the first heatmap step are more distinct from the grey of unworked muscles, in both themes.
+- The saved theme and language are loaded before the first render.
 
 ## [0.6.0] - 2026-10-09
 
 ### Added
-- Export JSON versionné (version 1) : séances, poids de corps, exercices personnalisés et notes/vidéos des exercices de la base de départ. Téléchargement depuis Réglages > Données.
-- Import au choix « Fusionner » ou « Remplacer » (avec confirmation avant remplacement), validation élément par élément et rapport des éléments ignorés. Les réglages ne sont ni exportés ni écrasés.
-- Migrations du format d'export : un fichier d'une version plus ancienne est converti, un fichier plus récent est refusé.
-- Rappel d'export : bandeau quand le dernier export date de plus de X semaines (réglable, 4 par défaut, désactivable).
-- Exercices personnalisés : création et modification par formulaire (muscles choisis sur la silhouette, exercices liés, vidéo), suppression, badge « Perso » dans la liste.
-- Import en masse d'exercices par fichier JSON, avec rapport ligne par ligne.
-- Tests du format d'export, des migrations, de la validation, des plans de fusion et de remplacement, et du rappel.
+- Versioned JSON export (version 1): sessions, body weights, custom exercises and notes/videos of built-in exercises. Download from Settings > Data.
+- Import with a choice of “Merge” or “Replace” (with confirmation before replacing), item-by-item validation and a report of skipped items. Settings are neither exported nor overwritten.
+- Export format migrations: an older file is converted, a newer file is rejected.
+- Export reminder: banner when the last export is more than X weeks old (adjustable, 4 by default, can be disabled).
+- Custom exercises: creation and editing through a form (muscles picked on the silhouette, linked exercises, video), deletion, “Custom” badge in the list.
+- Bulk exercise import from a JSON file, with a line-by-line report.
+- Tests for the export format, migrations, validation, merge and replace plans, and the reminder.
 
- - 2026-10-09
+## [0.5.0] - 2026-10-09
 
 ### Added
-- Aperçu : heatmap du corps (silhouette face et dos) colorée par volume par muscle sur 7, 30, 90 jours ou tout l'historique, avec classement des muscles, détail du muscle choisi et lien vers ses exercices.
-- Aperçu : calendrier des 26 dernières semaines (séries ou volume), cases accessibles au clavier (flèches), détail de la séance du jour et création d'une séance sur un jour de repos.
-- Aperçu : statistiques résumées (séances sur 30 jours, séries de la semaine, semaines consécutives).
-- La liste des exercices accepte un filtre de muscle dans l'adresse (`?muscle=<id>`).
-- Fonctions pures du volume par muscle, du calendrier et des statistiques, avec tests.
+- Overview: body heatmap (front and back silhouette) coloured by volume per muscle over 7, 30, 90 days or the whole history, with a muscle ranking, details of the selected muscle and a link to its exercises.
+- Overview: calendar of the last 26 weeks (sets or volume), keyboard-accessible cells (arrows), details of the day's session and session creation on a rest day.
+- Overview: summary statistics (sessions over 30 days, sets this week, consecutive weeks).
+- The exercise list accepts a muscle filter in the address (`?muscle=<id>`).
+- Pure functions for volume per muscle, the calendar and the statistics, with tests.
 
 ## [0.4.0] - 2026-10-09
 
 ### Added
-- Onglet Suivi en trois sections : Poids de corps, Progression, Records.
-- Poids de corps : saisie rapide (une valeur par date), courbe, moyenne glissante sur 7 jours, dernières mesures avec suppression.
-- Progression par exercice : charge max, 1RM estimé (Epley), volume et répétitions max, avec courbe du RPE moyen dans le temps.
-- Records personnels par exercice (charge max, 1RM estimé, reps max), mis en évidence quand ils ont moins de 30 jours.
-- Records et courbes également sur la fiche exercice.
-- Graphiques Recharts chargés à la demande, avec résumé textuel pour les lecteurs d'écran.
-- Fonctions pures de suivi (moyenne glissante, progression, RPE, records) avec tests.
+- Tracking tab in three sections: Body weight, Progression, Records.
+- Body weight: quick entry (one value per date), chart, 7-day rolling average, latest measurements with deletion.
+- Progression per exercise: max weight, estimated 1RM (Epley), volume and max reps, with a chart of the average RPE over time.
+- Personal records per exercise (max weight, estimated 1RM, max reps), highlighted when they are less than 30 days old.
+- Records and charts also on the exercise page.
+- Recharts charts loaded on demand, with a text summary for screen readers.
+- Pure tracking functions (rolling average, progression, RPE, records) with tests.
 
 ## [0.3.0] - 2026-10-09
 
 ### Added
-- Séances : liste triée par date, création, duplication (date du jour, mêmes exercices et séries) et suppression avec confirmation.
-- Éditeur de séance : nom, date, notes, ajout d'exercices par recherche, réorganisation, séries reps × poids × RPE optionnel (6 à 10 par demi-points), sauvegarde automatique dans Dexie.
-- Rappel de la dernière performance sous chaque exercice, avec reprise en un clic.
-- Historique des performances sur la fiche exercice.
-- Fonctions pures de séances (normalisation, duplication, historique, formatage « 3×12 @ 45 kg ») et de brouillon, avec tests.
+- Sessions: list sorted by date, creation, duplication (today's date, same exercises and sets) and deletion with confirmation.
+- Session editor: name, date, notes, adding exercises by search, reordering, sets with reps × weight × optional RPE (6 to 10 in half points), autosave in Dexie.
+- Reminder of the last performance under each exercise, with one-click reuse.
+- Performance history on the exercise page.
+- Pure session functions (normalisation, duplication, history, “3×12 @ 45 kg” formatting) and draft functions, with tests.
 
 ## [0.2.0] - 2026-10-09
 
 ### Added
-- Internationalisation FR/EN (i18next) avec sélecteur de langue dans les Réglages ; langue enregistrée dans Dexie, valeur par défaut selon `navigator.language`.
-- Base de départ de 100 exercices bilingues et 17 muscles (`src/data`), alternatives, antagonistes et complémentaires écrits en dur, semée dans Dexie au premier lancement.
-- Liste des exercices avec recherche (sans accents, FR et EN) et filtres par groupe, matériel et muscle principal.
-- Fiche exercice : silhouette SVG avant/arrière (principaux en couleur forte, secondaires en couleur claire), machine, conseil d'exécution, lien vidéo, notes personnelles, exercices liés cliquables.
-- Affichage bilingue des noms : langue d'origine en gros, anglais en dessous (une ligne si identique).
-- Tests du seed et des fonctions de recherche, de tri et de fusion du seed.
+- FR/EN internationalisation (i18next) with a language selector in Settings; language saved in Dexie, default value from `navigator.language`.
+- Starter catalogue of 100 bilingual exercises and 17 muscles (`src/data`), with alternatives, antagonists and complements hard-coded, seeded into Dexie on first launch.
+- Exercise list with search (accent-insensitive, FR and EN) and filters by group, equipment and primary muscle.
+- Exercise page: front/back SVG silhouette (primary muscles in a strong colour, secondary in a light colour), machine, execution tip, video link, personal notes, clickable related exercises.
+- Bilingual display of names: original language in large type, English below (one line if identical).
+- Tests for the seed and for the search, sort and seed-merge functions.
 
 ## [0.1.0] - 2026-10-09
 
 ### Added
-- Projet Vite + React + TypeScript strict, Tailwind CSS v4, ESLint, Vitest.
-- PWA installable et hors ligne (`vite-plugin-pwa`), `base` configurable via `VITE_BASE`.
-- Navigation à 5 onglets (Aperçu, Séances, Exercices, Suivi, Réglages) avec `HashRouter`.
-- Base locale Dexie (schéma v1) et types du modèle de données.
-- Utilitaires de dates en heure locale (`YYYY-MM-DD`) avec tests.
-- Palette et polices du prototype, thème clair/sombre selon le système.
-- Icônes placeholder générées par `npm run icons`.
+- Vite + React + strict TypeScript project, Tailwind CSS v4, ESLint, Vitest.
+- Installable, offline-capable PWA (`vite-plugin-pwa`), `base` configurable through `VITE_BASE`.
+- 5-tab navigation (Overview, Sessions, Exercises, Tracking, Settings) with `HashRouter`.
+- Local Dexie database (schema v1) and data model types.
+- Local-time date utilities (`YYYY-MM-DD`) with tests.
+- Palette and fonts from the prototype, light/dark theme following the system.
+- Placeholder icons generated by `npm run icons`.
