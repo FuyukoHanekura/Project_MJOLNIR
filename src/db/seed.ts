@@ -2,12 +2,15 @@ import { mergeSeedExercise } from '../lib/exercises'
 import { db } from './db'
 import { getSetting, setSetting } from './settings'
 
-/** À incrémenter quand exercises.seed.ts change : la base est alors resynchronisée au démarrage. */
-export const SEED_VERSION = 1
+/**
+ * Bump whenever exercises.seed.ts changes: the database is then resynchronised at startup.
+ * 1 = original 100 exercises; 2 = extended catalogue (adds smith, kettlebell and band equipment).
+ */
+export const SEED_VERSION = 2
 
 export async function seedExercises(): Promise<void> {
   if ((await getSetting<number>('seedVersion')) === SEED_VERSION) return
-  // Import dynamique : les ~100 exercices ne sont chargés que s'il faut (re)semer la base.
+  // Dynamic import: the exercise catalogue is only loaded when the database needs (re)seeding.
   const { EXERCISES_SEED } = await import('../data/exercises.seed')
   await db.transaction('rw', db.exercises, db.settings, async () => {
     const existing = await db.exercises.bulkGet(EXERCISES_SEED.map((e) => e.id))
