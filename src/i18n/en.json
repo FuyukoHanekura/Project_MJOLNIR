@@ -5,7 +5,8 @@
     "sessions": "Sessions",
     "exercises": "Exercises",
     "tracking": "Tracking",
-    "settings": "Settings"
+    "settings": "Settings",
+    "help": "Help"
   },
   "common": {
     "comingSoon": "This section is coming in a later phase.",
@@ -407,5 +408,83 @@
     "export": "Download the pack",
     "done": "Pack downloaded: {{file}}",
     "back": "Back to exercises"
+  },
+  "help": {
+    "title": "Help",
+    "intro": "Short explanations of the terms used in the app. Tap the “?” buttons next to a term to jump to its entry.",
+    "glossary": "Glossary",
+    "tip": {
+      "label": "What is {{term}}?",
+      "more": "Learn more",
+      "close": "Close"
+    },
+    "rpeScaleTitle": "The RPE scale",
+    "rpeScale": {
+      "6": "Moderate. Four or more repetitions were possible.",
+      "7": "Fairly hard. Three more repetitions were possible, and the bar was still moving fast.",
+      "8": "Hard. You could have done two more repetitions.",
+      "9": "Very hard. You could have done one more repetition.",
+      "10": "Maximum effort. No repetition left: you could not have done one more."
+    },
+    "rpeHowTitle": "How to choose your RPE",
+    "rpeHow": "Right after the set, ask yourself: “How many more clean repetitions could I have done, with the same form?” Four or more is a 6, three a 7, two an 8, one a 9, none a 10. Half points (7.5, 8.5, 9.5) are fine when you hesitate. It becomes more accurate with practice, and being off by half a point does not matter: what counts is judging the same way every time. If a weight you already know feels easier than last time, give it a lower RPE; the Average RPE chart on the exercise page shows it over time.",
+    "e1rmExample": "Example: {{weight}} kg for {{reps}} repetitions gives an estimated 1RM of about {{value}} kg.",
+    "terms": {
+      "rpe": {
+        "name": "RPE (rate of perceived exertion)",
+        "short": "How hard a set felt, from 6 (easy) to 10 (maximum effort).",
+        "body": "You give it right after a set. It is a way to describe how close to failure you went: the closer, the higher the number. The same weight and repetitions should get a lower RPE as you get stronger, which is why the app charts the average RPE of an exercise over time. Another common way to say the same thing is RIR (reps in reserve), which is 10 minus the RPE."
+      },
+      "rm": {
+        "name": "1RM (one-rep max)",
+        "short": "The heaviest weight you could lift for a single repetition.",
+        "body": "It is a measure of maximum strength. Testing it for real is tiring and risky, so most people estimate it from a lighter set instead (see “Estimated 1RM”)."
+      },
+      "e1rm": {
+        "name": "Estimated 1RM",
+        "short": "Your 1RM calculated from a set of several repetitions, without lifting the maximum.",
+        "body": "The app uses the Epley formula: weight × (1 + repetitions ÷ 30), and the weight itself for a single repetition. It is most reliable for sets of about 10 repetitions or fewer; beyond that it becomes rough. Sets without weight (bodyweight) have no estimate. Use it to compare sessions with each other rather than as an exact figure."
+      },
+      "set": {
+        "name": "Set",
+        "short": "A group of repetitions done without resting.",
+        "body": "You rest between sets. In the app a set holds the number of repetitions, the weight and, optionally, the RPE."
+      },
+      "rep": {
+        "name": "Repetition (rep)",
+        "short": "One complete movement of an exercise, up and down.",
+        "body": "Sets are written as repetitions × weight, for example 12 × 45 kg. “3×12 @ 45 kg” means three identical sets of 12 repetitions at 45 kg."
+      },
+      "volume": {
+        "name": "Volume",
+        "short": "Total work done: repetitions × weight, added over the sets.",
+        "body": "It is one of the measures you can chart for an exercise. Do not confuse it with the volume per muscle of the Overview, which counts sets (see “Primary and secondary muscles”)."
+      },
+      "topWeight": {
+        "name": "Top weight",
+        "short": "The heaviest weight you used on an exercise, with at least one repetition.",
+        "body": "It is one of your personal records. The “Recent” badge appears when the record is less than 30 days old."
+      },
+      "primarySecondary": {
+        "name": "Primary and secondary muscles",
+        "short": "Muscles that do most of the work, and those that help.",
+        "body": "On the silhouettes the primary muscles are in a strong colour and the secondary ones in a light colour. For the volume per muscle, a set counts 1 for a primary muscle and 0.5 for a secondary one."
+      },
+      "fullHeat": {
+        "name": "Full heat",
+        "short": "The strongest colour of the body heatmap.",
+        "body": "A muscle reaches full heat when it gets 15 weighted sets per week. The colour is relative to that reference, so a muscle at half colour has had about half of it. It is a guide to spot neglected muscles, not a target you must reach."
+      },
+      "movingAverage": {
+        "name": "Rolling average",
+        "short": "The average of your last 7 days of body weight.",
+        "body": "Your weight varies from day to day (water, meals). The average smooths those variations and shows the real trend; it is the dashed line on the body weight chart."
+      },
+      "relatedExercises": {
+        "name": "Alternatives, antagonists and complements",
+        "short": "Exercises related to the one you are viewing.",
+        "body": "Alternatives work the same muscles with other equipment or another angle. Antagonists work the opposing muscles (for example back versus chest). Complements work related muscles that complete the work."
+      }
+    }
   }
 }

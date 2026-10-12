@@ -5,7 +5,8 @@
     "sessions": "Séances",
     "exercises": "Exercices",
     "tracking": "Suivi",
-    "settings": "Réglages"
+    "settings": "Réglages",
+    "help": "Aide"
   },
   "common": {
     "comingSoon": "Cette section arrive dans une prochaine phase.",
@@ -407,5 +408,83 @@
     "export": "Télécharger le paquet",
     "done": "Paquet téléchargé : {{file}}",
     "back": "Retour aux exercices"
+  },
+  "help": {
+    "title": "Aide",
+    "intro": "De courtes explications sur les termes utilisés dans l'application. Touche les boutons « ? » à côté d'un terme pour arriver à sa fiche.",
+    "glossary": "Glossaire",
+    "tip": {
+      "label": "Qu'est-ce que {{term}} ?",
+      "more": "En savoir plus",
+      "close": "Fermer"
+    },
+    "rpeScaleTitle": "L'échelle du RPE",
+    "rpeScale": {
+      "6": "Modéré. Quatre répétitions de plus ou plus étaient possibles.",
+      "7": "Assez dur. Trois répétitions de plus étaient possibles, et la barre montait encore vite.",
+      "8": "Dur. Tu aurais pu faire deux répétitions de plus.",
+      "9": "Très dur. Tu aurais pu faire une répétition de plus.",
+      "10": "Effort maximal. Aucune répétition en réserve : tu n'aurais pas pu en faire une de plus."
+    },
+    "rpeHowTitle": "Comment choisir ton RPE",
+    "rpeHow": "Juste après la série, demande-toi : « Combien de répétitions propres aurais-je pu faire en plus, avec la même exécution ? » Quatre ou plus, c'est un 6 ; trois, un 7 ; deux, un 8 ; une, un 9 ; aucune, un 10. Les demi-points (7,5 ; 8,5 ; 9,5) conviennent quand tu hésites. Ça devient plus précis avec l'habitude, et un demi-point d'écart n'est pas grave : l'important est de juger de la même façon à chaque fois. Si une charge que tu connais te paraît plus facile que la dernière fois, mets un RPE plus bas ; la courbe du RPE moyen sur la fiche de l'exercice le montre dans le temps.",
+    "e1rmExample": "Exemple : {{weight}} kg pour {{reps}} répétitions donne un 1RM estimé d'environ {{value}} kg.",
+    "terms": {
+      "rpe": {
+        "name": "RPE (effort perçu)",
+        "short": "La difficulté ressentie d'une série, de 6 (facile) à 10 (effort maximal).",
+        "body": "Tu l'indiques juste après une série. C'est une façon de dire à quel point tu étais proche de l'échec : plus c'est proche, plus le nombre est élevé. Avec la même charge et les mêmes répétitions, le RPE doit baisser quand tu progresses, c'est pourquoi l'application trace le RPE moyen d'un exercice dans le temps. On parle aussi de RIR (répétitions en réserve), qui vaut 10 moins le RPE."
+      },
+      "rm": {
+        "name": "1RM (répétition maximale)",
+        "short": "La charge la plus lourde que tu peux soulever une seule fois.",
+        "body": "C'est une mesure de la force maximale. La tester pour de vrai est fatigant et risqué : la plupart des gens l'estiment plutôt à partir d'une série plus légère (voir « 1RM estimé »)."
+      },
+      "e1rm": {
+        "name": "1RM estimé",
+        "short": "Ton 1RM calculé à partir d'une série de plusieurs répétitions, sans soulever le maximum.",
+        "body": "L'application utilise la formule d'Epley : charge × (1 + répétitions ÷ 30), et la charge elle-même pour une seule répétition. C'est le plus fiable pour des séries d'une dizaine de répétitions ou moins ; au-delà, c'est approximatif. Les séries sans charge (poids du corps) n'ont pas d'estimation. Sers-t'en pour comparer tes séances entre elles plutôt que comme un chiffre exact."
+      },
+      "set": {
+        "name": "Série",
+        "short": "Un groupe de répétitions enchaînées sans pause.",
+        "body": "Tu te reposes entre les séries. Dans l'application, une série contient le nombre de répétitions, la charge et, si tu veux, le RPE."
+      },
+      "rep": {
+        "name": "Répétition (rep)",
+        "short": "Un mouvement complet d'un exercice, aller et retour.",
+        "body": "Les séries s'écrivent répétitions × charge, par exemple 12 × 45 kg. « 3×12 @ 45 kg » signifie trois séries identiques de 12 répétitions à 45 kg."
+      },
+      "volume": {
+        "name": "Volume",
+        "short": "Le travail total effectué : répétitions × charge, additionné sur les séries.",
+        "body": "C'est l'une des mesures que tu peux tracer pour un exercice. À ne pas confondre avec le volume par muscle de l'Aperçu, qui compte des séries (voir « Muscles principaux et secondaires »)."
+      },
+      "topWeight": {
+        "name": "Charge max",
+        "short": "La charge la plus lourde utilisée sur un exercice, avec au moins une répétition.",
+        "body": "C'est l'un de tes records personnels. Le badge « Récent » apparaît quand le record date de moins de 30 jours."
+      },
+      "primarySecondary": {
+        "name": "Muscles principaux et secondaires",
+        "short": "Les muscles qui font l'essentiel du travail, et ceux qui aident.",
+        "body": "Sur les silhouettes, les muscles principaux sont en couleur forte et les secondaires en couleur claire. Pour le volume par muscle, une série compte 1 pour un muscle principal et 0,5 pour un secondaire."
+      },
+      "fullHeat": {
+        "name": "Pleine chaleur",
+        "short": "La couleur la plus forte de la heatmap du corps.",
+        "body": "Un muscle atteint la pleine chaleur avec 15 séries pondérées par semaine. La couleur est relative à cette référence : un muscle à demi-teinte en a eu environ la moitié. C'est un repère pour repérer les muscles négligés, pas un objectif à atteindre."
+      },
+      "movingAverage": {
+        "name": "Moyenne glissante",
+        "short": "La moyenne de ton poids de corps sur les 7 derniers jours.",
+        "body": "Ton poids varie d'un jour à l'autre (eau, repas). La moyenne lisse ces variations et montre la vraie tendance ; c'est la ligne en pointillés du graphique de poids de corps."
+      },
+      "relatedExercises": {
+        "name": "Alternatives, antagonistes et complémentaires",
+        "short": "Des exercices liés à celui que tu consultes.",
+        "body": "Les alternatives travaillent les mêmes muscles avec un autre matériel ou un autre angle. Les antagonistes travaillent les muscles opposés (par exemple dos contre pectoraux). Les complémentaires travaillent des muscles associés qui complètent le travail."
+      }
+    }
   }
 }

@@ -12,6 +12,7 @@ import SettingsPage from './pages/SettingsPage'
 const ExerciseFormPage = lazy(() => import('./pages/ExerciseFormPage'))
 const BulkImportPage = lazy(() => import('./pages/BulkImportPage'))
 const PackExportPage = lazy(() => import('./pages/PackExportPage'))
+const HelpPage = lazy(() => import('./pages/HelpPage'))
 const TrackingPage = lazy(() => import('./pages/TrackingPage'))
 
 export default function App() {
@@ -30,6 +31,8 @@ export default function App() {
             <Route path="exercices/:id/modifier" element={<ExerciseFormPage />} />
             <Route path="exercices/:id" element={<ExerciseDetailPage />} />
             <Route path="suivi" element={<TrackingPage />} />
+            <Route path="aide" element={<HelpPage />} />
+            <Route path="aide/:term" element={<HelpPage />} />
             <Route path="reglages" element={<SettingsPage />} />
             <Route path="*" element={<OverviewPage />} />
           </Route>
