@@ -37,12 +37,12 @@ export default function BodyWeightPanel() {
 
   return (
     <div>
-      <form onSubmit={submit} className="grid grid-cols-[1fr_1fr] items-end gap-3 sm:grid-cols-[1fr_1fr_auto]" noValidate>
+      <form onSubmit={submit} className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_1fr_auto] sm:items-end" noValidate>
         <label className="block text-sm font-semibold text-ink2">
           {t('tracking.weight.date')}
           <input
             type="date"
-            className={`${field} mt-1 font-normal`}
+            className={`${field} mt-1 min-w-0 appearance-none text-left font-normal`}
             value={date}
             max={todayLocal()}
             onChange={(e) => e.target.value && setDate(e.target.value)}
@@ -59,7 +59,7 @@ export default function BodyWeightPanel() {
             aria-describedby={invalid ? 'weight-error' : undefined}
           />
         </label>
-        <button type="submit" className="col-span-2 min-h-11 rounded-lg bg-brand px-6 font-semibold text-brand-ink sm:col-span-1">
+        <button type="submit" className="min-h-11 rounded-lg bg-brand px-6 font-semibold text-brand-ink">
           {t('tracking.weight.save')}
         </button>
       </form>
