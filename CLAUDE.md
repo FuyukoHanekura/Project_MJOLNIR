@@ -67,7 +67,7 @@ If asked for a code review, I read `git diff main...HEAD`, comment (bugs, access
 
 ## Navigation
 
-Five tabs, hash routes:
+Six tabs, hash routes:
 
 | Tab | Content |
 | --- | --- |
@@ -76,6 +76,7 @@ Five tabs, hash routes:
 | Exercises | List, filters, exercise page, creation, bulk import |
 | Tracking | Body weight, RPE, records, progression charts |
 | Settings | Language, theme, export/import, export reminder, demo |
+| Help | Glossary of the terms the app displays (`/aide`, `/aide/:term`); room for other kinds of help later |
 
 ## Data model
 
@@ -168,6 +169,12 @@ In the Golden State Valkyries colours: purple `#AD96DC`, black `#010101`, white,
 - A pack is a JSON file `{ kind: "exercise-pack", version, name, description?, exportedAt, exercises }`. `version` is a pack schema integer, independent of the export version and the app version; any change to it needs a migration path like the export format.
 - Packs hold custom exercises only. Personal `notes` are never exported; relations to custom exercises outside the pack are dropped, relations to built-in exercises are kept.
 - Import goes through the bulk importer (`parseExerciseList` then `computeImport`); conflicts on an existing custom id are resolved by `resolveConflicts` (skip, replace or copy). Logic lives in `src/lib/exercisePack.ts`.
+
+## Help and tooltips (1.4.0)
+
+- Glossary ids live in `src/data/glossary.ts`; texts live in `help.terms.<id>` (`name`, `short` for tooltips, `body`) in both translation files. Only terms the app displays get an entry.
+- Tooltips use `InfoTip` (opens on tap or click, never on hover only; closes with Escape). Add one next to any new technical term and a matching glossary entry.
+- Worked examples in the help texts are computed with the app's own functions, never hard-coded.
 
 ## Code conventions
 

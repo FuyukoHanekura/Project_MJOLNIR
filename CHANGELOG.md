@@ -2,6 +2,16 @@
 
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versioned with [SemVer](https://semver.org/).
 
+## [1.4.0] - 2026-10-12
+
+### Added
+- Help tab (sixth tab): a glossary of the terms the app displays, in French and English: RPE (with the 6 to 10 scale, one sentence per level and how to choose your RPE after a set), 1RM and estimated 1RM (Epley formula with a worked example computed by the app itself), set, repetition, volume, top weight, primary and secondary muscles, full heat, rolling average, alternatives / antagonists / complements. The tab is meant to host other kinds of help later.
+- “?” tooltips next to RPE (session editor and exercise progress) and estimated 1RM (records). They open on tap or click, close with Escape, a tap outside or the Close button, and link to the matching glossary entry (`#/aide/<term>`), which opens and scrolls into view.
+- Tests: every glossary term has a name, a short text and a body in both languages, tooltip texts stay short, the RPE scale is complete, placeholders match between languages, the worked 1RM example matches the formula, and the tab bar has six tabs.
+
+### Fixed
+- Tracking > Body weight: on a phone the weight field was taller than expected and sat over the date field on iPhone. The date and weight fields are now stacked (date first, weight below) on small screens, and the native date input no longer forces its own width.
+
 ## [1.3.0] - 2026-10-12
 
 ### Added

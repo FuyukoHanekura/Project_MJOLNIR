@@ -13,6 +13,7 @@ Mobile-first, comfortable on desktop, installable on the home screen and usable 
 | Exercises | 420+ bilingual exercises, search and filters (multi-select equipment), exercise page with silhouette, custom exercises, bulk import, shareable exercise packs |
 | Tracking | Body weight and rolling average, average RPE, records, progression charts |
 | Settings | Language, theme, export/import, export reminder, demo data |
+| Help | Glossary of the terms used in the app (RPE, 1RM, volume...), also reachable from the “?” tooltips |
 
 Exercise, machine and muscle names follow the interface language: in English, the English name alone; in French, the original name in large type with the English name smaller below. Search works in both languages (“dos” as well as “back”, “barre” as well as “barbell”).
 
