@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { formatLocalDate, numberFormatter } from '../lib/format'
 import { availableMetrics, personalRecords, progression, rpeTrend, type ProgressMetric } from '../lib/tracking'
 import type { Session } from '../types'
+import InfoTip from './InfoTip'
 import LineChart from './LineChart'
 import RecordsList from './RecordsList'
 
@@ -73,7 +74,9 @@ export default function ExerciseProgress({ exerciseId, sessions }: Props) {
       </section>
 
       <section>
-        <h2 className={sectionTitle}>{t('tracking.progress.rpeTitle')}</h2>
+        <h2 className={sectionTitle}>
+          {t('tracking.progress.rpeTitle')} <InfoTip term="rpe" />
+        </h2>
         {rpe.length === 0 ? (
           <p className="mt-2 text-ink2">{t('tracking.progress.rpeEmpty')}</p>
         ) : (

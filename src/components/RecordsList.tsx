@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { todayLocal } from '../lib/date'
 import { formatLocalDate, numberFormatter } from '../lib/format'
 import { isRecent, type Records, type SetRecord } from '../lib/tracking'
+import InfoTip from './InfoTip'
 
 /** A record is “recent” if it is less than 30 days old. */
 const RECENT_DAYS = 30
@@ -32,7 +33,15 @@ export default function RecordsList({ records }: Props) {
         return (
           <div key={key} className={`rounded-xl border p-3 ${recent ? 'border-accent bg-accent/10' : 'border-line bg-surface'}`}>
             <dt className="flex items-center justify-between gap-2 text-sm font-semibold text-ink2">
-              {label}
+              <span>
+                {label}
+                {key === 'e1rm' && (
+                  <>
+                    {' '}
+                    <InfoTip term="e1rm" />
+                  </>
+                )}
+              </span>
               {recent && <span className="rounded-full bg-brand px-2 py-0.5 text-xs text-brand-ink">{t('tracking.records.recent')}</span>}
             </dt>
             <dd className="mt-1 text-2xl font-bold text-ink">{value}</dd>

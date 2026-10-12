@@ -6,6 +6,7 @@ import { emptyDraftSet, type DraftEntry, type DraftSet } from '../lib/sessionDra
 import { formatSets, RPE_VALUES, type Performance } from '../lib/sessions'
 import type { Exercise } from '../types'
 import BilingualName from './BilingualName'
+import InfoTip from './InfoTip'
 
 interface Props {
   entry: DraftEntry
@@ -84,7 +85,10 @@ export default function SessionEntryCard({ entry, exercise, last, isFirst, isLas
           <span aria-hidden="true">#</span>
           <span>{t('sessions.reps')}</span>
           <span>{t('sessions.weight')}</span>
-          <span>{t('sessions.rpe')}</span>
+          <span className="flex items-center gap-1">
+            {t('sessions.rpe')}
+            <InfoTip term="rpe" />
+          </span>
           <span />
         </div>
       )}
